@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Puma.Security.Rules</id>
+    <version>1.0.2.0</version>
+    <title>Puma.Security.Rules</title>
+    <authors>Puma Security LLC</authors>
+    <owners>Puma Security, LLC</owners>
+    <licenseUrl>https://www.pumascan.com/license.txt</licenseUrl>
+    <projectUrl>https://www.pumascan.com</projectUrl>
+    <iconUrl>https://www.pumascan.com/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Puma.Security.Rules</description>
+    <releaseNotes>Initial beta release.</releaseNotes>
+    <copyright>Copyright 2016 Puma Security, LLC</copyright>
+    <tags>Puma.Security.Rules, .NET Security Analyzer, Security, Code, Analyzers</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+    </frameworkAssemblies>
+  </metadata>
+  <!-- The convention for analyzers is to put language agnostic dlls in analyzers\portable50 and language specific analyzers in either analyzers\portable50\cs or analyzers\portable50\vb -->
+  <files>
+    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="tools\*.ps1" target="tools\" />
+  </files>
+</package>
