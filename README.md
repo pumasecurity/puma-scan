@@ -8,4 +8,4 @@ Puma Scan is licensed under the Mozilla Public License (MPL) version 2.0.
 
 # Contributing
 
-Contributing is easy. First, agree to the Contributors License Agreement (CLA) and we'll add you as a contributor on the project.
+Contributing is easy. First, agree to the [ Contributors License Agreement (CLA)](https://www.clahub.com/agreements/pumasecurity/puma-scan) and we'll add you as a contributor on the project.

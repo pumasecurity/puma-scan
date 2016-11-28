@@ -1,6 +1,6 @@
 # Contributor License Agreement
 
-To get started, <a href="https://www.clahub.com/agreements/pumasecurity/puma-scan">sign the Contributor License Agreement</a>. Then, we'll add you as a contributor.
+To get started, [sign the Contributor License Agreement](https://www.clahub.com/agreements/pumasecurity/puma-scan). Then, we'll add you as a contributor.
 
 # Rules Guide
 
