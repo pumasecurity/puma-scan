@@ -116,6 +116,8 @@
     <Compile Include="Analyzer\Validation\Redirect\Core\IResponseRedirectExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Redirect\Core\ResponseRedirectExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Redirect\ResponseRedirectAnalyzer.cs" />
+    <Compile Include="Analyzer\Validation\RequestValidation\AllowHtmlAnalyzer.cs" />
+    <Compile Include="Analyzer\Validation\RequestValidation\ValidateInputAnalyzer.cs" />
     <Compile Include="Base\BaseConfigurationFileDiagnosticSuite.cs" />
     <Compile Include="Base\BaseDiagnosticSuite.cs" />
     <Compile Include="Base\BaseMarkupDiagnosticSuite.cs" />
@@ -162,6 +164,7 @@
     <Compile Include="Suites\OpenRedirectDiagnosticSuite.cs" />
     <Compile Include="Suites\PagesConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\PathTamperingDiagnosticSuite.cs" />
+    <Compile Include="Suites\RequestValidationDiagnosticSuite.cs" />
     <Compile Include="Suites\SessionStateConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\WebFormsMarkupDiagnosticSuite.cs" />
     <Compile Include="Suites\SqlInjectionDiagnosticSuite.cs" />

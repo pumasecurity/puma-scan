@@ -574,4 +574,28 @@ Ensure file paths are read from a trusted location, such as a static resource or
   <data name="Analyzer_SEC0113_Title" xml:space="preserve">
     <value>Certificate Validation Disabled</value>
   </data>
+  <data name="Analyzer_SEC0022_Anchor" xml:space="preserve">
+    <value>sec0022-property-request-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0022_Description" xml:space="preserve">
+    <value>The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the AllowHtml attribute. This property should have strict white list validation in place to restrict user input.</value>
+  </data>
+  <data name="Analyzer_SEC0022_MessageFormat" xml:space="preserve">
+    <value>The AllowHtml attribute disables the validate request security feature.</value>
+  </data>
+  <data name="Analyzer_SEC0022_Title" xml:space="preserve">
+    <value>Model Request Validation Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0023_Anchor" xml:space="preserve">
+    <value>sec0023-action-request-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0023_Description" xml:space="preserve">
+    <value>The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the [ValidateInput(false)] attribute. This action should have strict white list validation in place to restrict user input.</value>
+  </data>
+  <data name="Analyzer_SEC0023_MessageFormat" xml:space="preserve">
+    <value>Setting the ValidateInput method's first parameter to false disables the validate request security feature.</value>
+  </data>
+  <data name="Analyzer_SEC0023_Title" xml:space="preserve">
+    <value>Action Request Validation Disabled</value>
+  </data>
 </root>

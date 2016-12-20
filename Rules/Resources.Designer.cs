@@ -850,6 +850,78 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sec0022-property-request-validation-disabled.
+        /// </summary>
+        internal static string Analyzer_SEC0022_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0022_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the AllowHtml attribute. This property should have strict white list validation in place to restrict user input..
+        /// </summary>
+        internal static string Analyzer_SEC0022_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0022_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The AllowHtml attribute disables the validate request security feature..
+        /// </summary>
+        internal static string Analyzer_SEC0022_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0022_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Model Request Validation Disabled.
+        /// </summary>
+        internal static string Analyzer_SEC0022_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0022_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0023-action-request-validation-disabled.
+        /// </summary>
+        internal static string Analyzer_SEC0023_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0023_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the [ValidateInput(false)] attribute. This action should have strict white list validation in place to restrict user input..
+        /// </summary>
+        internal static string Analyzer_SEC0023_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0023_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting the ValidateInput method&apos;s first parameter to false disables the validate request security feature..
+        /// </summary>
+        internal static string Analyzer_SEC0023_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0023_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action Request Validation Disabled.
+        /// </summary>
+        internal static string Analyzer_SEC0023_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0023_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sec0100-raw-inline-expression.
         /// </summary>
         internal static string Analyzer_SEC0100_Anchor {
