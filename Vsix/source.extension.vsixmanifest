@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="Puma.Security.Rules.Vsix..b2502b26-45ba-4568-9efe-bad89faad3c5" Version="1.0.2" Language="en-US" Publisher="Puma Security, LLC"/>
+    <Identity Id="Puma.Security.Rules.Vsix..b2502b26-45ba-4568-9efe-bad89faad3c5" Version="1.0.3" Language="en-US" Publisher="Puma Security, LLC"/>
     <DisplayName>Puma Scan</DisplayName>
     <Description xml:space="preserve">Diagnostic extension for the .NET Compiler Platform ("Roslyn") that performs static code analysis for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
     <MoreInfo>https://www.pumascan.com</MoreInfo>
+    <License>https://github.com/pumasecurity/puma-scan/blob/master/LICENSE</License>
     <GettingStartedGuide>https://www.pumascan.com/installation.html</GettingStartedGuide>
     <ReleaseNotes>https://www.pumascan.com/installation.html#release-notes</ReleaseNotes>
     <Icon>logo-200x200.png</Icon>

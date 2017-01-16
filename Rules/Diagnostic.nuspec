@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Puma.Security.Rules</id>
-    <version>1.0.2.0</version>
+    <version>1.0.3.0</version>
     <title>Puma.Security.Rules</title>
     <authors>Puma Security LLC</authors>
     <owners>Puma Security, LLC</owners>
@@ -11,8 +11,8 @@
     <iconUrl>https://www.pumascan.com/images/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Puma.Security.Rules</description>
-    <releaseNotes>Initial beta release.</releaseNotes>
-    <copyright>Copyright 2016 Puma Security, LLC</copyright>
+    <releaseNotes>https://www.pumascan.com/installation.html#release-notes</releaseNotes>
+    <copyright>Copyright 2016 - 2017 Puma Security, LLC</copyright>
     <tags>Puma.Security.Rules, .NET Security Analyzer, Security, Code, Analyzers</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
