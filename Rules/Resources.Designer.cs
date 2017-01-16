@@ -850,7 +850,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec0022-property-request-validation-disabled.
+        ///   Looks up a localized string similar to sec0022-model-request-validation-disabled.
         /// </summary>
         internal static string Analyzer_SEC0022_Anchor {
             get {

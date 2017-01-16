@@ -575,7 +575,7 @@ Ensure file paths are read from a trusted location, such as a static resource or
     <value>Certificate Validation Disabled</value>
   </data>
   <data name="Analyzer_SEC0022_Anchor" xml:space="preserve">
-    <value>sec0022-property-request-validation-disabled</value>
+    <value>sec0022-model-request-validation-disabled</value>
   </data>
   <data name="Analyzer_SEC0022_Description" xml:space="preserve">
     <value>The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the AllowHtml attribute. This property should have strict white list validation in place to restrict user input.</value>
