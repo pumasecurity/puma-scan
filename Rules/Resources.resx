@@ -598,4 +598,13 @@ Ensure file paths are read from a trusted location, such as a static resource or
   <data name="Analyzer_SEC0023_Title" xml:space="preserve">
     <value>Action Request Validation Disabled</value>
   </data>
+  <data name="Analyzer_SEC0114_Description" xml:space="preserve">
+    <value>LDAP Description Placeholder</value>
+  </data>
+  <data name="Analyzer_SEC0114_MessageFormat" xml:space="preserve">
+    <value>LDAP MessageFormat Placeholder</value>
+  </data>
+  <data name="Analyzer_SEC0114_Title" xml:space="preserve">
+    <value>LDAP Injection</value>
+  </data>
 </root>

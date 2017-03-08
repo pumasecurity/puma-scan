@@ -12,9 +12,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
+namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
-    public interface ILinqSqlInjectionExpressionAnalyzer
+    public interface ILdapDirectorySearcherInjectionExpressionAnalyzer
     {
         bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax);
     }

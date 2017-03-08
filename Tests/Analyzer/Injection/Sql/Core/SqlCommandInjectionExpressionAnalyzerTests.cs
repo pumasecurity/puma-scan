@@ -128,7 +128,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Sql.Core
 
             var result = _analyzer.IsVulnerable(testCode.SemanticModel, syntax);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         public void TestExecuteNonQuery(string code, bool expectedResult)

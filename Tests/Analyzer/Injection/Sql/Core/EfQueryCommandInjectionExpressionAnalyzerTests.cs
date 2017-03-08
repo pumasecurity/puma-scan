@@ -140,7 +140,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Sql.Core
 
             var result = _analyzer.IsVulnerable(testCode.SemanticModel, syntax);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         [TestCase(ExecuteSqlCommandOnEfDatabase, true)]
@@ -155,7 +155,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Sql.Core
 
             var result = _analyzer.IsVulnerable(testCode.SemanticModel, syntax);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         [TestCase(ExecuteSqlCommandAsyncOnEfDatabase, true)]
@@ -170,7 +170,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Sql.Core
 
             var result = _analyzer.IsVulnerable(testCode.SemanticModel, syntax);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         private const string MockEntityCode = @"[Serializable]
