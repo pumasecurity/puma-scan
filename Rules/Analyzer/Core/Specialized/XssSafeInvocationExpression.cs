@@ -27,7 +27,6 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
             if (symbol == null)
                 return false;
 
-            //TODO: use ruleOptions to indicate safe methods/use addition file for this collection
             if (symbol.ToString().StartsWith("System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode") ||
                 symbol.ToString().StartsWith("Microsoft.Security.Application.Encoder.HtmlEncode") ||
                 symbol.ToString().StartsWith("System.Web.HttpServerUtility.HtmlEncode"))

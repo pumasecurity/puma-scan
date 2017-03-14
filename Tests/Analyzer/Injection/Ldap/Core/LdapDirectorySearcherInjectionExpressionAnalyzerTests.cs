@@ -23,7 +23,7 @@ using Puma.Security.Rules.Analyzer.Injection.Ldap.Core;
 namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
 {
     [TestFixture]
-    public class LdapFilterInjectionExpressionAnalyzerTests
+    public class LdapDirectorySearcherInjectionExpressionAnalyzerTests
     {
         [SetUp]
         public void Initialize()
