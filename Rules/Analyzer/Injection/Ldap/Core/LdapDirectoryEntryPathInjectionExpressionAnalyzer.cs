@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
+using System.Linq;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -26,7 +28,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
             var symbol = model.GetSymbolInfo(syntax).Symbol as IMethodSymbol;
             if (symbol.IsCtorFor("System.DirectoryServices.DirectoryEntry"))
             {
-                if (syntax.ArgumentList.Arguments.Count > 0)
+                if (syntax.ArgumentList?.Arguments.Count > 0)
                 {
                     var argSyntax = syntax.ArgumentList.Arguments[0].Expression;
                     var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(argSyntax);
@@ -34,7 +36,18 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     {
                         return false;
                     }
-                    //TODO: if still vulnerable after eliminating any low hanging fruit - then we need to perform data flow analysis
+                }
+
+                var filter = syntax.Initializer?.Expressions.OfType<AssignmentExpressionSyntax>()
+                    .FirstOrDefault(p => (p.Left as IdentifierNameSyntax)?.Identifier.ValueText == "Path");
+
+                if (filter != null)
+                {
+                    var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(filter.Right);
+                    if (expressionAnalyzer.CanSuppress(model, filter.Right))
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }

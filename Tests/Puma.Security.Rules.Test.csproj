@@ -151,6 +151,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathInjectionExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectorySearcherInjectionExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\EfQueryCommandInjectionExpressionAnalyzerTests.cs" />

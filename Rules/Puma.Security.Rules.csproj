@@ -64,9 +64,12 @@
     <Compile Include="Analyzer\IAdditionalTextAnalyzer.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Analyzer\IConfigurationFileAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathInjectionExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectorySearcherInjectionExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\LdapDirectoryEntryPathAssignmentInjectionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\LdapDirectoryEntryPathInjectionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\EfQueryCommandInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\IEFCommandInjectionExpressionAnalyzer.cs" />

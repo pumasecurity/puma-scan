@@ -30,8 +30,9 @@ namespace Puma.Security.Rules.Suites
             Analyzers = new IAnalyzer[]
             {
                 //TODO: turn on when complete
-                //Container.Resolve<LdapDirectorySearcherInjectionAnalyzer>(),
-                //Container.Resolve<LdapDirectoryEntryPathInjectionAnalyzer>()
+                Container.Resolve<LdapDirectorySearcherInjectionAnalyzer>(),
+                Container.Resolve<LdapDirectoryEntryPathInjectionAnalyzer>(),
+                Container.Resolve<LdapDirectoryEntryPathAssignmentInjectionAnalyzer>()
             }.ToImmutableArray();
         }
     }
