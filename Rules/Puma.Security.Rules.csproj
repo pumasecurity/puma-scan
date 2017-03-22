@@ -75,12 +75,15 @@
     <Compile Include="Analyzer\Injection\Sql\SqlCommandInjectionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\Core\ILiteralTextAssignmentExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\Core\ILabelTextAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Xss\Core\IResponseWriteAssignmentExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\Core\LiteralTextAssignmentExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\Core\LabelTextAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Xss\Core\ResponseWriteAssignmentExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\DataBindExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\HtmlRawAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\LabelTextAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\LiteralTextAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Xss\ResponseWriteAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\ResponseWriteShortHandAnalyzer.cs" />
     <Compile Include="Analyzer\Configuration\Identity\PasswordComplexityAnalyzer.cs" />
     <Compile Include="Analyzer\Configuration\Identity\PasswordLockoutAnalyzer.cs" />

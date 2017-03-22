@@ -682,13 +682,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password validator settings do not meet the requirements:
-        ///
-        ///Minimum Length: {0}
-        ///Numeric Character: {1}
-        ///Lowercase Character: {2}
-        ///Uppercase Character: {3}
-        ///Special Character: {4}.
+        ///   Looks up a localized string similar to Password validator settings do not meet the requirements - Minimum Length ({0}), Numeric Character ({1}), Lowercase Character ({2}), Uppercase Character ({3}), Special Character ({4}).
         /// </summary>
         internal static string Analyzer_SEC0017_MessageFormat {
             get {
@@ -918,6 +912,42 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0023_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0023_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0024-unencoded-response-write.
+        /// </summary>
+        internal static string Analyzer_SEC0024_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0024_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data is written to the browser using the raw HttpResponse.Write method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.). Fixing the vulnerability requires the AntiXssEncoder.HtmlEncode method to neutralize dangous data before writing it to the browser..
+        /// </summary>
+        internal static string Analyzer_SEC0024_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0024_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raw data is passed to the Response.Write method..
+        /// </summary>
+        internal static string Analyzer_SEC0024_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0024_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unencoded Response Write.
+        /// </summary>
+        internal static string Analyzer_SEC0024_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0024_Title", resourceCulture);
             }
         }
         
@@ -1159,9 +1189,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concatenating untrusted data into a dynamic SQL string and calling vulnerable LINQ methods can allow SQL Injection: ExecuteQuery, ExecuteCommand.
-        ///
-        ///To ensure calls to vulnerable LINQ methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters..
+        ///   Looks up a localized string similar to Concatenating untrusted data into a dynamic SQL string and calling vulnerable LINQ methods (e.g. ExecuteQuery, ExecuteCommand) can allow SQL Injection. To ensure calls to vulnerable LINQ methods are parameterized, pass parameters into the statement using the method’s second argument: params object[] parameters..
         /// </summary>
         internal static string Analyzer_SEC0106_Description {
             get {
@@ -1197,9 +1225,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The System.Data.SqlClient.SqlCommand class allows applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods in this class that allow dynamic SQL statements to be constructed and executed against the database: ExecuteReader, ExecuteNonQuery, ExecuteScalar.
-        ///
-        ///Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to preven [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to The System.Data.SqlClient.SqlCommand class allows applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Analyzer_SEC0107_Description {
             get {
@@ -1235,9 +1261,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concatenating untrusted data into a dynamic SQL string and calling vulnerable Entity Framework (EF) methods can allow SQL Injection: ExecuteSqlCommand, ExecuteSqlCommandAsync, SqlQuery.
-        ///
-        ///To ensure calls to vulnerable EF methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters..
+        ///   Looks up a localized string similar to Concatenating untrusted data into a dynamic SQL string and calling vulnerable Entity Framework (EF) methods (ExecuteSqlCommand, ExecuteSqlCommandAsync, SqlQuery) can allow SQL Injection. To ensure calls to vulnerable EF methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters..
         /// </summary>
         internal static string Analyzer_SEC0108_Description {
             get {
@@ -1345,9 +1369,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server.
-        ///
-        ///Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker..
+        ///   Looks up a localized string similar to Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker..
         /// </summary>
         internal static string Analyzer_SEC0111_Description {
             get {
@@ -1383,9 +1405,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server.
-        ///
-        ///Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker..
+        ///   Looks up a localized string similar to Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker..
         /// </summary>
         internal static string Analyzer_SEC0112_Description {
             get {

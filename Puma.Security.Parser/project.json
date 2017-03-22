@@ -1,0 +1,24 @@
+{
+  "title": "Puma Scan Build Parser",
+  "copyright": "Puma Security, LLC",
+  "description": "Parses msbuild output logs and exports only Puma Scan warnings for processing in CI",
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "CommandLineParser": "2.1.1-beta"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.1.0"
+        }
+      },
+      "imports": "dnxcore50"
+    }
+  }
+}

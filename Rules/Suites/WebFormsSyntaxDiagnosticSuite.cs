@@ -30,7 +30,8 @@ namespace Puma.Security.Rules.Suites
             Analyzers = new IAnalyzer[]
             {
                 Container.Resolve<LiteralTextAnalyzer>(),
-                Container.Resolve<LabelTextAnalyzer>()
+                Container.Resolve<LabelTextAnalyzer>(),
+                Container.Resolve<ResponseWriteAnalyzer>(),
             }.ToImmutableArray();
         }
     }

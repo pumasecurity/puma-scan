@@ -318,13 +318,7 @@ Instead of using the raw WriteLiteral method, use a Razor helper that performs a
     <value>The Identity PasswordValidator settings do not meet the password complexity requirements. Weak passwords can be cracked much faster than complex passwords with sufficient length and complexity requirements.</value>
   </data>
   <data name="Analyzer_SEC0017_MessageFormat" xml:space="preserve">
-    <value>Password validator settings do not meet the requirements:
-
-Minimum Length: {0}
-Numeric Character: {1}
-Lowercase Character: {2}
-Uppercase Character: {3}
-Special Character: {4}</value>
+    <value>Password validator settings do not meet the requirements - Minimum Length ({0}), Numeric Character ({1}), Lowercase Character ({2}), Uppercase Character ({3}), Special Character ({4})</value>
   </data>
   <data name="Analyzer_SEC0017_Title" xml:space="preserve">
     <value>Weak Password Complexity</value>
@@ -388,9 +382,7 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>Session State Server Mode</value>
   </data>
   <data name="Analyzer_SEC0106_Description" xml:space="preserve">
-    <value>Concatenating untrusted data into a dynamic SQL string and calling vulnerable LINQ methods can allow SQL Injection: ExecuteQuery, ExecuteCommand.
-
-To ensure calls to vulnerable LINQ methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters.</value>
+    <value>Concatenating untrusted data into a dynamic SQL string and calling vulnerable LINQ methods (e.g. ExecuteQuery, ExecuteCommand) can allow SQL Injection. To ensure calls to vulnerable LINQ methods are parameterized, pass parameters into the statement using the method’s second argument: params object[] parameters.</value>
   </data>
   <data name="Analyzer_SEC0106_MessageFormat" xml:space="preserve">
     <value>SQL Injection - LINQ ExecuteQuery or ExecuteCommand method executes dynamic SQL without parameters.</value>
@@ -399,9 +391,7 @@ To ensure calls to vulnerable LINQ methods are parameterized, pass parameters in
     <value>SQL Injection Dynamic LINQ Query</value>
   </data>
   <data name="Analyzer_SEC0107_Description" xml:space="preserve">
-    <value>The System.Data.SqlClient.SqlCommand class allows applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods in this class that allow dynamic SQL statements to be constructed and executed against the database: ExecuteReader, ExecuteNonQuery, ExecuteScalar.
-
-Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection attacks.</value>
+    <value>The System.Data.SqlClient.SqlCommand class allows applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection attacks.</value>
   </data>
   <data name="Analyzer_SEC0107_MessageFormat" xml:space="preserve">
     <value>SQL Injection - ADO.NET method is passed a dynamic SQL statement.</value>
@@ -410,9 +400,7 @@ Ensure that calls to these methods do not concatenate untrusted data into dynami
     <value>SQL Injection ADO .NET</value>
   </data>
   <data name="Analyzer_SEC0108_Description" xml:space="preserve">
-    <value>Concatenating untrusted data into a dynamic SQL string and calling vulnerable Entity Framework (EF) methods can allow SQL Injection: ExecuteSqlCommand, ExecuteSqlCommandAsync, SqlQuery.
-
-To ensure calls to vulnerable EF methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters.</value>
+    <value>Concatenating untrusted data into a dynamic SQL string and calling vulnerable Entity Framework (EF) methods (ExecuteSqlCommand, ExecuteSqlCommandAsync, SqlQuery) can allow SQL Injection. To ensure calls to vulnerable EF methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters.</value>
   </data>
   <data name="Analyzer_SEC0108_MessageFormat" xml:space="preserve">
     <value>SQL Injection - EF method executes dynamic SQL without parameters</value>
@@ -439,9 +427,7 @@ To ensure calls to vulnerable EF methods are parameterized, pass parameters into
     <value>Unvalidated WebForms Redirect</value>
   </data>
   <data name="Analyzer_SEC0111_Description" xml:space="preserve">
-    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server.
-
-Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
+    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
   </data>
   <data name="Analyzer_SEC0111_MessageFormat" xml:space="preserve">
     <value>Unvalidated file paths are passed to the Controller FilePathResult action, which can allow arbitrary file downloads from the server.</value>
@@ -552,9 +538,7 @@ Ensure file paths are read from a trusted location, such as a static resource or
     <value>sec0112-path-tampering-unvalidated-file-path</value>
   </data>
   <data name="Analyzer_SEC0112_Description" xml:space="preserve">
-    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server.
-
-Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
+    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
   </data>
   <data name="Analyzer_SEC0112_MessageFormat" xml:space="preserve">
     <value>Unvalidated file paths are passed to a {0} API, which can allow unauthorized file system operations (e.g. read, write, delete) to be performed on unintended server files.</value>
@@ -597,5 +581,17 @@ Ensure file paths are read from a trusted location, such as a static resource or
   </data>
   <data name="Analyzer_SEC0023_Title" xml:space="preserve">
     <value>Action Request Validation Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0024_Anchor" xml:space="preserve">
+    <value>sec0024-unencoded-response-write</value>
+  </data>
+  <data name="Analyzer_SEC0024_Description" xml:space="preserve">
+    <value>Data is written to the browser using the raw HttpResponse.Write method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.). Fixing the vulnerability requires the AntiXssEncoder.HtmlEncode method to neutralize dangous data before writing it to the browser.</value>
+  </data>
+  <data name="Analyzer_SEC0024_MessageFormat" xml:space="preserve">
+    <value>Raw data is passed to the Response.Write method.</value>
+  </data>
+  <data name="Analyzer_SEC0024_Title" xml:space="preserve">
+    <value>Unencoded Response Write</value>
   </data>
 </root>
