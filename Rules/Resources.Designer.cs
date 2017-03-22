@@ -1466,5 +1466,32 @@ namespace Puma.Security.Rules {
                 return ResourceManager.GetString("Analyzer_SEC0113_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Description Placeholder.
+        /// </summary>
+        internal static string Analyzer_SEC0114_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0114_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP MessageFormat Placeholder.
+        /// </summary>
+        internal static string Analyzer_SEC0114_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0114_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection.
+        /// </summary>
+        internal static string Analyzer_SEC0114_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0114_Title", resourceCulture);
+            }
+        }
     }
 }

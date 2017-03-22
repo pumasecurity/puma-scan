@@ -9,7 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
+using System;
+
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Common;
@@ -21,17 +24,19 @@ namespace Puma.Security.Rules.Analyzer.Core
         public override bool CanSuppress(SemanticModel model, ExpressionSyntax syntax)
         {
             var identifierNameSyntax = syntax as IdentifierNameSyntax;
+            var symbolInfo = model.GetSymbolInfo(identifierNameSyntax);
 
-            var methodSymbol = model.GetSymbolInfo(identifierNameSyntax).Symbol as IMethodSymbol;
+            var methodSymbol = symbolInfo.Symbol as IMethodSymbol;
             if (methodSymbol != null && Utils.IsXssWhiteListedType(methodSymbol.ReturnType))
                 return true;
 
-            var localSymbol = model.GetSymbolInfo(identifierNameSyntax).Symbol as ILocalSymbol;
+            var localSymbol = symbolInfo.Symbol as ILocalSymbol;
             if (localSymbol != null && Utils.IsXssWhiteListedType(localSymbol.Type))
                 return true;
 
+            //todo: IParameterSymbol, IFieldSymbol, IPropertySymbol <- potential false postives to remove base on type, if string then need data flow analysis
+
             return false;
         }
-
     }
 }

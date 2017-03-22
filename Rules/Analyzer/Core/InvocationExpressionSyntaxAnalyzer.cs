@@ -22,12 +22,12 @@ namespace Puma.Security.Rules.Analyzer.Core
     {
         private readonly IXssSafeInvocationExpression _safeInvocationExpression;
         private readonly IExpressionSyntaxAnalyzer<ExpressionSyntax> _analyzer;
-        private readonly IsArgumentOnlyExpression _argsOnlyInvocationExpression;
+        private readonly IIsArgumentOnlyExpression _argsOnlyInvocationExpression;
 
-        public InvocationExpressionSyntaxAnalyzer()
+        public InvocationExpressionSyntaxAnalyzer(IXssSafeInvocationExpression safeInvocationExpression, IIsArgumentOnlyExpression argsOnlyInvocationExpression)
         {
-            _safeInvocationExpression = new XssSafeInvocationExpression();
-            _argsOnlyInvocationExpression = new IsArgumentOnlyExpression();
+            _safeInvocationExpression = safeInvocationExpression;
+            _argsOnlyInvocationExpression = argsOnlyInvocationExpression;
             _analyzer = new ExpressionSyntaxAnalyzer();
         }
 

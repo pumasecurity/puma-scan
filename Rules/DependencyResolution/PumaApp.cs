@@ -59,8 +59,7 @@ namespace Puma.Security.Rules//Root namespace to make globally available
                 {
                     var concreteType =
                         openType.MakeGenericType(theObject.GetType());
-                    return (IExpressionSyntaxAnalyzer) context.Resolve(concreteType,
-                        new PositionalParameter(0, theObject));
+                    return (IExpressionSyntaxAnalyzer) context.Resolve(concreteType);
                 };
             });
           

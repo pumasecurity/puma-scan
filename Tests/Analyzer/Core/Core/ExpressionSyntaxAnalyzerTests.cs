@@ -21,10 +21,10 @@ using NUnit.Framework;
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Test.Helpers;
 
-namespace Puma.Security.Rules.Test.Analyzer.Injection.Xss.Core
+namespace Puma.Security.Rules.Test.Analyzer.Core.Core
 {
     [TestFixture]
-    public class XssExpressionSyntaxAnalyzerTests
+    public class ExpressionSyntaxAnalyzerTests
     {
         [SetUp]
         public void Initialize()
@@ -181,7 +181,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Xss.Core
 
             var result = _analyzer.CanSuppress(testCode.SemanticModel, rightSyntax);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         
@@ -194,27 +194,26 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Xss.Core
 
             var result = _analyzer.CanSuppress(testCode.SemanticModel, rightSyntax);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
     }
-}
 
-public class MockObject
-{
-    public string Name { get; set; }
-}
-
-public class MockClass
-{
-    public MockClass()
-    {   
-        //Destination = Microsoft.Security.Application.AntiXssEncoder.(Value.Name);//Microsoft.Security.Application.Encoder.HtmlEncode(Value.Name);
-        //System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(Value.Name);
+    public class MockObject
+    {
+        public string Name { get; set; }
     }
 
-    public string Destination { get; set; }
-    public MockObject Value { get; set; }
-}
+    public class MockClass
+    {
+        public MockClass()
+        {   
+            //Destination = Microsoft.Security.Application.AntiXssEncoder.(Value.Name);//Microsoft.Security.Application.Encoder.HtmlEncode(Value.Name);
+            //System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(Value.Name);
+        }
+
+        public string Destination { get; set; }
+        public MockObject Value { get; set; }
+    }
 
 //public class MockClass
 //{
@@ -244,3 +243,4 @@ public class MockClass
 
 //    public string Destination { get; set; }
 //}
+}
