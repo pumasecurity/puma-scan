@@ -157,7 +157,7 @@
     <Compile Include="Analyzer\Injection\Sql\Core\EfQueryCommandInjectionExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\LinqSqlInjectionExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\SqlCommandInjectionExpressionAnalyzerTests.cs" />
-    <Compile Include="Analyzer\Core\Core\ExpressionSyntaxAnalyzerTests.cs" />
+    <Compile Include="Analyzer\Core\ExpressionSyntaxAnalyzerTests.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\FileDeleteExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Validation\Certificate\Core\ServicePointManagerCertificateValidationExpressionAnalyzerTests.cs" />
     <Compile Include="Analyzer\Validation\Certificate\Core\HttpWebRequestCertificateValidationExpressionAnalyzerTests.cs" />

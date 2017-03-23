@@ -15,6 +15,7 @@ using Puma.Security.Rules.Test.Helpers;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Security.Application;
 
 using NUnit.Framework;
 
@@ -36,9 +37,12 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         private static readonly MetadataReference DirectoryServicesReferences =
             MetadataReference.CreateFromFile(typeof(System.DirectoryServices.DirectoryEntry).Assembly.Location);
 
-        private const string DefaultUsing = @"using System;
-                                                    using System.DirectoryServices;";
+        private static readonly MetadataReference AntiXssEncoder =
+            MetadataReference.CreateFromFile(typeof(Encoder).Assembly.Location);
 
+        private const string DefaultUsing = @"using System;" +
+                                            "using System.DirectoryServices;" +
+                                            "using Microsoft.Security.Application;";
 
         private const string LdapFindAllFilterExpressionAssignmentWithVulnerableBinaryExpression = @"public class LdapSearch 
         {   
@@ -54,6 +58,27 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
                 searcher.SearchScope = SearchScope.Subtree;
 
                 searcher.Filter = "" (|(type="" + types[0] + "" ) (type="" + types[1] + ""))"";
+
+                resultCollection = searcher.FindAll();
+
+                return resultCollection;
+            }    
+        }";
+
+        private const string LdapFindAllFilterExpressionAssignmentWithSafelyEncodedBinaryExpression = @"public class LdapSearch 
+        {   
+            public object SearchByType(string searchExpression)
+            {
+                string[] types = searchExpression.Split('|');
+
+                SearchResultCollection resultCollection = null;
+
+                DirectoryEntry entry = new DirectoryEntry(""LDAP://DC=FOO, DC=COM/"");
+
+                DirectorySearcher searcher = new DirectorySearcher(entry);
+                searcher.SearchScope = SearchScope.Subtree;
+
+                searcher.Filter = Encoder.LdapFilterEncode("" (|(type="" + types[0] + "" ) (type="" + types[1] + ""))"");
 
                 resultCollection = searcher.FindAll();
 
@@ -208,6 +233,27 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
             }    
         }";
 
+        private const string LdapFindOneFilterExpressionAssignmentWithSafelyEncodedBinaryExpression = @"public class LdapSearch 
+        {   
+            public object SearchByType(string searchExpression)
+            {
+                string[] types = searchExpression.Split('|');
+
+                SearchResultCollection resultCollection = null;
+
+                DirectoryEntry entry = new DirectoryEntry(""LDAP://DC=FOO, DC=COM/"");
+
+                DirectorySearcher searcher = new DirectorySearcher(entry);
+                searcher.SearchScope = SearchScope.Subtree;
+
+                searcher.Filter = Encoder.LdapFilterEncode("" (|(type="" + types[0] + "" ) (type="" + types[1] + ""))"");
+
+                resultCollection = searcher.FindOne();
+
+                return resultCollection;
+            }    
+        }";
+
         private const string LdapFindOneFilterExpressionAssignmentWithLiteralExpression = @"public class LdapSearch 
         {   
             public object SearchByType(string searchExpression)
@@ -348,6 +394,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         }
 
         [TestCase(LdapFindAllFilterExpressionAssignmentWithVulnerableBinaryExpression, true)]
+        [TestCase(LdapFindAllFilterExpressionAssignmentWithSafelyEncodedBinaryExpression, false)]
         [TestCase(LdapFindAllFilterExpressionAssignmentWithLiteralExpression, false)]
         [TestCase(LdapFindAllFilterConstructorParamWithVulnerableExpression, true)]
         [TestCase(LdapFindAllFilterConstructorParamWithLiteralExpression, false)]
@@ -356,7 +403,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         [TestCase(LdapFindAllFilterObjectInitializerWithLiteralExpression, false)]
         public void TestFindAll(string code, bool expectedResult)
         {
-            var testCode = new TestCode(DefaultUsing + code, DirectoryServicesReferences);
+            var testCode = new TestCode(DefaultUsing + code, DirectoryServicesReferences, AntiXssEncoder);
 
             var syntax = GetSyntax(testCode, "FindAll");
 
@@ -366,6 +413,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         }
 
         [TestCase(LdapFindOneFilterExpressionAssignmentWithVulnerableBinaryExpression, true)]
+        [TestCase(LdapFindOneFilterExpressionAssignmentWithSafelyEncodedBinaryExpression, false)]
         [TestCase(LdapFindOneFilterExpressionAssignmentWithLiteralExpression, false)]
         [TestCase(LdapFindOneFilterConstructorParamWithVulnerableExpression, true)]
         [TestCase(LdapFindOneFilterConstructorParamWithLiteralExpression, false)]
@@ -374,7 +422,7 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         [TestCase(LdapFindOneFilterObjectInitializerWithLiteralExpression, false)]
         public void TestFindOne(string code, bool expectedResult)
         {
-            var testCode = new TestCode(DefaultUsing + code, DirectoryServicesReferences);
+            var testCode = new TestCode(DefaultUsing + code, DirectoryServicesReferences, AntiXssEncoder);
 
             var syntax = GetSyntax(testCode, "FindOne");
 

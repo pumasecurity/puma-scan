@@ -13,6 +13,7 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Security.Application;
 
 using NUnit.Framework;
 
@@ -35,9 +36,12 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         private static readonly MetadataReference DirectoryServicesReferences =
             MetadataReference.CreateFromFile(typeof(System.DirectoryServices.DirectoryEntry).Assembly.Location);
 
-        private const string DefaultUsing = @"using System;
-                                                    using System.DirectoryServices;";
+        private static readonly MetadataReference AntiXssEncoder =
+            MetadataReference.CreateFromFile(typeof(Encoder).Assembly.Location);
 
+        private const string DefaultUsing = @"using System;" + 
+                                            "using System.DirectoryServices;" +
+                                            "using Microsoft.Security.Application;";
 
         private static ObjectCreationExpressionSyntax GetSyntax(TestCode testCode)
         {
@@ -62,14 +66,13 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
             }    
         }";
 
-        //TODO: add endcoder and whitelist
-        private const string LdapDirectoryCtorWithSafeBinaryExpression = @"public class LdapSearch 
+        private const string LdapDirectoryCtorWithSafelyEncodedBinaryExpression = @"public class LdapSearch 
         {   
             public object GetDirectoryChildren(string domain)
             {
-                 DirectoryEntry entry = new DirectoryEntry(""LDAP://DC="" + domain + "", DC=COM/"");
-            
-                 return entry.Children;
+                   var entry = new DirectoryEntry(Encoder.LdapDistinguishedNameEncode(""LDAP://DC="" + domain + "", DC=COM/""));
+
+                   return entry.Children;
             }    
         }";
 
@@ -109,10 +112,10 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
         [TestCase(LdapDirectoryCtorWithLiteralExpression, false)]
         [TestCase(LdapDirectoryObjectInitializerWithBinaryExpression, true)]
         [TestCase(LdapDirectoryEntryWithNoPathSet, false)]
-        //[TestCase(LdapDirectoryCtorWithSafeBinaryExpression, false, Ignore = "Pending whitelist check for encoder")]
+        [TestCase(LdapDirectoryCtorWithSafelyEncodedBinaryExpression, false)]
         public void TestCtor(string code, bool expectedResult)
         {
-            var testCode = new TestCode(DefaultUsing + code, DirectoryServicesReferences);
+            var testCode = new TestCode(DefaultUsing + code, DirectoryServicesReferences, AntiXssEncoder);
 
             var syntax = GetSyntax(testCode);
 
