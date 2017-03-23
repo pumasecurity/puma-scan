@@ -96,9 +96,19 @@ namespace Puma.Security.Rules.Test.Analyzer.Injection.Ldap.Core
             }    
         }";
 
+        private const string LdapDirectoryEntryWithNoPathSet = @"public class LdapSearch 
+        {   
+            public object GetDirectoryChildren(string domain)
+            {
+                DirectoryEntry entry = new DirectoryEntry();
+                return entry.Children;
+            }    
+        }";
+
         [TestCase(LdapDirectoryCtorWithVulnerableBinaryExpression, true)]
         [TestCase(LdapDirectoryCtorWithLiteralExpression, false)]
         [TestCase(LdapDirectoryObjectInitializerWithBinaryExpression, true)]
+        [TestCase(LdapDirectoryEntryWithNoPathSet, false)]
         //[TestCase(LdapDirectoryCtorWithSafeBinaryExpression, false, Ignore = "Pending whitelist check for encoder")]
         public void TestCtor(string code, bool expectedResult)
         {
