@@ -1,6 +1,6 @@
 ![Puma Scan](https://www.pumascan.com/images/logo-horiz.png)
 
-![[Black Hat Arsenal](https://github.com/toolswatch/badges/blob/master/arsenal/2017.svg)](https://www.blackhat.com/asia-17/arsenal.html#eric-johnson)
+![[Black Hat Arsenal](https://www.pumascan.com/images/bh-arsenal-2017.svg)](https://www.blackhat.com/asia-17/arsenal.html#eric-johnson)
 
 # Description
 Puma Scan is the leading software security Visual Studio analyzer extension. Built on top of Roslyn, the open-source .NET Compiler Platform, Puma Scan provides real time, continuous source code analysis as development teams write code. Vulnerabilities are immediately displayed in the development environment as spell check and compiler warnings, preventing security bugs from entering your applications.
