@@ -1468,7 +1468,16 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LDAP Description Placeholder.
+        ///   Looks up a localized string similar to sec0114-ldap-injection.
+        /// </summary>
+        internal static string Analyzer_SEC0114_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0114_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding methods Encoder.LdapDistinguishedNameEncode() or Encoder.LdapFilterEncode()..
         /// </summary>
         internal static string Analyzer_SEC0114_Description {
             get {
@@ -1477,7 +1486,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LDAP MessageFormat Placeholder.
+        ///   Looks up a localized string similar to Untrusted data is passed to the LDAP Path or Filter expression..
         /// </summary>
         internal static string Analyzer_SEC0114_MessageFormat {
             get {
