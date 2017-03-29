@@ -29,7 +29,9 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
 
             if (symbol.ToString().StartsWith("System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode") ||
                 symbol.ToString().StartsWith("Microsoft.Security.Application.Encoder.HtmlEncode") ||
-                symbol.ToString().StartsWith("System.Web.HttpServerUtility.HtmlEncode"))
+                symbol.ToString().StartsWith("System.Web.HttpServerUtility.HtmlEncode") ||
+                symbol.ToString().StartsWith("Microsoft.Security.Application.Encoder.LdapFilterEncode") ||
+                symbol.ToString().StartsWith("Microsoft.Security.Application.Encoder.LdapDistinguishedNameEncode"))
                 return true;
 
             return false;

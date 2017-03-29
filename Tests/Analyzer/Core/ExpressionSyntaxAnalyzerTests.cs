@@ -21,7 +21,7 @@ using NUnit.Framework;
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Test.Helpers;
 
-namespace Puma.Security.Rules.Test.Analyzer.Core.Core
+namespace Puma.Security.Rules.Test.Analyzer.Core
 {
     [TestFixture]
     public class ExpressionSyntaxAnalyzerTests

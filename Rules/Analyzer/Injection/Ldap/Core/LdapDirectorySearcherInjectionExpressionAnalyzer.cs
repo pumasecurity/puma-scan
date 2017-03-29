@@ -14,6 +14,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
@@ -38,7 +39,12 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     
                     if (filter != null)
                     {
-                        return !(filter is LiteralExpressionSyntax);
+                        var expressionSyntax = filter as ExpressionSyntax;
+                        if (expressionSyntax != null)
+                        {
+                            var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(expressionSyntax);
+                            return !expressionAnalyzer.CanSuppress(model, expressionSyntax);
+                        }
                     }
 
                     return true;

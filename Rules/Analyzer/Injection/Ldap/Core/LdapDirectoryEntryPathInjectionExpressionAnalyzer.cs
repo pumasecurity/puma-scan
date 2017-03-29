@@ -49,6 +49,12 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                         return false;
                     }
                 }
+
+                if (filter == null && syntax.ArgumentList?.Arguments.Count == 0)
+                {
+                    return false;
+                }
+
                 return true;
             }
 
