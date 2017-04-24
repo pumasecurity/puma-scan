@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Parses msbuild output logs and exports only Puma Scan warnings for processing in CI</Description>
+    <Copyright>Puma Security, LLC</Copyright>
+    <AssemblyTitle>Puma Scan Build Parser</AssemblyTitle>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>Puma.Security.Parser</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Puma.Security.Parser</PackageId>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.1.1-beta" />
+  </ItemGroup>
+
+</Project>
