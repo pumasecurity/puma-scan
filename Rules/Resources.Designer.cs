@@ -952,6 +952,154 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sec0025-weak-algorithm-des.
+        /// </summary>
+        internal static string Analyzer_SEC0025_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0025_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information..
+        /// </summary>
+        internal static string Analyzer_SEC0025_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0025_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption..
+        /// </summary>
+        internal static string Analyzer_SEC0025_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0025_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weak Cryptography Algorithm (DES).
+        /// </summary>
+        internal static string Analyzer_SEC0025_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0025_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0026-weak-cipher-mode-ecb.
+        /// </summary>
+        internal static string Analyzer_SEC0026_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0026_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Electronic Codebook (ECB) mode encrypts blocks individually without using an initialization vector. Encrypting data in ECB mode fails to provide entropy for identical plaintext blocks being encrypted with the same encryption key. This can allow attackers to identify patterns and repetition in ciphertext, and may lead to the discovery of the original encryption key. Use the CipherMode.CBC option for symmetric block cipher operations..
+        /// </summary>
+        internal static string Analyzer_SEC0026_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0026_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Electronic Codebook (ECB) mode is not secure for symmetric block cipher operations..
+        /// </summary>
+        internal static string Analyzer_SEC0026_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0026_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insecure Cipher Mode -  Electronic Codebook (ECB).
+        /// </summary>
+        internal static string Analyzer_SEC0026_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0026_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0027-weak-algorithm-md5.
+        /// </summary>
+        internal static string Analyzer_SEC0027_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0027_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm..
+        /// </summary>
+        internal static string Analyzer_SEC0027_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0027_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
+        ///
+        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
+        /// </summary>
+        internal static string Analyzer_SEC0027_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0027_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weak Cryptography Algorithm (MD5).
+        /// </summary>
+        internal static string Analyzer_SEC0027_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0027_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0028-weak-algorithm-sha1.
+        /// </summary>
+        internal static string Analyzer_SEC0028_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0028_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2..
+        /// </summary>
+        internal static string Analyzer_SEC0028_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0028_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
+        ///
+        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
+        /// </summary>
+        internal static string Analyzer_SEC0028_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0028_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weak Cryptography Algorithm (SHA1).
+        /// </summary>
+        internal static string Analyzer_SEC0028_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0028_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sec0100-raw-inline-expression.
         /// </summary>
         internal static string Analyzer_SEC0100_Anchor {

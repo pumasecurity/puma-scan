@@ -61,6 +61,18 @@
     <Compile Include="Analyzer\Core\MemberAccessExpressionSyntaxAnalyzer.cs" />
     <Compile Include="Analyzer\Core\Specialized\IsArgumentOnlyExpression.cs" />
     <Compile Include="Analyzer\Core\Specialized\XssSafeInvocationExpression.cs" />
+    <Compile Include="Analyzer\Crypto\Core\DesExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\EcbAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\IDesExpressionAnalzyer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\IEcbAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\IMd5ExpressionAnalzyer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\ISha1ExpressionAnalzyer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\Md5ExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\Sha1ExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\DesDiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\EcbDiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Md5DiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Sha1DiagnosticAnalyzer.cs" />
     <Compile Include="Analyzer\IAdditionalTextAnalyzer.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Analyzer\IConfigurationFileAnalyzer.cs" />
@@ -167,6 +179,7 @@
     </Compile>
     <Compile Include="Suites\ConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\CookiesConfigurationDiagnosticSuite.cs" />
+    <Compile Include="Suites\CryptoDiagnosticSuite.cs" />
     <Compile Include="Suites\CsrfDiagnosticSuite.cs" />
     <Compile Include="Suites\FormsConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\HttpRuntimeConfigurationDiagnosticSuite.cs" />
