@@ -616,7 +616,7 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>Electronic Codebook (ECB) mode is not secure for symmetric block cipher operations.</value>
   </data>
   <data name="Analyzer_SEC0026_Title" xml:space="preserve">
-    <value>Insecure Cipher Mode -  Electronic Codebook (ECB)</value>
+    <value>Insecure Cipher Mode - Electronic Codebook (ECB)</value>
   </data>
   <data name="Analyzer_SEC0027_Anchor" xml:space="preserve">
     <value>sec0027-weak-algorithm-md5</value>
@@ -657,5 +657,29 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
   </data>
   <data name="Analyzer_SEC0114_Anchor" xml:space="preserve">
     <value>sec0114-ldap-injection</value>
+  </data>
+  <data name="Analyzer_SEC0029_Anchor" xml:space="preserve">
+    <value>sec0029-deserialization-binaryformatter</value>
+  </data>
+  <data name="Analyzer_SEC0029_Description" xml:space="preserve">
+    <value>Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse</value>
+  </data>
+  <data name="Analyzer_SEC0029_MessageFormat" xml:space="preserve">
+    <value>Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data.</value>
+  </data>
+  <data name="Analyzer_SEC0029_Title" xml:space="preserve">
+    <value>Insecure Deserialization - BinaryFormatter</value>
+  </data>
+  <data name="Analyzer_SEC0030_Anchor" xml:space="preserve">
+    <value>sec0030-deserialization-newtonsoft-json</value>
+  </data>
+  <data name="Analyzer_SEC0030_Description" xml:space="preserve">
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
+  </data>
+  <data name="Analyzer_SEC0030_MessageFormat" xml:space="preserve">
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
+  </data>
+  <data name="Analyzer_SEC0030_Title" xml:space="preserve">
+    <value>Insecure Deserialization - Newtonsoft JSON</value>
   </data>
 </root>

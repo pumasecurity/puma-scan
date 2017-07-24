@@ -76,6 +76,12 @@
     <Compile Include="Analyzer\IAdditionalTextAnalyzer.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Analyzer\IConfigurationFileAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\IBinaryFormatterExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\INewtonsoftJsonTypeNameHandlingExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\BinaryFormatterExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\NewtonsoftJsonTypeNameHandlingExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\BinaryFormatterAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\NewtonsoftJsonTypeNameHandlingAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
@@ -181,6 +187,7 @@
     <Compile Include="Suites\CookiesConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\CryptoDiagnosticSuite.cs" />
     <Compile Include="Suites\CsrfDiagnosticSuite.cs" />
+    <Compile Include="Suites\DeserializationDiagnosticSuite.cs" />
     <Compile Include="Suites\FormsConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\HttpRuntimeConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\IdentityDiagnosticSuite.cs" />

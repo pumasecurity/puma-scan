@@ -1015,7 +1015,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insecure Cipher Mode -  Electronic Codebook (ECB).
+        ///   Looks up a localized string similar to Insecure Cipher Mode - Electronic Codebook (ECB).
         /// </summary>
         internal static string Analyzer_SEC0026_Title {
             get {
@@ -1096,6 +1096,78 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0028_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0028_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0029-deserialization-binaryformatter.
+        /// </summary>
+        internal static string Analyzer_SEC0029_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0029_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse.
+        /// </summary>
+        internal static string Analyzer_SEC0029_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0029_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data..
+        /// </summary>
+        internal static string Analyzer_SEC0029_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0029_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insecure Deserialization - BinaryFormatter.
+        /// </summary>
+        internal static string Analyzer_SEC0029_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0029_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0030-deserialization-newtonsoft-json.
+        /// </summary>
+        internal static string Analyzer_SEC0030_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0030_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None..
+        /// </summary>
+        internal static string Analyzer_SEC0030_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0030_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None..
+        /// </summary>
+        internal static string Analyzer_SEC0030_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0030_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insecure Deserialization - Newtonsoft JSON.
+        /// </summary>
+        internal static string Analyzer_SEC0030_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0030_Title", resourceCulture);
             }
         }
         

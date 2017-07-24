@@ -10,22 +10,20 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 using Autofac;
 using Puma.Security.Rules.Analyzer;
-using Puma.Security.Rules.Analyzer.Crypto;
+using Puma.Security.Rules.Analyzer.Injection.Deserialization;
 using Puma.Security.Rules.Base;
 
 namespace Puma.Security.Rules.Suites
 {
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class CryptoDiagnosticSuite : BaseSyntaxDiagnosticSuite
+    [DiagnosticAnalyzer(LanguageNames.CSharp, LanguageNames.VisualBasic)]
+    public class DeserializationDiagnosticSuite : BaseSyntaxDiagnosticSuite
     {
-        public CryptoDiagnosticSuite()
+        public DeserializationDiagnosticSuite()
         {
             Analyzers = new IAnalyzer[]
             {
-                Container.Resolve<DesDiagnosticAnalyzer>(),
-                Container.Resolve<EcbDiagnosticAnalyzer>(),
-                Container.Resolve<Md5DiagnosticAnalyzer>(),
-                Container.Resolve<Sha1DiagnosticAnalyzer>(),
+                Container.Resolve<NewtonsoftJsonTypeNameHandlingAnalyzer>(),
+                Container.Resolve<BinaryFormatterAnalyzer>(),
             }.ToImmutableArray();
         }
     }
