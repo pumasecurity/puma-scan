@@ -61,9 +61,27 @@
     <Compile Include="Analyzer\Core\MemberAccessExpressionSyntaxAnalyzer.cs" />
     <Compile Include="Analyzer\Core\Specialized\IsArgumentOnlyExpression.cs" />
     <Compile Include="Analyzer\Core\Specialized\XssSafeInvocationExpression.cs" />
+    <Compile Include="Analyzer\Crypto\Core\DesExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\EcbAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\IDesExpressionAnalzyer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\IEcbAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\IMd5ExpressionAnalzyer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\ISha1ExpressionAnalzyer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\Md5ExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Core\Sha1ExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\DesDiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\EcbDiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Md5DiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Crypto\Sha1DiagnosticAnalyzer.cs" />
     <Compile Include="Analyzer\IAdditionalTextAnalyzer.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Analyzer\IConfigurationFileAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\IBinaryFormatterExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\INewtonsoftJsonTypeNameHandlingExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\BinaryFormatterExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\Core\NewtonsoftJsonTypeNameHandlingExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\BinaryFormatterAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Deserialization\NewtonsoftJsonTypeNameHandlingAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
@@ -167,7 +185,9 @@
     </Compile>
     <Compile Include="Suites\ConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\CookiesConfigurationDiagnosticSuite.cs" />
+    <Compile Include="Suites\CryptoDiagnosticSuite.cs" />
     <Compile Include="Suites\CsrfDiagnosticSuite.cs" />
+    <Compile Include="Suites\DeserializationDiagnosticSuite.cs" />
     <Compile Include="Suites\FormsConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\HttpRuntimeConfigurationDiagnosticSuite.cs" />
     <Compile Include="Suites\IdentityDiagnosticSuite.cs" />

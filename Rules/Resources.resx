@@ -594,6 +594,58 @@ Label controls are often found in HTML contexts, but can also appear in other co
   <data name="Analyzer_SEC0024_Title" xml:space="preserve">
     <value>Unencoded Response Write</value>
   </data>
+  <data name="Analyzer_SEC0025_Anchor" xml:space="preserve">
+    <value>sec0025-weak-algorithm-des</value>
+  </data>
+  <data name="Analyzer_SEC0025_Description" xml:space="preserve">
+    <value>The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information.</value>
+  </data>
+  <data name="Analyzer_SEC0025_MessageFormat" xml:space="preserve">
+    <value>The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption.</value>
+  </data>
+  <data name="Analyzer_SEC0025_Title" xml:space="preserve">
+    <value>Weak Cryptography Algorithm (DES)</value>
+  </data>
+  <data name="Analyzer_SEC0026_Anchor" xml:space="preserve">
+    <value>sec0026-weak-cipher-mode-ecb</value>
+  </data>
+  <data name="Analyzer_SEC0026_Description" xml:space="preserve">
+    <value>The Electronic Codebook (ECB) mode encrypts blocks individually without using an initialization vector. Encrypting data in ECB mode fails to provide entropy for identical plaintext blocks being encrypted with the same encryption key. This can allow attackers to identify patterns and repetition in ciphertext, and may lead to the discovery of the original encryption key. Use the CipherMode.CBC option for symmetric block cipher operations.</value>
+  </data>
+  <data name="Analyzer_SEC0026_MessageFormat" xml:space="preserve">
+    <value>Electronic Codebook (ECB) mode is not secure for symmetric block cipher operations.</value>
+  </data>
+  <data name="Analyzer_SEC0026_Title" xml:space="preserve">
+    <value>Insecure Cipher Mode - Electronic Codebook (ECB)</value>
+  </data>
+  <data name="Analyzer_SEC0027_Anchor" xml:space="preserve">
+    <value>sec0027-weak-algorithm-md5</value>
+  </data>
+  <data name="Analyzer_SEC0027_Description" xml:space="preserve">
+    <value>The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.</value>
+  </data>
+  <data name="Analyzer_SEC0027_MessageFormat" xml:space="preserve">
+    <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
+
+NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+  </data>
+  <data name="Analyzer_SEC0027_Title" xml:space="preserve">
+    <value>Weak Cryptography Algorithm (MD5)</value>
+  </data>
+  <data name="Analyzer_SEC0028_Anchor" xml:space="preserve">
+    <value>sec0028-weak-algorithm-sha1</value>
+  </data>
+  <data name="Analyzer_SEC0028_Description" xml:space="preserve">
+    <value>The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2.</value>
+  </data>
+  <data name="Analyzer_SEC0028_MessageFormat" xml:space="preserve">
+    <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
+
+NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+  </data>
+  <data name="Analyzer_SEC0028_Title" xml:space="preserve">
+    <value>Weak Cryptography Algorithm (SHA1)</value>
+  </data>
   <data name="Analyzer_SEC0114_Description" xml:space="preserve">
     <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding methods Encoder.LdapDistinguishedNameEncode() or Encoder.LdapFilterEncode().</value>
   </data>
@@ -605,5 +657,29 @@ Label controls are often found in HTML contexts, but can also appear in other co
   </data>
   <data name="Analyzer_SEC0114_Anchor" xml:space="preserve">
     <value>sec0114-ldap-injection</value>
+  </data>
+  <data name="Analyzer_SEC0029_Anchor" xml:space="preserve">
+    <value>sec0029-deserialization-binaryformatter</value>
+  </data>
+  <data name="Analyzer_SEC0029_Description" xml:space="preserve">
+    <value>Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse</value>
+  </data>
+  <data name="Analyzer_SEC0029_MessageFormat" xml:space="preserve">
+    <value>Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data.</value>
+  </data>
+  <data name="Analyzer_SEC0029_Title" xml:space="preserve">
+    <value>Insecure Deserialization - BinaryFormatter</value>
+  </data>
+  <data name="Analyzer_SEC0030_Anchor" xml:space="preserve">
+    <value>sec0030-deserialization-newtonsoft-json</value>
+  </data>
+  <data name="Analyzer_SEC0030_Description" xml:space="preserve">
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
+  </data>
+  <data name="Analyzer_SEC0030_MessageFormat" xml:space="preserve">
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
+  </data>
+  <data name="Analyzer_SEC0030_Title" xml:space="preserve">
+    <value>Insecure Deserialization - Newtonsoft JSON</value>
   </data>
 </root>
