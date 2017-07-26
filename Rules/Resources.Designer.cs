@@ -1100,7 +1100,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec0029-deserialization-binaryformatter.
+        ///   Looks up a localized string similar to sec0029-deserialization-binary-formatter.
         /// </summary>
         internal static string Analyzer_SEC0029_Anchor {
             get {
@@ -1118,7 +1118,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data..
+        ///   Looks up a localized string similar to Deserializing untrusted data using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse methods can lead to remote code execution and denial of service vulnerabilities..
         /// </summary>
         internal static string Analyzer_SEC0029_MessageFormat {
             get {
@@ -1154,7 +1154,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None..
+        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None..
         /// </summary>
         internal static string Analyzer_SEC0030_MessageFormat {
             get {
