@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -11,14 +11,14 @@
 
 using System.Collections.Immutable;
 
-using Autofac;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Analyzer;
-using Puma.Security.Rules.Analyzer.Configuration;
-using Puma.Security.Rules.Base;
+using Puma.Security.Rules.Analyzer.Configuration.Compilation;
+using Puma.Security.Rules.Analyzer.Configuration.CustomErrors;
+using Puma.Security.Rules.Analyzer.Configuration.MachineKey;
+using Puma.Security.Rules.Core;
 
 namespace Puma.Security.Rules.Suites
 {
@@ -27,11 +27,11 @@ namespace Puma.Security.Rules.Suites
     {
         public ConfigurationDiagnosticSuite()
         {
-            Analyzers = new IAnalyzer[]
+            Analyzers = new ICompilationAnalyzer[]
             {
-                Container.Resolve<CompilationAnalyzer>(),
-                Container.Resolve<CustomErrorsAnalyzer>(),
-                Container.Resolve<MachineKeyAnalyzer>()
+                new CompilationAnalyzer(),
+                new CustomErrorsAnalyzer(),
+                new MachineKeyAnalyzer()
             }.ToImmutableArray();
         }
     }

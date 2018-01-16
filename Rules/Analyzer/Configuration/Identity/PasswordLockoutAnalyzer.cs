@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,53 +9,47 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Puma.Security.Rules.Diagnostics;
-using Puma.Security.Rules.Model;
-using Microsoft.CodeAnalysis;
+using System.Linq;
+
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using System;
-using System.Collections.Generic;
+
+using Puma.Security.Rules.Analyzer.Configuration.Identity.Core;
+using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Diagnostics;
 
 namespace Puma.Security.Rules.Analyzer.Configuration.Identity
 {
     [SupportedDiagnostic(DiagnosticId.SEC0018)]
-    public class PasswordLockoutAnalyzer : ISyntaxNodeAnalyzer
+    internal class PasswordLockoutAnalyzer : BaseSemanticAnalyzer, ISyntaxAnalyzer
     {
-        public SyntaxKind Kind => SyntaxKind.InvocationExpression;
+        private readonly IPasswordLockoutExpressionAnalyzer _expressionSyntaxAnalyzer;
+        private readonly IArgumentVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(SyntaxNodeAnalysisContext context)
+        internal PasswordLockoutAnalyzer() : this(new PasswordLockoutExpressionAnalyzer(), new ArgumentVulnerableSyntaxNodeFactory()) { }
+
+        private PasswordLockoutAnalyzer(IPasswordLockoutExpressionAnalyzer expressionSyntaxAnalyzer,
+            IArgumentVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
         {
-            var result = new List<DiagnosticInfo>();
-            var statement = context.Node as InvocationExpressionSyntax;
-            var expression = statement.Expression as MemberAccessExpressionSyntax;
+            _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
+            _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
+        }
 
-            var isMethod = expression?.Name.ToString().StartsWith("PasswordSignIn", StringComparison.Ordinal);
-            if(!isMethod.HasValue || !isMethod.Value)
-                return result;
+        public SyntaxKind SinkKind => SyntaxKind.InvocationExpression;
 
-            var symbol = context.SemanticModel.GetSymbolInfo(expression).Symbol as ISymbol;
-            if (string.Compare(symbol?.ContainingNamespace.ToString(), "Microsoft.AspNet.Identity.Owin", StringComparison.Ordinal) != 0)
-                return result;
+        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        {
+            var syntax = context.Node as InvocationExpressionSyntax;
 
-            var args = statement.ArgumentList as ArgumentListSyntax;
-            if (args == null || args.Arguments.Count < 4)
-                return result;
+            ArgumentSyntax argumentSyntaxStatement = null;
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, out argumentSyntaxStatement))
+                return;
 
-            var passwordLockoutParm = args.Arguments[3];
-            var argExpression = passwordLockoutParm.Expression as LiteralExpressionSyntax;
-
-            if (argExpression == null)
-                return result;
-
-            var token = context.SemanticModel.GetConstantValue(argExpression);
-
-            if (token.HasValue && !(bool)token.Value)
-                result.Add(new DiagnosticInfo(argExpression.GetLocation()));
-
-            return result;
+            if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != argumentSyntaxStatement.GetLocation()))
+                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(argumentSyntaxStatement));
         }
     }
 }

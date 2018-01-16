@@ -1,5 +1,5 @@
-/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+﻿/* 
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -11,14 +11,11 @@
 
 using System.Collections.Immutable;
 
-using Autofac;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-
+using Puma.Security.Rules.Core;
 using Puma.Security.Rules.Analyzer;
 using Puma.Security.Rules.Analyzer.Validation.Path;
-using Puma.Security.Rules.Base;
 
 namespace Puma.Security.Rules.Suites
 {
@@ -27,11 +24,11 @@ namespace Puma.Security.Rules.Suites
     {
         public PathTamperingDiagnosticSuite()
         {
-            Analyzers = new IAnalyzer[]
+            Analyzers = new ISyntaxAnalyzer[]
             {
-                Container.Resolve<FilePathResultAnalyzer>(),
-                Container.Resolve<IOFileAnalyzer>(),
-                Container.Resolve<FileStreamAnalyzer>()
+                new FilePathResultAnalyzer(),
+                new FileStreamAnalyzer(),
+                new IOFileAnalyzer(),
             }.ToImmutableArray();
         }
     }

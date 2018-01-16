@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -19,7 +19,7 @@ using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
-    public class LdapDirectorySearcherInjectionExpressionAnalyzer : ILdapDirectorySearcherInjectionExpressionAnalyzer
+    internal class LdapDirectorySearcherInjectionExpressionAnalyzer : ILdapDirectorySearcherInjectionExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
         {
@@ -35,16 +35,15 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     if (containingBlock == null) return false;
 
                     var filter = GetFilterFromConstructor(model, containingBlock, identifier) ??
-                                      GetFilterFromAssignment(containingBlock, identifier);
-                    
+                                 GetFilterFromAssignment(containingBlock, identifier);
+
                     if (filter != null)
                     {
-                        var expressionSyntax = filter as ExpressionSyntax;
-                        if (expressionSyntax != null)
-                        {
-                            var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(expressionSyntax);
-                            return !expressionAnalyzer.CanSuppress(model, expressionSyntax);
-                        }
+                        var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(filter);
+                        if (expressionAnalyzer.CanIgnore(model, filter))
+                            return false;
+                        if (expressionAnalyzer.CanSuppress(model, filter))
+                            return false;
                     }
 
                     return true;
@@ -54,15 +53,19 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
         }
 
         private bool IsSearchCommand(IMethodSymbol symbol)
-        => symbol.IsMethod("System.DirectoryServices.DirectorySearcher", "FindOne") ||
-           symbol.IsMethod("System.DirectoryServices.DirectorySearcher", "FindAll");
+        {
+            return symbol.IsMethod("System.DirectoryServices.DirectorySearcher", "FindOne") ||
+                   symbol.IsMethod("System.DirectoryServices.DirectorySearcher", "FindAll");
+        }
 
         private static bool ContainsSearchCommands(InvocationExpressionSyntax syntax)
-            => syntax.ToString().Contains("FindOne") ||
-               syntax.ToString().Contains("FindAll");
+        {
+            return syntax.ToString().Contains("FindOne") ||
+                   syntax.ToString().Contains("FindAll");
+        }
 
         private static SyntaxNode GetFilterFromAssignment(BlockSyntax containingBlock,
-                IdentifierNameSyntax identifier)
+            IdentifierNameSyntax identifier)
         {
             var assignments = containingBlock.DescendantNodes()
                 .OfType<AssignmentExpressionSyntax>()
@@ -72,21 +75,18 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     var leftIdentifier = leftExpression?.Expression as IdentifierNameSyntax;
 
                     if (leftIdentifier?.Identifier.ValueText == identifier.Identifier.ValueText)
-                    {
                         return leftExpression?.Name.Identifier.ValueText == "Filter";
-                    }
 
                     return false;
                 }).ToList();
 
             if (assignments.Any() && assignments.Count == 1)
-            {
                 return assignments.First().Right;
-            }
             return null;
         }
 
-        private static SyntaxNode GetFilterFromConstructor(SemanticModel model, BlockSyntax containingBlock,
+        private static SyntaxNode GetFilterFromConstructor(SemanticModel model,
+            BlockSyntax containingBlock,
             IdentifierNameSyntax identifier)
         {
             var objectCreations = containingBlock.DescendantNodes()
@@ -115,39 +115,25 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     var firstArg = directorySearcherCreation.ArgumentList.Arguments[0].Expression;
                     //if first param is string literal, it's the filter
                     if (firstArg is LiteralExpressionSyntax)
-                    {
                         return directorySearcherCreation.ArgumentList.Arguments[0].Expression;
-                    }
 
                     //if first param is of type DirectoryEntry, then second param (if present) is filters
                     var localSymbol = model.GetSymbolInfo(firstArg).Symbol as ILocalSymbol;
                     if (localSymbol?.Type.Name == "DirectoryEntry")
-                    {
                         if (directorySearcherCreation.ArgumentList.Arguments.Count > 1)
-                        {
                             return directorySearcherCreation.ArgumentList.Arguments[1].Expression;
-                        }
-                    }
 
                     //if first param is of type DirectoryEntry, then second param (if present) is filters
                     var methodSymbol = model.GetSymbolInfo(firstArg).Symbol as IMethodSymbol;
                     if (methodSymbol.IsCtorFor("System.DirectoryServices.DirectoryEntry"))
-                    {
                         if (directorySearcherCreation.ArgumentList.Arguments.Count > 1)
-                        {
                             return directorySearcherCreation.ArgumentList.Arguments[1].Expression;
-                        }
-                    }
 
                     //if first param is of type DirectoryEntry, then second param (if present) is filters
                     var parameterSymbol = model.GetSymbolInfo(firstArg).Symbol as IParameterSymbol;
                     if (parameterSymbol?.Type.ToString() == "System.DirectoryServices.DirectoryEntry")
-                    {
                         if (directorySearcherCreation.ArgumentList.Arguments.Count > 1)
-                        {
                             return directorySearcherCreation.ArgumentList.Arguments[1].Expression;
-                        }
-                    }
 
                     //look in object initializer
                     var filter =
@@ -159,9 +145,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                             });
 
                     if (filter != null)
-                    {
                         return filter.Right;
-                    }
                 }
             }
 

@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -14,7 +14,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
-    public interface ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer
+    internal interface ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer
     {
         bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax);
     }

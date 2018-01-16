@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
+using System;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -16,20 +18,25 @@ using Puma.Security.Rules.Analyzer.Core;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
-    public class LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer : ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer
+    internal class LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer : ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
         {
             var leftSyntax = syntax?.Left as MemberAccessExpressionSyntax;
-            
-            if (leftSyntax == null || leftSyntax.Name.Identifier.ValueText.ToLower() != "path") return false;
+
+            if (leftSyntax == null || string.Compare(leftSyntax.Name.Identifier.ValueText, "Path", StringComparison.OrdinalIgnoreCase) != 0) return false;
 
             var leftSymbol = model.GetSymbolInfo(leftSyntax).Symbol;
 
             if (!leftSymbol.ToString().StartsWith("System.DirectoryServices.DirectoryEntry")) return false;
 
-            var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(syntax.Right);
-            return !expressionAnalyzer.CanSuppress(model, syntax.Right);
+            var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(syntax.Right);
+            if (expressionAnalyzer.CanIgnore(model, syntax.Right))
+                return false;
+            if (expressionAnalyzer.CanSuppress(model, syntax.Right))
+                return false;
+
+            return true;
         }
     }
 }

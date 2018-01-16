@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -12,11 +12,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 {
-    public class EfQueryCommandInjectionExpressionAnalyzer : IEfQueryCommandInjectionExpressionAnalyzer
+    internal class EfQueryCommandInjectionExpressionAnalyzer : IEfQueryCommandInjectionExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
         {
@@ -26,30 +27,32 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 
             if (!IsSymbolEfRawSqlCommand(symbol)) return false;
 
-            if (syntax.ArgumentList.Arguments.Count == 1) //No params passed
+            if (syntax.ArgumentList != null && syntax.ArgumentList.Arguments.Any())
             {
-                return !(syntax.ArgumentList.Arguments[0].Expression is LiteralExpressionSyntax);
-            }
+                var commandTextArg = syntax.ArgumentList.Arguments[0];
 
-            if (syntax.ArgumentList.Arguments.Count > 1)
-                //params passed, code could still be doing some string concatation in first param, passing as safe for now
-            {
-                return syntax.ArgumentList.Arguments[0].Expression is BinaryExpressionSyntax;
+                var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(commandTextArg);
+                if (expressionAnalyzer.CanSuppress(model, commandTextArg))
+                    return false;
             }
 
             return true;
         }
 
         private bool IsSymbolEfRawSqlCommand(IMethodSymbol symbol)
-            => symbol.IsMethod("System.Data.Entity.Database", "SqlQuery") ||
-               symbol.IsMethod("System.Data.Entity.DbSet<TEntity>", "SqlQuery") ||
-               symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommand") ||
-               symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommandAsync");
+        {
+            return symbol.IsMethod("System.Data.Entity.Database", "SqlQuery") ||
+                   symbol.IsMethod("System.Data.Entity.DbSet<TEntity>", "SqlQuery") ||
+                   symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommand") ||
+                   symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommandAsync");
+        }
 
 
         private static bool ContainsEfRawSqlCommands(InvocationExpressionSyntax syntax)
-            => syntax.ToString().Contains("SqlQuery") ||
-               syntax.ToString().Contains("ExecuteSqlCommand") ||
-               syntax.ToString().Contains("ExecuteSqlCommandAsync");
+        {
+            return syntax.ToString().Contains("SqlQuery") ||
+                   syntax.ToString().Contains("ExecuteSqlCommand") ||
+                   syntax.ToString().Contains("ExecuteSqlCommandAsync");
+        }
     }
 }

@@ -1,5 +1,5 @@
-/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+﻿/* 
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,16 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System.Collections.Immutable;
-
-using Autofac;
-
-using Puma.Security.Rules.Analyzer;
-using Puma.Security.Rules.Base;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Puma.Security.Rules.Analyzer;
 using Puma.Security.Rules.Analyzer.Injection.Ldap;
+using Puma.Security.Rules.Core;
+using System.Collections.Immutable;
 
 namespace Puma.Security.Rules.Suites
 {
@@ -27,12 +23,11 @@ namespace Puma.Security.Rules.Suites
     {
         public LdapInjectionDiagnosticSuite()
         {
-            Analyzers = new IAnalyzer[]
+            Analyzers = new ISyntaxAnalyzer[]
             {
-                //TODO: turn on when complete
-                Container.Resolve<LdapDirectorySearcherInjectionAnalyzer>(),
-                Container.Resolve<LdapDirectoryEntryPathInjectionAnalyzer>(),
-                Container.Resolve<LdapDirectoryEntryPathAssignmentInjectionAnalyzer>()
+               new LdapDirectoryEntryPathAssignmentAnalzyer(),
+               new LdapDirectoryEntryPathCreationAnalyzer(),
+               new LdapDirectorySearcherAnalyzer(),
             }.ToImmutableArray();
         }
     }

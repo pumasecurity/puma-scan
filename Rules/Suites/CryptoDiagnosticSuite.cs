@@ -1,31 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/* 
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
+ * 
+ * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
+ * Lead Developer: Eric Mead (eric.mead@pumascan.com)
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ */
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-
-using Autofac;
 using Puma.Security.Rules.Analyzer;
 using Puma.Security.Rules.Analyzer.Crypto;
-using Puma.Security.Rules.Base;
+using Puma.Security.Rules.Core;
+
+using System.Collections.Immutable;
+
 
 namespace Puma.Security.Rules.Suites
 {
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    [DiagnosticAnalyzer(LanguageNames.CSharp, LanguageNames.VisualBasic)]
     public class CryptoDiagnosticSuite : BaseSyntaxDiagnosticSuite
     {
         public CryptoDiagnosticSuite()
         {
-            Analyzers = new IAnalyzer[]
+            Analyzers = new ISyntaxAnalyzer[]
             {
-                Container.Resolve<DesDiagnosticAnalyzer>(),
-                Container.Resolve<EcbDiagnosticAnalyzer>(),
-                Container.Resolve<Md5DiagnosticAnalyzer>(),
-                Container.Resolve<Sha1DiagnosticAnalyzer>(),
+                new DesDiagnosticAnalyzer(),
+                new EcbDiagnosticAnalyzer(),
+                new Md5DiagnosticAnalyzer(),
+                new Sha1DiagnosticAnalyzer(),
+                new SystemRandomDiagnosticAnalyzer(),
             }.ToImmutableArray();
         }
     }

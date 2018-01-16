@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -15,44 +15,53 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core.Specialized;
+using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public class InvocationExpressionSyntaxAnalyzer : BaseExpressionSyntaxAnalyzer<InvocationExpressionSyntax>
+    internal class InvocationExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<InvocationExpressionSyntax>
     {
-        private readonly IXssSafeInvocationExpression _safeInvocationExpression;
-        private readonly IExpressionSyntaxAnalyzer<ExpressionSyntax> _analyzer;
+        private readonly ISanitizedSourceAnalyzer _sanitizedSourceAnalyzer;
+        private readonly ISyntaxNodeAnalyzer<SyntaxNode> _analyzer;
         private readonly IIsArgumentOnlyExpression _argsOnlyInvocationExpression;
 
-        public InvocationExpressionSyntaxAnalyzer(IXssSafeInvocationExpression safeInvocationExpression, IIsArgumentOnlyExpression argsOnlyInvocationExpression)
+        internal InvocationExpressionSyntaxAnalyzer()
+            : this(new SanitizedSourceAnalyzer(),
+                new IsArgumentOnlyExpression(),
+                new SyntaxNodeAnalyzer())
         {
-            _safeInvocationExpression = safeInvocationExpression;
-            _argsOnlyInvocationExpression = argsOnlyInvocationExpression;
-            _analyzer = new ExpressionSyntaxAnalyzer();
+
         }
 
-        public override bool CanSuppress(SemanticModel model, ExpressionSyntax syntax)
+        internal InvocationExpressionSyntaxAnalyzer(ISanitizedSourceAnalyzer sanitizedSourceAnalyzer, IIsArgumentOnlyExpression argsOnlyInvocationExpression, ISyntaxNodeAnalyzer<SyntaxNode> syntaxNodeAnalyzer)
+        {
+            _sanitizedSourceAnalyzer = sanitizedSourceAnalyzer;
+            _argsOnlyInvocationExpression = argsOnlyInvocationExpression;
+            _analyzer = syntaxNodeAnalyzer;
+        }
+
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
         {
             var invocationExpressionSyntax = syntax as InvocationExpressionSyntax;
 
-            if (_safeInvocationExpression.IsSafe(model, invocationExpressionSyntax))
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(model.GetSymbolInfo(invocationExpressionSyntax)))
                 return true;
 
             var argsSafe = CanSuppressArguments(model, invocationExpressionSyntax.ArgumentList);
 
             var isArgsOnlyExpression = _argsOnlyInvocationExpression.Execute(model, invocationExpressionSyntax);
 
-            if(isArgsOnlyExpression)
+            if (isArgsOnlyExpression)
                 return argsSafe;
 
             var isBodySafe = CanSuppressExpression(model, invocationExpressionSyntax.Expression);
 
             return argsSafe && isBodySafe;
         }
-        
-        private bool CanSuppressExpression(SemanticModel model, ExpressionSyntax expression)
+
+        private bool CanSuppressExpression(SemanticModel model, SyntaxNode expression)
         {
-            return _analyzer.CanSuppress(model, expression);
+            return _analyzer.CanIgnore(model, expression) || _analyzer.CanSuppress(model, expression);
         }
 
         private bool CanSuppressArguments(SemanticModel model, ArgumentListSyntax argumentList)
@@ -62,7 +71,7 @@ namespace Puma.Security.Rules.Analyzer.Core
 
             var args = argumentList.Arguments;
 
-            return args.All(p => _analyzer.CanSuppress(model, p.Expression));
+            return args.All(p => _analyzer.CanIgnore(model, p.Expression) || _analyzer.CanSuppress(model, p.Expression));
         }
     }
 }

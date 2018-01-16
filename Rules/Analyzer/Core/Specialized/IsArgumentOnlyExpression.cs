@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -16,16 +16,16 @@ using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Core.Specialized
 {
-    public interface IIsArgumentOnlyExpression
+    internal interface IIsArgumentOnlyExpression
     {
         bool Execute(SemanticModel model, InvocationExpressionSyntax syntax);
     }
 
-    public class IsArgumentOnlyExpression : IIsArgumentOnlyExpression
+    internal class IsArgumentOnlyExpression : IIsArgumentOnlyExpression
     {
         public bool Execute(SemanticModel model, InvocationExpressionSyntax syntax)
         {
-            if (syntax.ToString().Contains("MapPath"))
+            if (ContainsArgumentOnlyMethod(syntax))
             {
                 var symbol = model.GetSymbolInfo(syntax).Symbol as IMethodSymbol;
                 if (symbol != null)
@@ -36,7 +36,17 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
 
             return false;
         }
+        
+        private bool IsArgumentOnlyMethod(IMethodSymbol symbol)
+        {
+            return symbol.IsMethod("System.Web.HttpRequest", "MapPath") ||
+                   symbol.IsMethod("String", "Format");
+        }
 
-        private bool IsArgumentOnlyMethod(IMethodSymbol symbol) => symbol.IsMethod("System.Web.HttpRequest", "MapPath");
+        private static bool ContainsArgumentOnlyMethod(InvocationExpressionSyntax syntax)
+        {
+            return syntax.ToString().Contains("Format") ||
+                   syntax.ToString().Contains("MapPath");
+        }
     }
 }

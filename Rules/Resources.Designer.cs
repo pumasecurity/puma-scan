@@ -19,7 +19,7 @@ namespace Puma.Security.Rules {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,15 @@ namespace Puma.Security.Rules {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        internal static string Analyzer_Category_License {
+            get {
+                return ResourceManager.GetString("Analyzer_Category_License", resourceCulture);
             }
         }
         
@@ -1720,6 +1729,42 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0114_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0114_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0115-insecure-random-number-generator.
+        /// </summary>
+        internal static string Analyzer_SEC0115_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0115_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.Random is a statistical random number generator that does not generate sufficiently random values for use in a security context. Generate values used in a security context (e.g., encryption keys, initialization vectors, random passwords, authentication tokens) using the System.Security.Cryptography.RNGCryptoServiceProvider..
+        /// </summary>
+        internal static string Analyzer_SEC0115_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0115_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.Random does not provide cryptographically random numbers. Consider using the System.Security.Cryptography.RNGCryptoServiceProvider for random values used in a security context..
+        /// </summary>
+        internal static string Analyzer_SEC0115_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0115_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insecure Random Number Generator.
+        /// </summary>
+        internal static string Analyzer_SEC0115_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0115_Title", resourceCulture);
             }
         }
     }

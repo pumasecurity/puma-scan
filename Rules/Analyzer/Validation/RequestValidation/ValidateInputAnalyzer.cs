@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,55 +9,46 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Microsoft.CodeAnalysis;
+using System.Linq;
+
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Analyzer.Core.Factories;
+using Puma.Security.Rules.Analyzer.Validation.RequestValidation.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Diagnostics;
-using Puma.Security.Rules.Model;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Puma.Security.Rules.Analyzer.Validation.RequestValidation
 {
     [SupportedDiagnostic(DiagnosticId.SEC0023)]
-    public class ValidateInputAnalyzer : ISyntaxNodeAnalyzer
+    internal class ValidateInputAnalyzer : BaseSemanticAnalyzer, ISyntaxAnalyzer
     {
-        public SyntaxKind Kind => SyntaxKind.MethodDeclaration;
+        private readonly IValidateInputExpressionAnalyzer _expressionSyntaxAnalyzer;
+        private readonly IAttributeVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(SyntaxNodeAnalysisContext context)
+        internal ValidateInputAnalyzer() : this(new ValidateInputExpressionAnalyzer(), new AttributeVulnerableSyntaxNodeFactory()) { }
+
+        private ValidateInputAnalyzer(IValidateInputExpressionAnalyzer expressionSyntaxAnalyzer,
+            IAttributeVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
         {
-            var result = new List<DiagnosticInfo>();
-            var method = context.Node as MethodDeclarationSyntax;
+            _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
+            _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
+        }
 
-            foreach (AttributeListSyntax attributeList in method.AttributeLists)
-            {
-                foreach (AttributeSyntax attribute in attributeList.Attributes)
-                {
-                    if (string.Compare(attribute.Name?.ToString(), "ValidateInput") != 0)
-                        continue;
+        public SyntaxKind SinkKind => SyntaxKind.Attribute;
 
-                    //Verify the namespace before proceeding
-                    var symbol = context.SemanticModel.GetSymbolInfo(attribute).Symbol as ISymbol;
-                    if (string.Compare(symbol?.ContainingNamespace.ToString(), "System.Web.Mvc", StringComparison.Ordinal) != 0)
-                        continue;
+        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        {
+            var syntax = context.Node as AttributeSyntax;
 
-                    AttributeArgumentListSyntax argumentList = attribute.ArgumentList;
-                    AttributeArgumentSyntax argument = argumentList.Arguments.First();
-                    var value = context.SemanticModel.GetConstantValue(argument?.Expression);
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+                return;
 
-                    if(value.HasValue && (bool)value.Value == false)
-                        result.Add(new DiagnosticInfo(attribute.GetLocation()));
-                }
-            }
-
-            return result;
+            if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
+                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
         }
     }
 }

@@ -594,6 +594,18 @@ Label controls are often found in HTML contexts, but can also appear in other co
   <data name="Analyzer_SEC0024_Title" xml:space="preserve">
     <value>Unencoded Response Write</value>
   </data>
+  <data name="Analyzer_SEC0114_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding methods Encoder.LdapDistinguishedNameEncode() or Encoder.LdapFilterEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0114_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the LDAP Path or Filter expression.</value>
+  </data>
+  <data name="Analyzer_SEC0114_Title" xml:space="preserve">
+    <value>LDAP Injection</value>
+  </data>
+  <data name="Analyzer_SEC0114_Anchor" xml:space="preserve">
+    <value>sec0114-ldap-injection</value>
+  </data>
   <data name="Analyzer_SEC0025_Anchor" xml:space="preserve">
     <value>sec0025-weak-algorithm-des</value>
   </data>
@@ -646,18 +658,6 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
   <data name="Analyzer_SEC0028_Title" xml:space="preserve">
     <value>Weak Cryptography Algorithm (SHA1)</value>
   </data>
-  <data name="Analyzer_SEC0114_Description" xml:space="preserve">
-    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding methods Encoder.LdapDistinguishedNameEncode() or Encoder.LdapFilterEncode().</value>
-  </data>
-  <data name="Analyzer_SEC0114_MessageFormat" xml:space="preserve">
-    <value>Untrusted data is passed to the LDAP Path or Filter expression.</value>
-  </data>
-  <data name="Analyzer_SEC0114_Title" xml:space="preserve">
-    <value>LDAP Injection</value>
-  </data>
-  <data name="Analyzer_SEC0114_Anchor" xml:space="preserve">
-    <value>sec0114-ldap-injection</value>
-  </data>
   <data name="Analyzer_SEC0029_Anchor" xml:space="preserve">
     <value>sec0029-deserialization-binary-formatter</value>
   </data>
@@ -681,5 +681,20 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
   </data>
   <data name="Analyzer_SEC0030_Title" xml:space="preserve">
     <value>Insecure Deserialization - Newtonsoft JSON</value>
+  </data>
+  <data name="Analyzer_Category_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Analyzer_SEC0115_Anchor" xml:space="preserve">
+    <value>sec0115-insecure-random-number-generator</value>
+  </data>
+  <data name="Analyzer_SEC0115_Description" xml:space="preserve">
+    <value>System.Random is a statistical random number generator that does not generate sufficiently random values for use in a security context. Generate values used in a security context (e.g., encryption keys, initialization vectors, random passwords, authentication tokens) using the System.Security.Cryptography.RNGCryptoServiceProvider.</value>
+  </data>
+  <data name="Analyzer_SEC0115_MessageFormat" xml:space="preserve">
+    <value>System.Random does not provide cryptographically random numbers. Consider using the System.Security.Cryptography.RNGCryptoServiceProvider for random values used in a security context.</value>
+  </data>
+  <data name="Analyzer_SEC0115_Title" xml:space="preserve">
+    <value>Insecure Random Number Generator</value>
   </data>
 </root>

@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puma.Security.Rules", "Rules\Puma.Security.Rules.csproj", "{0D0530A0-368E-459D-9008-CDC66F093C2F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puma.Security.Rules.Test", "Tests\Puma.Security.Rules.Test.csproj", "{577BEBDC-1BF6-4272-8112-60E5CDDD0BFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puma.Security.Rules.Vsix", "Vsix\Puma.Security.Rules.Vsix.csproj", "{8B03C2D1-8552-4010-A219-6D6262F10BD1}"
 EndProject
@@ -21,10 +19,6 @@ Global
 		{0D0530A0-368E-459D-9008-CDC66F093C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D0530A0-368E-459D-9008-CDC66F093C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D0530A0-368E-459D-9008-CDC66F093C2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{577BEBDC-1BF6-4272-8112-60E5CDDD0BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{577BEBDC-1BF6-4272-8112-60E5CDDD0BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{577BEBDC-1BF6-4272-8112-60E5CDDD0BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{577BEBDC-1BF6-4272-8112-60E5CDDD0BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B03C2D1-8552-4010-A219-6D6262F10BD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B03C2D1-8552-4010-A219-6D6262F10BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B03C2D1-8552-4010-A219-6D6262F10BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72DC64BE-FA8A-4192-8222-E3852F0E9D99}
 	EndGlobalSection
 EndGlobal

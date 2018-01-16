@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,34 +9,47 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using Puma.Security.Rules.Common;
-
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public class IdentifierNameSyntaxAnalyzer : BaseExpressionSyntaxAnalyzer<IdentifierNameSyntax>
+    internal class IdentifierNameSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<IdentifierNameSyntax>
     {
-        public override bool CanSuppress(SemanticModel model, ExpressionSyntax syntax)
+        private readonly ISanitizedSourceAnalyzer _sanitizedSourceAnalyzer;
+        private readonly ISafeSyntaxTypeAnalyzer _safeSyntaxTypeAnalyzer;
+
+        internal IdentifierNameSyntaxAnalyzer()
+            : this(
+                new SanitizedSourceAnalyzer(),
+                new SafeSyntaxTypeAnalyzer())
+        {
+
+        }
+
+        internal IdentifierNameSyntaxAnalyzer(ISanitizedSourceAnalyzer sanitizedSourceAnalyzer, ISafeSyntaxTypeAnalyzer safeSyntaxTypeAnalyzer)
+        {
+            _sanitizedSourceAnalyzer = sanitizedSourceAnalyzer;
+            _safeSyntaxTypeAnalyzer = safeSyntaxTypeAnalyzer;
+        }
+
+        public override bool CanIgnore(SemanticModel model, SyntaxNode syntax)
         {
             var identifierNameSyntax = syntax as IdentifierNameSyntax;
             var symbolInfo = model.GetSymbolInfo(identifierNameSyntax);
 
-            var methodSymbol = symbolInfo.Symbol as IMethodSymbol;
-            if (methodSymbol != null && Utils.IsXssWhiteListedType(methodSymbol.ReturnType))
-                return true;
+            if (_safeSyntaxTypeAnalyzer.IsSafeSyntaxType(symbolInfo)) return true;
+            return base.CanIgnore(model, syntax);
+        }
 
-            var localSymbol = symbolInfo.Symbol as ILocalSymbol;
-            if (localSymbol != null && Utils.IsXssWhiteListedType(localSymbol.Type))
-                return true;
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        {
+            var identifierNameSyntax = syntax as IdentifierNameSyntax;
+            var symbolInfo = model.GetSymbolInfo(identifierNameSyntax);
 
-            //todo: IParameterSymbol, IFieldSymbol, IPropertySymbol <- potential false postives to remove base on type, if string then need data flow analysis
-
-            return false;
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(symbolInfo)) return true;
+            return base.CanSuppress(model, syntax);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,16 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Puma.Security.Rules.Analyzer;
-using Puma.Security.Rules.Analyzer.Validation.Csrf;
-using Puma.Security.Rules.Base;
+using System.Collections.Immutable;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Puma.Security.Rules.Core;
+using Puma.Security.Rules.Analyzer;
+using Puma.Security.Rules.Analyzer.Validation.Csrf;
 
 namespace Puma.Security.Rules.Suites
 {
@@ -27,11 +25,10 @@ namespace Puma.Security.Rules.Suites
     {
         public CsrfDiagnosticSuite()
         {
-            //TODO: could also have this look at attributes. Manually creating list for now 
-            Analyzers = new List<ISyntaxNodeAnalyzer>
+            Analyzers = new ISyntaxAnalyzer[]
             {
-                new AntiForgeryTokenAnalyzer()
-            };
+                new AntiForgeryTokenAnalyzer(),
+            }.ToImmutableArray();
         }
     }
 }

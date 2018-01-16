@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -15,11 +15,13 @@ namespace Puma.Security.Rules.Common
     {
         None = 0,
         Security = 1,
-        Syntax = 2
+        Syntax = 2, 
+        License = 3
     }
 
     public enum DiagnosticId
     {
+        None,
         SEC0001,
         SEC0002,
         SEC0003,
@@ -65,6 +67,7 @@ namespace Puma.Security.Rules.Common
         SEC0111,
         SEC0112,
         SEC0113,
-        SEC0114
+        SEC0114,
+        SEC0115
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,16 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using Puma.Security.Rules.Analyzer.Core;
-using Puma.Security.Rules.Common;
-
 namespace Puma.Security.Rules.Analyzer.Crypto.Core
 {
-    public class EcbAssignmentExpressionAnalyzer : IEcbAssignmentExpressionAnalyzer
+    internal class EcbAssignmentExpressionAnalyzer : IEcbAssignmentExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
         {
@@ -29,13 +25,13 @@ namespace Puma.Security.Rules.Analyzer.Crypto.Core
             var leftSymbol = model.GetSymbolInfo(leftSyntax.Name).Symbol as IPropertySymbol;
             if (leftSymbol == null || string.Compare(leftSymbol.Type.ToString(), "System.Security.Cryptography.CipherMode", true) != 0)
                 return false;
-            
+
             var rightSyntax = syntax?.Right as MemberAccessExpressionSyntax;
             if (rightSyntax == null || string.Compare(rightSyntax.Name.Identifier.ValueText, "ECB", true) != 0)
                 return false;
 
             var rightSymbol = model.GetSymbolInfo(rightSyntax.Name).Symbol as IFieldSymbol;
-            if(rightSyntax == null || string.Compare(rightSymbol.OriginalDefinition.ToString(), "System.Security.Cryptography.CipherMode.ECB", true) != 0)
+            if (rightSyntax == null || string.Compare(rightSymbol.OriginalDefinition.ToString(), "System.Security.Cryptography.CipherMode.ECB", true) != 0)
                 return false;
 
             return true;

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -14,9 +14,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public class LiteralExpressionSyntaxAnalyzer : BaseExpressionSyntaxAnalyzer<LiteralExpressionSyntax>
+    internal class LiteralExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<LiteralExpressionSyntax>
     {
-        public override bool CanSuppress(SemanticModel model, ExpressionSyntax syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        {
+            return true;
+        }
+
+        public override bool CanIgnore(SemanticModel model, SyntaxNode syntax)
         {
             return true;
         }

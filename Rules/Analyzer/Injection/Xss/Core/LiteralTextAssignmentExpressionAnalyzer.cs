@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -16,7 +16,7 @@ using Puma.Security.Rules.Analyzer.Core;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Xss.Core
 {
-    public class LiteralTextAssignmentExpressionAnalyzer : ILiteralTextAssignmentExpressionAnalyzer
+    internal class LiteralTextAssignmentExpressionAnalyzer : ILiteralTextAssignmentExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
         {
@@ -26,10 +26,15 @@ namespace Puma.Security.Rules.Analyzer.Injection.Xss.Core
 
             var leftSymbol = model.GetSymbolInfo(leftSyntax).Symbol;
 
-            if (!leftSymbol.ToString().StartsWith("System.Web.UI.WebControls.Literal.Text")) return false;
+            if (!(leftSymbol != null && leftSymbol.ToString().StartsWith("System.Web.UI.WebControls.Literal.Text"))) return false;
 
-            var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(syntax.Right);
-            return !expressionAnalyzer.CanSuppress(model, syntax.Right);
+            var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(syntax.Right);
+            if (expressionAnalyzer.CanIgnore(model, syntax.Right))
+                return false;
+            if (expressionAnalyzer.CanSuppress(model, syntax.Right))
+                return false;
+
+            return true;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -14,28 +14,30 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+using Puma.Security.Rules.Diagnostics;
 
 namespace Puma.Security.Rules.Common
 {
     public static class Utils
     {
-        private static string ARTIFACTS_DIR = "Artifacts";
-        
+        private static readonly string ARTIFACTS_DIR = "Artifacts";
+
+
         /// <summary>
-        /// Creates a working directory for artifacts being analyzed
+        ///     Creates a working directory for artifacts being analyzed
         /// </summary>
         /// <param name="assemblyName">Name of the assembly being analyzed</param>
         /// <returns></returns>
         public static string GetWorkingDirectory(string assemblyName)
         {
-            string workingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-               , "Microsoft", "VisualStudio", Assembly.GetExecutingAssembly().GetName().Name, ARTIFACTS_DIR, assemblyName);
+            var workingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                , "Microsoft", "VisualStudio", Assembly.GetExecutingAssembly().GetName().Name, ARTIFACTS_DIR, assemblyName);
 
             if (!Directory.Exists(workingPath))
                 Directory.CreateDirectory(workingPath);
@@ -43,26 +45,35 @@ namespace Puma.Security.Rules.Common
             return workingPath;
         }
 
+        public static string GetPumaAppDataPath()
+        {
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                , "Microsoft", "VisualStudio", Assembly.GetExecutingAssembly().GetName().Name);
+		
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            return filePath;
+        }
+
         public static string GetCommonRootPath(IEnumerable<AdditionalText> files)
         {
             var paths = from f in files
-                        select f.Path;
+                select f.Path;
             return GetCommonRootPath(paths);
         }
 
         public static string GetCommonRootPath(IEnumerable<string> paths)
         {
             string[] commonPathParts = null;
-            int commonPartIndex = int.MaxValue;
+            var commonPartIndex = int.MaxValue;
 
-            foreach (string path in paths)
+            foreach (var path in paths)
             {
                 if (!Path.IsPathRooted(path))
-                {
                     throw new InvalidOperationException("Only fully qualified path are supported");
-                }
 
-                string[] pathParts = path.Split(Path.DirectorySeparatorChar);
+                var pathParts = path.Split(Path.DirectorySeparatorChar);
 
                 if (commonPathParts == null)
                 {
@@ -71,7 +82,7 @@ namespace Puma.Security.Rules.Common
                 }
                 else
                 {
-                    int partIndex = 0;
+                    var partIndex = 0;
                     while (partIndex < pathParts.Length && partIndex < commonPathParts.Length)
                     {
                         if (string.Compare(commonPathParts[partIndex], pathParts[partIndex], true) != 0) break;
@@ -85,17 +96,11 @@ namespace Puma.Security.Rules.Common
 
             string commonPath;
             if (commonPartIndex == 0)
-            {
                 commonPath = string.Empty;
-            }
             else if (commonPartIndex == 1)
-            {
                 commonPath = string.Concat(commonPathParts[0], Path.DirectorySeparatorChar);
-            }
             else
-            {
                 commonPath = string.Join(Path.DirectorySeparatorChar.ToString(), commonPathParts, 0, commonPartIndex);
-            }
 
             return commonPath;
         }
@@ -137,10 +142,8 @@ namespace Puma.Security.Rules.Common
             while (true)
             {
                 //Check the symbol type
-                if (string.Compare(symbol.ToString(), baseTypeFullName, StringComparison.Ordinal) == 0)
-                {
+                if (string.Compare(symbol.ToDisplayString(), baseTypeFullName, StringComparison.Ordinal) == 0)
                     return true;
-                }
 
                 //If no match, walk up the chain to the base type
                 if (symbol.BaseType != null)
@@ -155,71 +158,92 @@ namespace Puma.Security.Rules.Common
 
             return false;
         }
-
-        public static bool IsXssWhiteListedType(ISymbol type)
+        
+        public static IdentifierNameSyntax GetMethodReturnType(MethodDeclarationSyntax syntax)
         {
-            var typeToCheck = type;
-            if (type.Name.ToLower() == "nullable")
-            {
-                var namedType = type as INamedTypeSymbol;
-                if (namedType == null)
-                    return false;
+            IdentifierNameSyntax returnType = null;
 
-                var ctor = namedType.Constructors.FirstOrDefault(p => p.Parameters.Length > 0);
-                if (ctor != null)
-                {
-                    typeToCheck = ctor.Parameters[0].Type;
-                }
+            if (syntax?.ReturnType is GenericNameSyntax)
+            {
+                var generic = syntax?.ReturnType as GenericNameSyntax;
+                if (generic.TypeArgumentList.Arguments.Count > 0)
+                    returnType = generic.TypeArgumentList.Arguments[0] as IdentifierNameSyntax;
             }
 
-            switch (typeToCheck.Name.ToLower())
+            if (syntax?.ReturnType is IdentifierNameSyntax)
+                returnType = syntax?.ReturnType as IdentifierNameSyntax;
+
+            return returnType;
+        }
+
+        /// <summary>
+        ///     Gets the diagnostic id from the given type's SupportedDiagnosticAttribute attribute data
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static DiagnosticId GetDiagnosticId(Type type)
+        {
+            var supportedDiagnosticAttribute = type
+                .GetCustomAttributes(typeof(SupportedDiagnosticAttribute), true)
+                .FirstOrDefault() as SupportedDiagnosticAttribute;
+
+            var diagnosticId = DiagnosticId.None;
+            Enum.TryParse(supportedDiagnosticAttribute.Code, out diagnosticId);
+            return diagnosticId;
+        }
+
+        /// <summary>
+        ///     Returns whether node is a descandant of any node of types in type array.
+        /// </summary>
+        /// <param name="rootNode">The root node. Checks the ancestors of node up to root node</param>
+        /// <param name="node">The node to check.</param>
+        /// <param name="types">The types to check</param>
+        /// <returns></returns>
+        public static bool HasAncestorOfType(SyntaxNode rootNode, SyntaxNode node, Type[] types)
+        {
+            if (types.Contains(node.GetType()))
+                return true;
+
+            while (node != rootNode)
             {
-                case "decimal":
-                case "datetime":
-                case "datetimeoffset":
-                case "int16":
-                case "int32":
-                case "int64":
-                case "double":
+                node = node.Parent;
+                if (types.Contains(node.GetType()))
                     return true;
-                default:
-                    break;
             }
+
             return false;
         }
 
         /// <summary>
-        /// Returns the entire declaration that contains an object create expression. Helps underline the entire line, rather than just a creation expression (right side) of a line.
+        ///     Returns the first ancestor of given type
         /// </summary>
-        /// <param name="syntax"></param>
+        /// <param name="rootNode">The ending node.</param>
+        /// <param name="node">The starting node.</param>
+        /// <param name="type">The type of ancestor to find</param>
         /// <returns></returns>
-        public static LocalDeclarationStatementSyntax GetParentLocalDeclarationStatement(ObjectCreationExpressionSyntax syntax)
+        public static SyntaxNode GetFirstAncestorOfType(SyntaxNode rootNode, SyntaxNode node, Type type)
         {
-            var item = syntax.Parent;
+            return GetFirstAncestorOfType(rootNode, node, new[] {type});
+        }
 
-            while (true)
+        public static SyntaxNode GetFirstAncestorOfType(SyntaxNode rootNode, SyntaxNode node, Type[] types)
+        {
+            if (types.Contains(node.GetType()))
+                return node;
+
+            while (node != rootNode)
             {
-                //Break if the item is null
-                if (item == null)
-                {
-                    break;
-                }
-
-                //Check the type
-                if (item is LocalDeclarationStatementSyntax)
-                {
-                    return item as LocalDeclarationStatementSyntax;
-                }
-
-                //If no good, walk up the chain to the next parent
-                if (item.Parent != null)
-                {
-                    item = item.Parent;
-                    continue;
-                }
+                node = node.Parent;
+                if (types.Contains(node.GetType()))
+                    return node;
             }
 
             return null;
+        }
+
+        public static SyntaxNode TrimTrivia(SyntaxNode node)
+        {
+            return node.WithoutLeadingTrivia().WithoutTrailingTrivia();
         }
     }
 }

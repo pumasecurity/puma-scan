@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,32 +9,44 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using Puma.Security.Rules.Analyzer.Core.Specialized;
-using Puma.Security.Rules.Common;
-
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public class MemberAccessExpressionSyntaxAnalyzer : BaseExpressionSyntaxAnalyzer<MemberAccessExpressionSyntax>
+    internal class MemberAccessExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<MemberAccessExpressionSyntax>
     {
-        public override bool CanSuppress(SemanticModel model, ExpressionSyntax syntax)
+        private readonly ISanitizedSourceAnalyzer _sanitizedSourceAnalyzer;
+        private readonly ISafeSyntaxTypeAnalyzer _safeSyntaxTypeAnalyzer;
+
+        internal MemberAccessExpressionSyntaxAnalyzer() : this(new SanitizedSourceAnalyzer(), new SafeSyntaxTypeAnalyzer())
+        {
+        }
+
+        internal MemberAccessExpressionSyntaxAnalyzer(ISanitizedSourceAnalyzer sanitizedSourceAnalyzer, ISafeSyntaxTypeAnalyzer safeSyntaxTypeAnalyzer)
+        {
+            _sanitizedSourceAnalyzer = sanitizedSourceAnalyzer;
+            _safeSyntaxTypeAnalyzer = safeSyntaxTypeAnalyzer;
+        }
+
+        public override bool CanIgnore(SemanticModel model, SyntaxNode syntax)
         {
             var memberAccessExpressionSyntax = syntax as MemberAccessExpressionSyntax;
-            var symbol = model.GetSymbolInfo(memberAccessExpressionSyntax).Symbol as IMethodSymbol;
 
-            if (symbol == null) return base.CanSuppress(model, syntax);
-
-            if (symbol.ToString().StartsWith("string.format", StringComparison.InvariantCultureIgnoreCase) && !symbol.IsOverride)
+            if (_safeSyntaxTypeAnalyzer.IsSafeSyntaxType(model.GetSymbolInfo(memberAccessExpressionSyntax)))
                 return true;
 
-            if (Utils.IsXssWhiteListedType(symbol.ReceiverType))
+            return base.CanSuppress(model, syntax);
+        }
+
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        {
+            var memberAccessExpressionSyntax = syntax as MemberAccessExpressionSyntax;
+
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(model.GetSymbolInfo(memberAccessExpressionSyntax)))
                 return true;
-          
-            return false;
+
+            return base.CanSuppress(model, syntax);
         }
     }
 }

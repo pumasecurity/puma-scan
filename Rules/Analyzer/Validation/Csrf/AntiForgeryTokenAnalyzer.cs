@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,91 +9,49 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Puma.Security.Rules.Common;
-using Puma.Security.Rules.Diagnostics;
-using Puma.Security.Rules.Model;
-using Microsoft.CodeAnalysis;
+using System.Linq;
+
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Analyzer.Core.Factories;
+using Puma.Security.Rules.Analyzer.Validation.Csrf.Core;
+using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Diagnostics;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Csrf
 {
     [SupportedDiagnostic(DiagnosticId.SEC0019)]
-    public class AntiForgeryTokenAnalyzer : ISyntaxNodeAnalyzer
+    internal class AntiForgeryTokenAnalyzer : BaseSemanticAnalyzer, ISyntaxAnalyzer
     {
-        private const string _MODIFICATION_VERB_ATTRIBUTES = "HttpDelete|HttpPatch|HttpPost|HttpPut";
-        private const string _ACTION_RESULT_NAMESPACE = "System.Web.Mvc.ActionResult";
-        private const string _ANTI_FORGERY_TOKEN_ATTRIBUTE = "ValidateAntiForgeryToken";
+        private readonly IAntiForgeryTokenExpressionAnalyzer _expressionSyntaxAnalyzer;
+        private readonly IIdentifierNameVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        public SyntaxKind Kind => SyntaxKind.MethodDeclaration;
+        internal AntiForgeryTokenAnalyzer() : this(new AntiForgeryTokenExpressionAnalyzer(), new IdentifierNameVulnerableSyntaxNodeFactory()) { }
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(SyntaxNodeAnalysisContext context)
+        private AntiForgeryTokenAnalyzer(IAntiForgeryTokenExpressionAnalyzer expressionSyntaxAnalyzer,
+            IIdentifierNameVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
         {
-            var result = new List<DiagnosticInfo>();
+            _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
+            _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
+        }
 
-            var method = context.Node as MethodDeclarationSyntax;
+        public SyntaxKind SinkKind => SyntaxKind.MethodDeclaration;
 
-            //Grab the method's return type. 2 cases:
-            // - GenericNameSyntax (Task<ActionResult>)
-            // - IdentifierNameSyntax (ActionResult)
-            IdentifierNameSyntax returnType = null;
-            if (method?.ReturnType is GenericNameSyntax)
-            {
-                GenericNameSyntax generic = method?.ReturnType as GenericNameSyntax;
-                if (generic.TypeArgumentList.Arguments.Count > 0)
-                    returnType = generic.TypeArgumentList.Arguments[0] as IdentifierNameSyntax;
-            }
-            else
-            {
-                returnType = method?.ReturnType as IdentifierNameSyntax;
-            }
+        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        {
+            var syntax = context.Node as MethodDeclarationSyntax;
 
-            //If returnType is null, bail out
-            if (returnType == null)
-                return result;
+            //Grab the method's return type for the location value
+            var returnType = Utils.GetMethodReturnType(syntax);
 
-            //Grab the return type symbol and return if it is not a named type
-            var symbol = context.SemanticModel.GetSymbolInfo(returnType).Symbol as INamedTypeSymbol;
-            if (symbol == null)
-                return result;
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, returnType))
+                return;
 
-            //This could be expensive, but we need search to the base type and determine if this return type
-            //inherits from the System.Web.Mvc.ActionResult and verify if the return type is of type ActionResult
-            if (!Utils.SymbolInheritsFrom(symbol, _ACTION_RESULT_NAMESPACE))
-                return result;
-
-            //Assuming a good design pattern where GET requests (no method decoration) actually
-            //only retrieve data and do not make a data modifications. We all know this isn't always the case,
-            //but this is to reduce false positives on methods that are not vulnerable
-            if (method.AttributeLists.Count == 0)
-                return result;
-
-            //Search for HttpPost, HttpPut, HttpPatch, and HttpDelete decorators on the action
-            bool dataModification = false;
-            bool validateAntiForgeryToken = false;
-
-            foreach(AttributeListSyntax attribute in method.AttributeLists)
-            {
-                foreach(AttributeSyntax syntax in attribute.Attributes)
-                {
-                    if(!dataModification && _MODIFICATION_VERB_ATTRIBUTES.Split('|').Contains(syntax.Name?.ToString()))
-                        dataModification = true;
-
-                    if (!validateAntiForgeryToken && string.Compare(syntax.Name?.ToString(), _ANTI_FORGERY_TOKEN_ATTRIBUTE) == 0)
-                        validateAntiForgeryToken = true;
-                }
-            }
-
-            if (dataModification && !validateAntiForgeryToken)
-                result.Add(new DiagnosticInfo(returnType.GetLocation()));
-
-            return result;
+            if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != returnType?.GetLocation()))
+                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(returnType));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -14,16 +14,24 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public class BinaryExpressionSyntaxAnalyzer : BaseExpressionSyntaxAnalyzer<BinaryExpressionSyntax>
+    internal class BinaryExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<BinaryExpressionSyntax>
     {
-        private readonly IExpressionSyntaxAnalyzer<ExpressionSyntax> _analyzer;
+        private readonly ISyntaxNodeAnalyzer<SyntaxNode> _analyzer;
 
         public BinaryExpressionSyntaxAnalyzer()
         {
-            _analyzer = new ExpressionSyntaxAnalyzer();
+            _analyzer = new SyntaxNodeAnalyzer();
         }
 
-        public override bool CanSuppress(SemanticModel model, ExpressionSyntax syntax)
+        public override bool CanIgnore(SemanticModel model, SyntaxNode syntax)
+        {
+            var binaryExpressionSyntax = syntax as BinaryExpressionSyntax;
+
+            return _analyzer.CanIgnore(model, binaryExpressionSyntax.Right) &&
+                   _analyzer.CanIgnore(model, binaryExpressionSyntax.Left);
+        }
+
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
         {
             var binaryExpressionSyntax = syntax as BinaryExpressionSyntax;
 

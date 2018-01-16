@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -17,7 +17,7 @@ using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Path.Core
 {
-    public class FileWriteExpressionAnalyzer : IFileWriteExpressionAnalyzer
+    internal class FileWriteExpressionAnalyzer : IFileWriteExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
         {
@@ -30,24 +30,28 @@ namespace Puma.Security.Rules.Analyzer.Validation.Path.Core
             if (syntax.ArgumentList.Arguments.Count > 0)
             {
                 var argSyntax = syntax.ArgumentList.Arguments[0].Expression;
-                var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(argSyntax);
-                if (expressionAnalyzer.CanSuppress(model, argSyntax))
-                {
+                var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(argSyntax);
+                if (expressionAnalyzer.CanIgnore(model, argSyntax))
                     return false;
-                }
-                //TODO: if still vulnerable after eliminating any low hanging fruit - then we need to perform data flow analysis
+                if (expressionAnalyzer.CanSuppress(model, argSyntax))
+                    return false;
             }
 
             return true;
         }
 
         private static bool ContainsFileWriteCommands(InvocationExpressionSyntax syntax)
-            => syntax.ToString().Contains("File.WriteAllText") ||
-               syntax.ToString().Contains("File.WriteAllLines") ||
-               syntax.ToString().Contains("File.WriteAllBytes");
+        {
+            return syntax.ToString().Contains("File.WriteAllText") ||
+                   syntax.ToString().Contains("File.WriteAllLines") ||
+                   syntax.ToString().Contains("File.WriteAllBytes");
+        }
 
-        private bool IsFileWriteCommand(IMethodSymbol symbol) => symbol.IsMethod("System.IO.File", "WriteAllText") ||
-                                                                 symbol.IsMethod("System.IO.File", "WriteAllLines") ||
-                                                                 symbol.IsMethod("System.IO.File", "WriteAllBytes");
+        private bool IsFileWriteCommand(IMethodSymbol symbol)
+        {
+            return symbol.IsMethod("System.IO.File", "WriteAllText") ||
+                   symbol.IsMethod("System.IO.File", "WriteAllLines") ||
+                   symbol.IsMethod("System.IO.File", "WriteAllBytes");
+        }
     }
 }

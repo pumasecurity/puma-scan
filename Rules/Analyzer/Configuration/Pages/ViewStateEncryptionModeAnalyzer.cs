@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -10,10 +10,11 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Xml.XPath;
 
+using Microsoft.CodeAnalysis.Diagnostics;
+
+using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 using Puma.Security.Rules.Diagnostics;
@@ -22,20 +23,17 @@ using Puma.Security.Rules.Model;
 namespace Puma.Security.Rules.Analyzer.Configuration.Pages
 {
     [SupportedDiagnostic(DiagnosticId.SEC0013)]
-    public class ViewStateEncryptionModeAnalyzer : IConfigurationFileAnalyzer
+    internal class ViewStateEncryptionModeAnalyzer : BaseConfigurationFileAnalyzer, IConfigurationFileAnalyzer
     {
         private const string SEARCH_EXPRESSION = "configuration/system.web/pages";
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(IEnumerable<ConfigurationFile> srcFiles,
-            CancellationToken cancellationToken)
+        public void OnCompilationEnd(CompilationAnalysisContext pumaContext)
         {
-            var result = new List<DiagnosticInfo>();
-
-            foreach (var config in srcFiles)
+            foreach (var config in ConfigurationFiles)
             {
                 //Search for the element in question
                 var element = config.ProductionConfigurationDocument.XPathSelectElement(SEARCH_EXPRESSION);
-                if(element == null)
+                if (element == null)
                     continue;
 
                 //Get the cookieless attribute
@@ -47,11 +45,9 @@ namespace Puma.Security.Rules.Analyzer.Configuration.Pages
                     string.Compare(attribute.Value, "Always", StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     var lineInfo = config.GetProductionLineInfo(element, SEARCH_EXPRESSION);
-                    result.Add(new DiagnosticInfo(config.Source.Path, lineInfo.LineNumber, element.ToString()));
+                    VulnerableAdditionalText.Push(new DiagnosticInfo(config.Source.Path, lineInfo.LineNumber, element.ToString()));
                 }
             }
-
-            return result;
         }
     }
 }

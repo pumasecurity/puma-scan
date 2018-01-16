@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -17,7 +17,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Certificate.Core
 {
-    public class WebRequestHandlerCertificateValidationExpressionAnalyzer :
+    internal class WebRequestHandlerCertificateValidationExpressionAnalyzer :
         IWebRequestHandlerCertificateValidationExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
@@ -29,10 +29,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.Certificate.Core
             if (symbol == null)
                 return false;
 
-            //NOTE: only flagging those hard-coding a return value of true. Therefore could miss scenarios where the value is hardcoded in a const, config value. 
-            //TODO: therefore need dataflow to analyzer further
-            //TODO: can we evaluate the expression? Possibly with the scripting lib. Would need to gather any references needed to execute.
-
+            //TODO: only flagging those hard-coding a return value of true. Therefore could miss scenarios where the value is hardcoded in a const, config value. 
             if (symbol.Name == "ServerCertificateValidationCallback" &&
                 symbol.ContainingType.Name == "WebRequestHandler")
             {
@@ -92,6 +89,8 @@ namespace Puma.Security.Rules.Analyzer.Validation.Certificate.Core
         }
 
         private static bool ContainsCertificateValidationCallback(AssignmentExpressionSyntax syntax)
-            => syntax.ToString().Contains("ServerCertificateValidationCallback");
+        {
+            return syntax.ToString().Contains("ServerCertificateValidationCallback");
+        }
     }
 }

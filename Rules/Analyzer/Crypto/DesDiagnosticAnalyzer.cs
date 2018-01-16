@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,44 +9,46 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Analyzer.Crypto.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Diagnostics;
-using Puma.Security.Rules.Model;
 
 namespace Puma.Security.Rules.Analyzer.Crypto
 {
     [SupportedDiagnostic(DiagnosticId.SEC0025)]
-    public class DesDiagnosticAnalyzer : ISyntaxNodeAnalyzer
+    internal class DesDiagnosticAnalyzer : BaseSemanticAnalyzer, ISyntaxAnalyzer
     {
         private readonly IDesExpressionAnalzyer _expressionSyntaxAnalyzer;
+        private readonly IObjectCreationExpressionVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        public DesDiagnosticAnalyzer(IDesExpressionAnalzyer expressionSyntaxAnalyzer)
+        internal DesDiagnosticAnalyzer() : this(new DesExpressionAnalyzer(), new ObjectCreationExpressionVulnerableSyntaxNodeFactory()) { }
+
+        private DesDiagnosticAnalyzer(IDesExpressionAnalzyer expressionSyntaxAnalyzer,
+            IObjectCreationExpressionVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
         {
             _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
+            _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
         }
 
-        public SyntaxKind Kind => SyntaxKind.ObjectCreationExpression;
+        public SyntaxKind SinkKind => SyntaxKind.ObjectCreationExpression;
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context)
         {
-            var result = new List<DiagnosticInfo>();
             var syntax = context.Node as ObjectCreationExpressionSyntax;
 
             if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
-                return result;
-
-
-            var location = Utils.GetParentLocalDeclarationStatement(syntax);
-            result.Add(new DiagnosticInfo(location != null ? location.GetLocation() : syntax.GetLocation()));
-
-            return result;
+                return;
+            
+            if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax.GetLocation()))
+                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
         }
     }
 }

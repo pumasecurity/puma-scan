@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -10,34 +10,35 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Crypto.Core
 {
-    public class DesExpressionAnalyzer : IDesExpressionAnalzyer
+    internal class DesExpressionAnalyzer : IDesExpressionAnalzyer
     {
         public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
         {
-            //Check for the DESCryptoServiceProvider type
+            //Check for the type
             if (!ContainsTypeName(syntax)) return false;
 
             //If we found it, verify the namespace
-            var symbol = model.GetSymbolInfo(syntax).Symbol as ISymbol;
+            var symbol = model.GetSymbolInfo(syntax).Symbol;
 
             if (!IsType(symbol)) return false;
-            
+
             return true;
         }
 
         private static bool ContainsTypeName(ObjectCreationExpressionSyntax syntax)
-            => string.Compare(syntax?.Type.ToString(), "DESCryptoServiceProvider", StringComparison.Ordinal) == 0;
+        {
+            return string.Compare(syntax?.Type.ToString(), "DESCryptoServiceProvider", StringComparison.Ordinal) == 0;
+        }
 
-        private bool IsType(ISymbol symbol) => symbol.ContainingNamespace.ToString().Equals("System.Security.Cryptography");
+        private bool IsType(ISymbol symbol)
+        {
+            return symbol.ContainingNamespace.ToString().Equals("System.Security.Cryptography");
+        }
     }
 }

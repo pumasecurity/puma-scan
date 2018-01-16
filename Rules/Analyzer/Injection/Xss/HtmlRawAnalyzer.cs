@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,52 +9,60 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 
+using Microsoft.CodeAnalysis.Diagnostics;
+
+using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Diagnostics;
+using Puma.Security.Rules.Filters;
 using Puma.Security.Rules.Model;
 using Puma.Security.Rules.Regex;
 using Puma.Security.Rules.Regex.Mvc;
 
-using Microsoft.CodeAnalysis;
-
 namespace Puma.Security.Rules.Analyzer.Injection.Xss
 {
-
     [SupportedDiagnostic(DiagnosticId.SEC0102)]
-    public class HtmlRawAnalyzer : IAdditionalTextAnalyzer
+    internal class HtmlRawAnalyzer : BaseMarkupFileAnalyzer, IAdditionalTextAnalyzer
     {
         private readonly IRegexHelper _htmlRawRegexHelper;
-        
-        public HtmlRawAnalyzer(HtmlRawRegexHelper htmlRawRegexHelper)
+        private readonly IFileExtensionFilter _mvcMarkupFileFilter;
+
+        internal HtmlRawAnalyzer() : this(new HtmlRawRegexHelper(), new MvcMarkupFileFilter()) { }
+
+        private HtmlRawAnalyzer(IRegexHelper htmlRawRegexHelper, IFileExtensionFilter mvcMarkupFileFilter)
         {
             _htmlRawRegexHelper = htmlRawRegexHelper;
+            _mvcMarkupFileFilter = mvcMarkupFileFilter;
         }
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(IEnumerable<AdditionalText> srcFiles,
-            CancellationToken cancellationToken)
+        public ConcurrentStack<DiagnosticInfo> VulnerableAdditionalText { get; } = new ConcurrentStack<DiagnosticInfo>();
+
+        public void OnCompilationEnd(CompilationAnalysisContext context)
         {
-            var result = new List<DiagnosticInfo>();
+            if (!context.Options.AdditionalFiles.Any())
+                return;
+
+            var srcFiles = _mvcMarkupFileFilter.GetFiles(context.Options.AdditionalFiles).ToList();
+
+            if (!srcFiles.Any())
+                return;
 
             foreach (var file in srcFiles)
             {
-                var document = file.GetText(cancellationToken);
+                var document = file.GetText();
 
                 var source = document.ToString();
 
                 if (!_htmlRawRegexHelper.HasMatch(source)) continue;
 
                 foreach (Match match in _htmlRawRegexHelper.GetMatches(source))
-                {
-                    result.Add(new DiagnosticInfo(file.Path, document.Lines.GetLinePosition(match.Index).Line,
+                    VulnerableAdditionalText.Push(new DiagnosticInfo(file.Path, document.Lines.GetLinePosition(match.Index).Line,
                         source.Substring(match.Index, match.Length)));
-                }
             }
-
-            return result;
         }
     }
 }

@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -19,7 +19,7 @@ using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
-    public class LdapDirectoryEntryPathInjectionExpressionAnalyzer : ILdapDirectoryEntryPathInjectionExpressionAnalyzer
+    internal class LdapDirectoryEntryPathInjectionExpressionAnalyzer : ILdapDirectoryEntryPathInjectionExpressionAnalyzer
     {
         public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
         {
@@ -31,11 +31,11 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                 if (syntax.ArgumentList?.Arguments.Count > 0)
                 {
                     var argSyntax = syntax.ArgumentList.Arguments[0].Expression;
-                    var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(argSyntax);
-                    if (expressionAnalyzer.CanSuppress(model, argSyntax))
-                    {
+                    var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(argSyntax);
+                    if (expressionAnalyzer.CanIgnore(model, argSyntax))
                         return false;
-                    }
+                    if (expressionAnalyzer.CanSuppress(model, argSyntax))
+                        return false;
                 }
 
                 var filter = syntax.Initializer?.Expressions.OfType<AssignmentExpressionSyntax>()
@@ -43,17 +43,15 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 
                 if (filter != null)
                 {
-                    var expressionAnalyzer = ExpressionSyntaxAnalyzerFactory.Create(filter.Right);
-                    if (expressionAnalyzer.CanSuppress(model, filter.Right))
-                    {
+                    var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(filter.Right);
+                    if (expressionAnalyzer.CanIgnore(model, filter.Right))
                         return false;
-                    }
+                    if (expressionAnalyzer.CanSuppress(model, filter.Right))
+                        return false;
                 }
 
                 if (filter == null && syntax.ArgumentList?.Arguments.Count == 0)
-                {
                     return false;
-                }
 
                 return true;
             }

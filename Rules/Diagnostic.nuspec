@@ -2,26 +2,29 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Puma.Security.Rules</id>
-    <version>1.0.6.0</version>
+    <version>2.0.0.0</version>
     <title>Puma Scan</title>
     <authors>Puma Security LLC</authors>
     <owners>Puma Security, LLC</owners>
     <licenseUrl>https://www.pumascan.com/license</licenseUrl>
-    <projectUrl>https://www.pumascan.com</projectUrl>
+    <projectUrl>https://www.pumascan.com/community</projectUrl>
     <iconUrl>https://www.pumascan.com/images/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Puma.Security.Rules</description>
+    <description>Diagnostic extension for the .NET Compiler Platform that performs static code analysis for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</description>
     <developmentDependency>true</developmentDependency>
-    <releaseNotes>https://www.pumascan.com/installation.html#release-notes</releaseNotes>
-    <copyright>Copyright 2016 - 2017 Puma Security, LLC</copyright>
-    <tags>Puma.Security.Rules, .NET Security Analyzer, Security, Code, Analyzers</tags>
+    <releaseNotes>https://www.pumascan.com/community/installation.html#release-notes</releaseNotes>
+    <copyright>Copyright 2016 - 2018 Puma Security, LLC</copyright>
+    <tags>Puma.Security.Rules, Professional, .NET Security Analyzer, Security, Code, Analyzers, OWASP</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="10.0.3" />
+    </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
     </frameworkAssemblies>
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\portable50 and language specific analyzers in either analyzers\portable50\cs or analyzers\portable50\vb -->
   <files>
-    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.Build.*;**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
     <file src="tools\*.ps1" target="tools\" />
   </files>
 </package>

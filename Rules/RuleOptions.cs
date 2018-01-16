@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -27,7 +27,7 @@ namespace Puma.Security.Rules
         //private static string _productionBuildConfiguration = ""; //This will disable transforms
         private static int _maxRequestLengthMax = 204800;
         private static int _passwordComplexityMinPasswordLength = 12;
-         private static bool _passwordComplexityRequireNumber = true;
+        private static bool _passwordComplexityRequireNumber = true;
         private static bool _passwordComplexityRequireSpecialCharcter = true;
         private static bool _passwordComplexityRequireLowerCharacter = true;
         private static bool _passwordComplexityRequireUpperCharacter = true;

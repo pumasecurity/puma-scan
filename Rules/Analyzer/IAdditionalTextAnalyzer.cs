@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -9,15 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System.Collections.Generic;
-using System.Threading;
+using System.Collections.Concurrent;
+
 using Puma.Security.Rules.Model;
-using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Analyzer
 {
-    public interface IAdditionalTextAnalyzer : IAnalyzer
+    public interface IAdditionalTextAnalyzer : ICompilationAnalyzer
     {
-        IEnumerable<DiagnosticInfo> GetDiagnosticInfo(IEnumerable<AdditionalText> srcFiles, CancellationToken cancellationToken);
+        ConcurrentStack<DiagnosticInfo> VulnerableAdditionalText { get; }
     }
 }

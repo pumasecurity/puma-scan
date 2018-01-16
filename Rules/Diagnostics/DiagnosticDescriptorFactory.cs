@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -25,14 +25,14 @@ namespace Puma.Security.Rules.Diagnostics
             LocalizableString anchor = new LocalizableResourceString(string.Format("Analyzer_{0}_Anchor", code), Resources.ResourceManager, typeof(Resources));
 
             return new DiagnosticDescriptor(
-            code
-            , title
-            , message
-            , getCategoryResource(category)
-            , DiagnosticSeverity.Warning
-            , true
-            , description
-            , string.Format("https://www.pumascan.com/rules.html#{0}", anchor));
+                code
+                , title
+                , message
+                , getCategoryResource(category)
+                , DiagnosticSeverity.Warning
+                , true
+                , description
+                , string.Format("https://www.pumascan.com/rules.html#{0}", anchor));
         }
 
         private static string getCategoryResource(DiagnosticCategory cateogry)

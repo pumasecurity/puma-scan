@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -16,8 +16,8 @@ using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 {
-    public class LinqSqlInjectionExpressionAnalyzer : ILinqSqlInjectionExpressionAnalyzer
-    {   
+    internal class LinqSqlInjectionExpressionAnalyzer : ILinqSqlInjectionExpressionAnalyzer
+    {
         public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
         {
             if (!ContainsLinqExecuteCommands(syntax))
@@ -27,6 +27,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 
             if (!IsSymbolLinqExecuteCommand(symbol)) return false;
 
+            /* THIS IS GOING TO BE PASSED TO THE DFA FOR ANALYSIS GOING FORWARD
             if (syntax.ArgumentList.Arguments.Count == 1) //No params passed
             {
                 return !(syntax.ArgumentList.Arguments[0].Expression is LiteralExpressionSyntax);
@@ -37,16 +38,21 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
             {
                 return syntax.ArgumentList.Arguments[0].Expression is BinaryExpressionSyntax;
             }
+            */
 
             return true;
         }
 
         private static bool ContainsLinqExecuteCommands(InvocationExpressionSyntax syntax)
-         => syntax.ToString().Contains("ExecuteQuery") ||
-            syntax.ToString().Contains("ExecuteCommand");
+        {
+            return syntax.ToString().Contains("ExecuteQuery") ||
+                   syntax.ToString().Contains("ExecuteCommand");
+        }
 
         private bool IsSymbolLinqExecuteCommand(IMethodSymbol symbol)
-            => symbol.IsMethod("System.Data.Linq.DataContext", "ExecuteQuery") ||
-               symbol.IsMethod("System.Data.Linq.DataContext", "ExecuteCommand");
+        {
+            return symbol.IsMethod("System.Data.Linq.DataContext", "ExecuteQuery") ||
+                   symbol.IsMethod("System.Data.Linq.DataContext", "ExecuteCommand");
+        }
     }
 }

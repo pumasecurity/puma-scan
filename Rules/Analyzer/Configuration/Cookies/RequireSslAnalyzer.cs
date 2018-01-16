@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2017 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -10,11 +10,11 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Xml.Linq;
 using System.Xml.XPath;
 
+using Microsoft.CodeAnalysis.Diagnostics;
+
+using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 using Puma.Security.Rules.Diagnostics;
@@ -23,35 +23,30 @@ using Puma.Security.Rules.Model;
 namespace Puma.Security.Rules.Analyzer.Configuration.Cookies
 {
     [SupportedDiagnostic(DiagnosticId.SEC0014)]
-    public class RequireSslAnalyzer : IConfigurationFileAnalyzer
+    internal class RequireSslAnalyzer : BaseConfigurationFileAnalyzer, IConfigurationFileAnalyzer
     {
         private const string SEARCH_EXPRESSION = "configuration/system.web/httpCookies";
 
-        public IEnumerable<DiagnosticInfo> GetDiagnosticInfo(IEnumerable<ConfigurationFile> srcFiles,
-            CancellationToken cancellationToken)
+        public void OnCompilationEnd(CompilationAnalysisContext context)
         {
-            var result = new List<DiagnosticInfo>();
-
-            foreach (var config in srcFiles)
+            foreach (var config in ConfigurationFiles)
             {
                 //Search for the element in question
-                XElement element = config.ProductionConfigurationDocument.XPathSelectElement(SEARCH_EXPRESSION);
+                var element = config.ProductionConfigurationDocument.XPathSelectElement(SEARCH_EXPRESSION);
                 if (element == null)
                     continue;
 
                 //Get the requireSSL attribute
-                XAttribute attribute = element.Attribute("requireSSL");
+                var attribute = element.Attribute("requireSSL");
 
                 //Default value is false, so it's an issue if it does not exist
                 //Or, look for a non-true value and flag it
                 if (attribute == null || string.Compare(attribute.Value, "true", StringComparison.OrdinalIgnoreCase) != 0)
                 {
                     var lineInfo = config.GetProductionLineInfo(element, SEARCH_EXPRESSION);
-                    result.Add(new DiagnosticInfo(config.Source.Path, lineInfo.LineNumber, element.ToString()));
+                    VulnerableAdditionalText.Push(new DiagnosticInfo(config.Source.Path, lineInfo.LineNumber, element.ToString()));
                 }
             }
-
-            return result;
         }
     }
 }
