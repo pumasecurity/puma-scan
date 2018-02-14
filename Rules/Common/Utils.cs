@@ -187,39 +187,5 @@ namespace Puma.Security.Rules.Common
             }
             return false;
         }
-
-        /// <summary>
-        /// Returns the entire declaration that contains an object create expression. Helps underline the entire line, rather than just a creation expression (right side) of a line.
-        /// </summary>
-        /// <param name="syntax"></param>
-        /// <returns></returns>
-        public static LocalDeclarationStatementSyntax GetParentLocalDeclarationStatement(ObjectCreationExpressionSyntax syntax)
-        {
-            var item = syntax.Parent;
-
-            while (true)
-            {
-                //Break if the item is null
-                if (item == null)
-                {
-                    break;
-                }
-
-                //Check the type
-                if (item is LocalDeclarationStatementSyntax)
-                {
-                    return item as LocalDeclarationStatementSyntax;
-                }
-
-                //If no good, walk up the chain to the next parent
-                if (item.Parent != null)
-                {
-                    item = item.Parent;
-                    continue;
-                }
-            }
-
-            return null;
-        }
     }
 }

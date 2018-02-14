@@ -19,7 +19,7 @@ namespace Puma.Security.Rules {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -1033,7 +1033,9 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm..
+        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
+        ///
+        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
         /// </summary>
         internal static string Analyzer_SEC0027_Description {
             get {
@@ -1042,9 +1044,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
-        ///
-        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
+        ///   Looks up a localized string similar to The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm..
         /// </summary>
         internal static string Analyzer_SEC0027_MessageFormat {
             get {
@@ -1071,7 +1071,9 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2..
+        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
+        ///
+        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
         /// </summary>
         internal static string Analyzer_SEC0028_Description {
             get {
@@ -1080,9 +1082,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
-        ///
-        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
+        ///   Looks up a localized string similar to The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2..
         /// </summary>
         internal static string Analyzer_SEC0028_MessageFormat {
             get {

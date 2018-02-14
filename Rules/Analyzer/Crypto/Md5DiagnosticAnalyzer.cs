@@ -43,8 +43,7 @@ namespace Puma.Security.Rules.Analyzer.Crypto
                 return result;
 
 
-            var location = Utils.GetParentLocalDeclarationStatement(syntax);
-            result.Add(new DiagnosticInfo(location != null ? location.GetLocation() : syntax.GetLocation()));
+            result.Add(new DiagnosticInfo(syntax.GetLocation()));
 
             return result;
         }

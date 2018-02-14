@@ -622,12 +622,12 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>sec0027-weak-algorithm-md5</value>
   </data>
   <data name="Analyzer_SEC0027_Description" xml:space="preserve">
-    <value>The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.</value>
-  </data>
-  <data name="Analyzer_SEC0027_MessageFormat" xml:space="preserve">
     <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
 
 NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+  </data>
+  <data name="Analyzer_SEC0027_MessageFormat" xml:space="preserve">
+    <value>The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.</value>
   </data>
   <data name="Analyzer_SEC0027_Title" xml:space="preserve">
     <value>Weak Cryptography Algorithm (MD5)</value>
@@ -636,12 +636,12 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
     <value>sec0028-weak-algorithm-sha1</value>
   </data>
   <data name="Analyzer_SEC0028_Description" xml:space="preserve">
-    <value>The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2.</value>
-  </data>
-  <data name="Analyzer_SEC0028_MessageFormat" xml:space="preserve">
     <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
 
 NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+  </data>
+  <data name="Analyzer_SEC0028_MessageFormat" xml:space="preserve">
+    <value>The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2.</value>
   </data>
   <data name="Analyzer_SEC0028_Title" xml:space="preserve">
     <value>Weak Cryptography Algorithm (SHA1)</value>

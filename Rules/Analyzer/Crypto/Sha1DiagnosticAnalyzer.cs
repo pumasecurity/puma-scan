@@ -42,9 +42,7 @@ namespace Puma.Security.Rules.Analyzer.Crypto
             if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
                 return result;
 
-
-            var location = Utils.GetParentLocalDeclarationStatement(syntax);
-            result.Add(new DiagnosticInfo(location != null ? location.GetLocation() : syntax.GetLocation()));
+            result.Add(new DiagnosticInfo(syntax.GetLocation()));
 
             return result;
         }
