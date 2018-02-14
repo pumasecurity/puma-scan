@@ -7,13 +7,13 @@
     <authors>Puma Security LLC</authors>
     <owners>Puma Security, LLC</owners>
     <licenseUrl>https://www.pumascan.com/license</licenseUrl>
-    <projectUrl>https://www.pumascan.com</projectUrl>
+    <projectUrl>https://www.pumascan.com/community</projectUrl>
     <iconUrl>https://www.pumascan.com/images/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Puma.Security.Rules</description>
     <developmentDependency>true</developmentDependency>
-    <releaseNotes>https://www.pumascan.com/installation.html#release-notes</releaseNotes>
-    <copyright>Copyright 2016 - 2017 Puma Security, LLC</copyright>
+    <releaseNotes>https://www.pumascan.com/community/installation.html#release-notes</releaseNotes>
+    <copyright>Copyright 2016 - 2018 Puma Security, LLC</copyright>
     <tags>Puma.Security.Rules, .NET Security Analyzer, Security, Code, Analyzers</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
