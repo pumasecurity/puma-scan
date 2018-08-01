@@ -13,6 +13,9 @@ using System.Collections.Concurrent;
 
 using Microsoft.CodeAnalysis.Diagnostics;
 
+using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Core;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class BaseSemanticAnalyzer
@@ -20,12 +23,14 @@ namespace Puma.Security.Rules.Analyzer.Core
         public ConcurrentStack<VulnerableSyntaxNode> VulnerableSyntaxNodes { get; } =
             new ConcurrentStack<VulnerableSyntaxNode>();
 
-        public virtual void GetSinks(SyntaxNodeAnalysisContext context)
+        public virtual void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
+
         }
 
-        public virtual void OnCompilationEnd(CompilationAnalysisContext context)
+        public virtual void OnCompilationEnd(PumaCompilationAnalysisContext context)
         {
+            
         }
     }
 }

@@ -12,6 +12,8 @@
 using Puma.Security.Rules.Common;
 
 using Microsoft.CodeAnalysis;
+using Puma.Security.Rules.Configuration.Core;
+using System;
 
 namespace Puma.Security.Rules.Diagnostics
 {
@@ -29,7 +31,7 @@ namespace Puma.Security.Rules.Diagnostics
                 , title
                 , message
                 , getCategoryResource(category)
-                , DiagnosticSeverity.Warning
+                , severity
                 , true
                 , description
                 , string.Format("https://www.pumascan.com/rules.html#{0}", anchor));

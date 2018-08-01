@@ -12,11 +12,13 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Injection.Deserialization.Core
 {
     internal class NewtonsoftJsonTypeNameHandlingExpressionAnalyzer : INewtonsoftJsonTypeNameHandlingExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId)
         {
             //2 cases here: x.TypeNameHandling or { TypeNameHandling = }
             if (syntax?.Left is MemberAccessExpressionSyntax)

@@ -12,6 +12,8 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class ArgumentSyntaxNodeAnalyzer : BaseSyntaxNodeAnalyzer<ArgumentSyntax>
@@ -31,19 +33,19 @@ namespace Puma.Security.Rules.Analyzer.Core
             return base.CanIgnore(model, syntax);
         }
 
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             var argumentSyntax = syntax as ArgumentSyntax;
             if (argumentSyntax != null)
             {
                 var parentOfArgumentSyntaxAnalyzer = SyntaxNodeAnalyzerFactory.Create(argumentSyntax.Parent);
-                if (parentOfArgumentSyntaxAnalyzer.CanSuppress(model, argumentSyntax.Parent))
+                if (parentOfArgumentSyntaxAnalyzer.CanSuppress(model, argumentSyntax.Parent, ruleId))
                 {
                     return true;
                 }
             }
 
-            return base.CanSuppress(model, syntax);
+            return base.CanSuppress(model, syntax, ruleId);
         }
     }
 }

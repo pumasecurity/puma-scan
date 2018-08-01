@@ -14,6 +14,7 @@ using System;
 using Puma.Security.Rules.Common;
 
 using Microsoft.CodeAnalysis;
+using Puma.Security.Rules.Configuration.Core;
 
 namespace Puma.Security.Rules.Diagnostics
 {
@@ -28,9 +29,9 @@ namespace Puma.Security.Rules.Diagnostics
             Category = category;
         }
 
-        public DiagnosticCategory Category { get; }
+        public DiagnosticCategory Category { get; set; }
 
-        public DiagnosticSeverity Severity { get; }
+        public DiagnosticSeverity Severity { get; set; }
 
         public string Code { get; }
 

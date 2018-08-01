@@ -40,7 +40,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.RequestValidation
 
         public SyntaxKind SinkKind => SyntaxKind.Attribute;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as AttributeSyntax;
 

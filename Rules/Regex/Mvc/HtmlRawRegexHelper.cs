@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace Puma.Security.Rules.Regex.Mvc
 {
-    public class HtmlRawRegexHelper : BaseRegexHelper
+    internal class HtmlRawRegexHelper : BaseRegexHelper
     {
         private const string Regex = @"\@Html.Raw\(
                                             (
@@ -24,7 +24,7 @@ namespace Puma.Security.Rules.Regex.Mvc
                                             (?(Level)(?!))     
                                         \)";
 
-        public HtmlRawRegexHelper() : base(RegexOptions.IgnorePatternWhitespace) { }
+        internal HtmlRawRegexHelper() : base(RegexOptions.IgnorePatternWhitespace) { }
 
         protected override string GetExpression()
         {

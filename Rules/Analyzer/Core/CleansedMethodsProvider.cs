@@ -10,6 +10,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -35,23 +36,23 @@ namespace Puma.Security.Rules.Analyzer.Core
             sources.Add(new CleanseMethod(TaintFlags.DataType, typeof(InvocationExpressionSyntax).Name, "System", "Convert", "ToUInt16"));
             sources.Add(new CleanseMethod(TaintFlags.DataType, typeof(InvocationExpressionSyntax).Name, "System", "Convert", "ToUInt32"));
             sources.Add(new CleanseMethod(TaintFlags.DataType, typeof(InvocationExpressionSyntax).Name, "System", "Convert", "ToUInt64"));
-         
+
             List<DiagnosticId> antiXssIds = new List<DiagnosticId>();
             antiXssIds.AddRange(new[] { DiagnosticId.SEC0024, DiagnosticId.SEC0100, DiagnosticId.SEC0101, DiagnosticId.SEC0102
                 , DiagnosticId.SEC0103, DiagnosticId.SEC0104, DiagnosticId.SEC0105});
-            
+
             sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "System.Web.Security.AntiXss", "AntiXssEncoder", "HtmlEncode", antiXssIds));
             sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "Microsoft.Security.Application", "Encoder", "HtmlEncode", antiXssIds));
             sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "System.Web", "HttpServerUtility", "HtmlEncode", antiXssIds));
 
 
-            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "Microsoft.Security.Application", "Encoder", "LdapDistinguishedNameEncode", new List<DiagnosticId>() {DiagnosticId.SEC0012}));
+            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "Microsoft.Security.Application", "Encoder", "LdapDistinguishedNameEncode", new List<DiagnosticId>() { DiagnosticId.SEC0012 }));
 
-            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "Microsoft.Security.Application", "Encoder", "LdapFilterEncode", new List<DiagnosticId>() {DiagnosticId.SEC0012}));
+            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "Microsoft.Security.Application", "Encoder", "LdapFilterEncode", new List<DiagnosticId>() { DiagnosticId.SEC0012 }));
 
-            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "System.Web.Mvc", "UrlHelper", "IsLocalUrl", new List<DiagnosticId>() {DiagnosticId.SEC0109}));
+            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "System.Web.Mvc", "UrlHelper", "IsLocalUrl", new List<DiagnosticId>() { DiagnosticId.SEC0109 }));
 
-            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "System", "Uri", "TryCreate", new List<DiagnosticId>() {DiagnosticId.SEC0110}));
+            sources.Add(new CleanseMethod(TaintFlags.Web, typeof(InvocationExpressionSyntax).Name, "System", "Uri", "TryCreate", new List<DiagnosticId>() { DiagnosticId.SEC0110 }));
 
             return sources;
         }

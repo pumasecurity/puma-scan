@@ -15,12 +15,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Validation.Certificate.Core
 {
     internal class WebRequestHandlerCertificateValidationExpressionAnalyzer :
         IWebRequestHandlerCertificateValidationExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!ContainsCertificateValidationCallback(syntax))
                 return false;

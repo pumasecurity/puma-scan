@@ -11,7 +11,7 @@
 
 namespace Puma.Security.Rules.Regex.Mvc
 {
-    public class WriteLiteralRegexHelper : BaseRegexHelper
+    internal class WriteLiteralRegexHelper : BaseRegexHelper
     {
         //TODO: this one could use some more love. As if two WriteLiteral's exist in one code block it will only fire 1 rule violation. Want to only match on 
         //WriteLiterals within the code block @{}, but not necessarily have the regex expression match the code block. Could have analyzer run two regexes or 

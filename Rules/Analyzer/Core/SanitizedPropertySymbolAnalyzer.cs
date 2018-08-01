@@ -23,11 +23,12 @@ namespace Puma.Security.Rules.Analyzer.Core
     {
         private readonly ICleansedMethodsProvider _cleansedMethodsProvider;
 
-        public SanitizedPropertySymbolAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
+        internal SanitizedPropertySymbolAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
         {   
             _cleansedMethodsProvider = cleansedMethodsProvider;
         }
-        public bool IsSymbolSanitized(IPropertySymbol propertySymbol, DiagnosticId ruleId = DiagnosticId.None)
+
+        public bool IsSymbolSanitized(IPropertySymbol propertySymbol, DiagnosticId ruleId)
         {
             //Filter by namespace
             IEnumerable<CleanseMethod> methods = _cleansedMethodsProvider.GetByRuleId(ruleId).Where(i => string.Compare(i.Namespace, propertySymbol.ContainingNamespace.ToString()) == 0);

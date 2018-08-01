@@ -13,6 +13,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class ParameterSyntaxNodeAnalyzer : BaseSyntaxNodeAnalyzer<ParameterSyntax>
@@ -24,8 +26,8 @@ namespace Puma.Security.Rules.Analyzer.Core
             this(new CleansedMethodsProvider())
         { }
 
-        internal ParameterSyntaxNodeAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
-            : this(new SanitizedParameterSymbolAnalyzer(cleansedMethodsProvider), new SafeSyntaxTypeAnalyzer())
+        internal ParameterSyntaxNodeAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider) 
+            :this(new SanitizedParameterSymbolAnalyzer(cleansedMethodsProvider), new SafeSyntaxTypeAnalyzer())
         { }
 
         internal ParameterSyntaxNodeAnalyzer(ISanitizedParameterSymbolAnalyzer sanitizedSourceAnalyzer, ISafeSyntaxTypeAnalyzer safeSyntaxTypeAnalyzer)
@@ -43,13 +45,13 @@ namespace Puma.Security.Rules.Analyzer.Core
             return base.CanIgnore(model, syntax);
         }
 
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             var parameterSyntax = syntax as ParameterSyntax;
             var symbol = model.GetDeclaredSymbol(parameterSyntax);
 
-            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(symbol)) return true;
-            return base.CanSuppress(model, syntax);
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(symbol, ruleId)) return true;
+            return base.CanSuppress(model, syntax, ruleId);
         }
     }
 }

@@ -136,7 +136,7 @@
     <value>Debug Build Enabled</value>
   </data>
   <data name="Analyzer_SEC0002_Description" xml:space="preserve">
-    <value>Displaying stack traces in the browser can leak information to attackers and help them gain information for launching additional attacks. Enable custom errors by setting the mode to On or RemoteOnly: &lt;customErrors mode="On|RemoteOnly" /&gt;</value>
+    <value>Displaying stack traces in the browser can leak information to attackers and help them gain information for launching additional attacks. Enable custom errors by setting the mode to On or RemoteOnly: &lt;customErrors mode="On|RemoteOnly" /&gt;.</value>
   </data>
   <data name="Analyzer_SEC0002_MessageFormat" xml:space="preserve">
     <value>Custom errors are disabled. {0}({1}): {2}</value>
@@ -306,7 +306,7 @@ Instead of using the raw WriteLiteral method, use a Razor helper that performs a
     <value>Cookie Accessible via Script</value>
   </data>
   <data name="Analyzer_SEC0016_Description" xml:space="preserve">
-    <value>The machine key element defines keys to use for encryption and decryption of authentication cookies, view state, and verification of session state identification. The validation and decryption key values should not be stored in configuration files in cleartext. Encrypt the machineKey section of the configuration file using aspnet_regiis.exe. </value>
+    <value>The machine key element defines keys to use for encryption and decryption of authentication cookies, view state, and verification of session state identification. The validation and decryption key values should not be stored in configuration files in cleartext. Encrypt the machineKey section of the configuration file using aspnet_regiis.exe.</value>
   </data>
   <data name="Analyzer_SEC0016_MessageFormat" xml:space="preserve">
     <value>Machine key element is not encrypted. {0}({1}): {2}</value>
@@ -391,7 +391,7 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>SQL Injection Dynamic LINQ Query</value>
   </data>
   <data name="Analyzer_SEC0107_Description" xml:space="preserve">
-    <value>The System.Data.SqlClient.SqlCommand class allows applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection attacks.</value>
+    <value>The SQL Command communicates directly with the backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection attacks.</value>
   </data>
   <data name="Analyzer_SEC0107_MessageFormat" xml:space="preserve">
     <value>SQL Injection - ADO.NET method is passed a dynamic SQL statement.</value>
@@ -430,7 +430,7 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
   </data>
   <data name="Analyzer_SEC0111_MessageFormat" xml:space="preserve">
-    <value>Unvalidated file paths are passed to the Controller FilePathResult action, which can allow arbitrary file downloads from the server.</value>
+    <value>Unvalidated file path parameter is passed to the Controller {0} action, which can allow arbitrary file downloads from the server.</value>
   </data>
   <data name="Analyzer_SEC0111_Title" xml:space="preserve">
     <value>Path Tampering File Path Result</value>
@@ -532,7 +532,7 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>sec0110-unvalidated-web-forms-redirect</value>
   </data>
   <data name="Analyzer_SEC0111_Anchor" xml:space="preserve">
-    <value>sec0111-path-tampering-mvc-file-path-result</value>
+    <value>sec0111-path-tampering-mvc-file-result</value>
   </data>
   <data name="Analyzer_SEC0112_Anchor" xml:space="preserve">
     <value>sec0112-path-tampering-unvalidated-file-path</value>
@@ -595,25 +595,25 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>Unencoded Response Write</value>
   </data>
   <data name="Analyzer_SEC0114_Description" xml:space="preserve">
-    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding methods Encoder.LdapDistinguishedNameEncode() or Encoder.LdapFilterEncode().</value>
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method Encoder.LdapDistinguishedNameEncode().</value>
   </data>
   <data name="Analyzer_SEC0114_MessageFormat" xml:space="preserve">
-    <value>Untrusted data is passed to the LDAP Path or Filter expression.</value>
+    <value>Untrusted data is passed to the LDAP DirectoryEntry path expression.</value>
   </data>
   <data name="Analyzer_SEC0114_Title" xml:space="preserve">
-    <value>LDAP Injection</value>
+    <value>LDAP Injection Directory Entry</value>
   </data>
   <data name="Analyzer_SEC0114_Anchor" xml:space="preserve">
-    <value>sec0114-ldap-injection</value>
+    <value>sec0114-ldap-injection-directory-entry</value>
   </data>
   <data name="Analyzer_SEC0025_Anchor" xml:space="preserve">
     <value>sec0025-weak-algorithm-des</value>
   </data>
   <data name="Analyzer_SEC0025_Description" xml:space="preserve">
-    <value>The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information.</value>
+    <value>The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption.</value>
   </data>
   <data name="Analyzer_SEC0025_MessageFormat" xml:space="preserve">
-    <value>The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption.</value>
+    <value>The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information.</value>
   </data>
   <data name="Analyzer_SEC0025_Title" xml:space="preserve">
     <value>Weak Cryptography Algorithm (DES)</value>
@@ -634,12 +634,10 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>sec0027-weak-algorithm-md5</value>
   </data>
   <data name="Analyzer_SEC0027_Description" xml:space="preserve">
-    <value>The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.</value>
+    <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. NOTE: SHA2 is still not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
   </data>
   <data name="Analyzer_SEC0027_MessageFormat" xml:space="preserve">
-    <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
-
-NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+    <value>The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.</value>
   </data>
   <data name="Analyzer_SEC0027_Title" xml:space="preserve">
     <value>Weak Cryptography Algorithm (MD5)</value>
@@ -648,12 +646,10 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
     <value>sec0028-weak-algorithm-sha1</value>
   </data>
   <data name="Analyzer_SEC0028_Description" xml:space="preserve">
-    <value>The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2.</value>
+    <value>Consider upgrading the algorithm to at least SHA2.Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. NOTE: SHA2 is still not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
   </data>
   <data name="Analyzer_SEC0028_MessageFormat" xml:space="preserve">
-    <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
-
-NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+    <value>The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context.</value>
   </data>
   <data name="Analyzer_SEC0028_Title" xml:space="preserve">
     <value>Weak Cryptography Algorithm (SHA1)</value>
@@ -662,7 +658,7 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
     <value>sec0029-deserialization-binary-formatter</value>
   </data>
   <data name="Analyzer_SEC0029_Description" xml:space="preserve">
-    <value>Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse</value>
+    <value>Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse.</value>
   </data>
   <data name="Analyzer_SEC0029_MessageFormat" xml:space="preserve">
     <value>Deserializing untrusted data using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse methods can lead to remote code execution and denial of service vulnerabilities.</value>
@@ -677,13 +673,10 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
     <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
   </data>
   <data name="Analyzer_SEC0030_MessageFormat" xml:space="preserve">
-    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None.</value>
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
   </data>
   <data name="Analyzer_SEC0030_Title" xml:space="preserve">
     <value>Insecure Deserialization - Newtonsoft JSON</value>
-  </data>
-  <data name="Analyzer_Category_License" xml:space="preserve">
-    <value>License</value>
   </data>
   <data name="Analyzer_SEC0115_Anchor" xml:space="preserve">
     <value>sec0115-insecure-random-number-generator</value>
@@ -696,5 +689,67 @@ NOTE. This not sufficient for password hashing, which requires a unique salt and
   </data>
   <data name="Analyzer_SEC0115_Title" xml:space="preserve">
     <value>Insecure Random Number Generator</value>
+  </data>
+  <data name="Analyzer_SEC0116_Anchor" xml:space="preserve">
+    <value>sec0116-path-tampering-unvalidated-file-path</value>
+  </data>
+  <data name="Analyzer_SEC0116_Description" xml:space="preserve">
+    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
+  </data>
+  <data name="Analyzer_SEC0116_MessageFormat" xml:space="preserve">
+    <value>Unvalidated file paths are passed to a {0} API, which can allow unauthorized file system operations (e.g. read, write, delete) to be performed on unintended server files.</value>
+  </data>
+  <data name="Analyzer_SEC0116_Title" xml:space="preserve">
+    <value>Path Tampering Unvalidated File Path</value>
+  </data>
+  <data name="Analyzer_SEC0117_Anchor" xml:space="preserve">
+    <value>sec0117-ldap-injection-path-assignment</value>
+  </data>
+  <data name="Analyzer_SEC0117_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method  Encoder.LdapDistinguishedNameEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0117_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is assigned to the LDAP DirectoryEntry Path property.</value>
+  </data>
+  <data name="Analyzer_SEC0117_Title" xml:space="preserve">
+    <value>LDAP Injection Path Assignment</value>
+  </data>
+  <data name="Analyzer_SEC0118_Anchor" xml:space="preserve">
+    <value>sec0118-ldap-injection-directory-searcher</value>
+  </data>
+  <data name="Analyzer_SEC0118_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP filter encoding method Encoder.LdapFilterEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0118_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the LDAP DirectorySearcher filter expression.</value>
+  </data>
+  <data name="Analyzer_SEC0118_Title" xml:space="preserve">
+    <value>LDAP Injection Directory Searcher</value>
+  </data>
+  <data name="Analyzer_SEC0119_Anchor" xml:space="preserve">
+    <value>sec0119-ldap-injection-directory-searcher</value>
+  </data>
+  <data name="Analyzer_SEC0119_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Filter without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP filter encoding method Encoder.LdapFilterEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0119_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the LDAP DirectoryEntry Filter property</value>
+  </data>
+  <data name="Analyzer_SEC0119_Title" xml:space="preserve">
+    <value>LDAP Injection Filter Assignment</value>
+  </data>
+  <data name="Analyzer_SEC0031_Anchor" xml:space="preserve">
+    <value>sec0031-command-injection-process-start</value>
+  </data>
+  <data name="Analyzer_SEC0031_Description" xml:space="preserve">
+    <value>Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server's operating system.
+
+Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to whitelist safe characters and escape evil characters.</value>
+  </data>
+  <data name="Analyzer_SEC0031_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the Process.Start fileName or arguments parameter.</value>
+  </data>
+  <data name="Analyzer_SEC0031_Title" xml:space="preserve">
+    <value>Command Injection Process Start</value>
   </data>
 </root>

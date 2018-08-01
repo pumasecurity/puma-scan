@@ -12,11 +12,10 @@
 using System;
 using System.Xml.XPath;
 
-using Microsoft.CodeAnalysis.Diagnostics;
-
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
+using Puma.Security.Rules.Core;
 using Puma.Security.Rules.Diagnostics;
 using Puma.Security.Rules.Model;
 
@@ -27,7 +26,7 @@ namespace Puma.Security.Rules.Analyzer.Configuration.Forms
     {
         private const string FORMS_SEARCH_EXPRESSION = "configuration/system.web/authentication[@mode='Forms']/forms";
 
-        public void OnCompilationEnd(CompilationAnalysisContext context)
+        public void OnCompilationEnd(PumaCompilationAnalysisContext context)
         {
             foreach (var config in ConfigurationFiles)
             {

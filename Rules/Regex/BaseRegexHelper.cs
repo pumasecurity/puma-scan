@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace Puma.Security.Rules.Regex
 {
-    public abstract class BaseRegexHelper : IRegexHelper
+    internal abstract class BaseRegexHelper : IRegexHelper
     {
         private readonly RegexOptions _options;
 

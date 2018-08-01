@@ -26,10 +26,10 @@ namespace Puma.Security.Rules.Analyzer.Core
 
         internal SanitizedSourceAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
             : this(new SanitizedMethodSymbolAnalyzer(cleansedMethodsProvider),
-                new SanitizedLocalSymbolAnalyzer(cleansedMethodsProvider),
-                new SanitizedFieldSymbolAnalyzer(cleansedMethodsProvider),
-                new SanitizedParameterSymbolAnalyzer(cleansedMethodsProvider),
-                new SanitizedPropertySymbolAnalyzer(cleansedMethodsProvider))
+                  new SanitizedLocalSymbolAnalyzer(cleansedMethodsProvider),
+                  new SanitizedFieldSymbolAnalyzer(cleansedMethodsProvider),
+                  new SanitizedParameterSymbolAnalyzer(cleansedMethodsProvider),
+                  new SanitizedPropertySymbolAnalyzer(cleansedMethodsProvider))
         {
         }
 
@@ -42,23 +42,23 @@ namespace Puma.Security.Rules.Analyzer.Core
             _propertySymbolAnalyzer = propertySymbolAnalyzer;
         }
 
-        public bool IsSymbolSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId = DiagnosticId.None)
+        public bool IsSymbolSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId)
         {
             //TODO: create a func factory so it can just be magic
-            if (CanMethodSymbolBeSanitized(symbolInfo)) return true;
+            if (CanMethodSymbolBeSanitized(symbolInfo, ruleId)) return true;
 
-            if (CanLocalSymbolBeSanitized(symbolInfo)) return true;
+            if (CanLocalSymbolBeSanitized(symbolInfo, ruleId)) return true;
 
-            if (CanFieldSymbolBeSanitized(symbolInfo)) return true;
+            if (CanFieldSymbolBeSanitized(symbolInfo, ruleId)) return true;
 
-            if (CanParameterSymbolBeSanitized(symbolInfo)) return true;
+            if (CanParameterSymbolBeSanitized(symbolInfo, ruleId)) return true;
 
-            if (CanPropertySymbolBeSanitized(symbolInfo)) return true;
+            if (CanPropertySymbolBeSanitized(symbolInfo, ruleId)) return true;
 
             return false;
         }
 
-        private bool CanMethodSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId = DiagnosticId.None)
+        private bool CanMethodSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId)
         {
             var methodSymbol = symbolInfo.Symbol as IMethodSymbol;
             if (methodSymbol == null)
@@ -67,7 +67,7 @@ namespace Puma.Security.Rules.Analyzer.Core
             return _methodSymbolAnalyzer.IsSymbolSanitized(methodSymbol, ruleId);
         }
 
-        private bool CanLocalSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId = DiagnosticId.None)
+        private bool CanLocalSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId)
         {
             var localSymbol = symbolInfo.Symbol as ILocalSymbol;
             if (localSymbol == null)
@@ -76,7 +76,7 @@ namespace Puma.Security.Rules.Analyzer.Core
             return _localSymbolAnalyzer.IsSymbolSanitized(localSymbol, ruleId);
         }
 
-        private bool CanFieldSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId = DiagnosticId.None)
+        private bool CanFieldSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId)
         {
             var fieldSymbol = symbolInfo.Symbol as IFieldSymbol;
             if (fieldSymbol == null)
@@ -85,7 +85,7 @@ namespace Puma.Security.Rules.Analyzer.Core
             return _fieldSymbolAnalyzer.IsSymbolSanitized(fieldSymbol, ruleId);
         }
 
-        private bool CanParameterSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId = DiagnosticId.None)
+        private bool CanParameterSymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId)
         {
             var parameterSymbol = symbolInfo.Symbol as IParameterSymbol;
             if (parameterSymbol == null)
@@ -94,7 +94,7 @@ namespace Puma.Security.Rules.Analyzer.Core
             return _parameterSymbolAnalyzer.IsSymbolSanitized(parameterSymbol, ruleId);
         }
 
-        public bool CanPropertySymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId = DiagnosticId.None)
+        public bool CanPropertySymbolBeSanitized(SymbolInfo symbolInfo, DiagnosticId ruleId)
         {
             var propertySymbol = symbolInfo.Symbol as IPropertySymbol;
             if (propertySymbol == null)

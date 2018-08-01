@@ -1,16 +1,28 @@
+/* 
+ * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
+ * 
+ * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
+ * Lead Developer: Eric Mead (eric.mead@pumascan.com)
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ */
+
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 {
     internal class SqlCommandInjectionObjectCreationExpressionAnalyzer : ISqlCommandInjectionObjectCreationExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!ContainsSqlCommand(syntax))
                 return false;
@@ -26,7 +38,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
                 var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(commandTextArg);
                 if (expressionAnalyzer.CanIgnore(model, commandTextArg))
                     return false;
-                if (expressionAnalyzer.CanSuppress(model, commandTextArg))
+                if (expressionAnalyzer.CanSuppress(model, commandTextArg, ruleId))
                     return false;
             }
 
@@ -43,7 +55,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
                 var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(commandTextInitializer);
                 if (expressionAnalyzer.CanIgnore(model, commandTextInitializer))
                     return false;
-                if (expressionAnalyzer.CanSuppress(model, commandTextInitializer))
+                if (expressionAnalyzer.CanSuppress(model, commandTextInitializer, ruleId))
                     return false;
             }
 
@@ -52,13 +64,15 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 
         private bool IsSymbolSqlCommand(IMethodSymbol symbol)
         {
-            return symbol.IsCtorFor("System.Data.SqlClient.SqlCommand");
+            return  symbol.IsCtorFor("System.Data.SqlClient.SqlCommand") ||
+                    symbol.IsCtorFor("Microsoft.Data.Sqlite.SqliteCommand");
         }
 
 
         private static bool ContainsSqlCommand(ObjectCreationExpressionSyntax syntax)
         {
-            return syntax.ToString().Contains("SqlCommand");
+            return  syntax.ToString().Contains("SqlCommand") ||
+                    syntax.ToString().Contains("SqliteCommand");
         }
     }
 }

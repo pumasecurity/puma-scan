@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Csrf.Core
 {
@@ -23,6 +24,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf.Core
         private const string _MODIFICATION_VERB_ATTRIBUTES = "HttpDelete|HttpPatch|HttpPost|HttpPut";
         private const string _ACTION_RESULT_NAMESPACE = "System.Web.Mvc.ActionResult";
         private const string _ANTI_FORGERY_TOKEN_ATTRIBUTE = "ValidateAntiForgeryToken";
+        private const string _ANONYMOUS_ATTRIBUTE = "AllowAnonymous";
 
         public bool IsVulnerable(SemanticModel model, MethodDeclarationSyntax syntax, IdentifierNameSyntax returnType)
         {
@@ -36,7 +38,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf.Core
 
             //This could be expensive, but we need search to the base type and determine if this return type
             //inherits from the System.Web.Mvc.ActionResult and verify if the return type is of type ActionResult
-            if (!Utils.SymbolInheritsFrom(symbol, _ACTION_RESULT_NAMESPACE))
+            if (!symbol.SymbolInheritsFrom(_ACTION_RESULT_NAMESPACE))
                 return false;
 
             //Assuming a good design pattern where GET requests (no method decoration) actually
@@ -48,18 +50,27 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf.Core
             //Search for HttpPost, HttpPut, HttpPatch, and HttpDelete decorators on the action
             var dataModification = false;
             var validateAntiForgeryToken = false;
+            var anonymousMethod = false;
 
             foreach (var attributeSyntax in syntax.AttributeLists)
-            foreach (var attribute in attributeSyntax.Attributes)
             {
-                if (!dataModification && _MODIFICATION_VERB_ATTRIBUTES.Split('|').Contains(attribute.Name?.ToString()))
-                    dataModification = true;
+                foreach (var attribute in attributeSyntax.Attributes)
+                {
+                    //Check for action verb (post, put, delete, etc.)
+                    if (!dataModification && _MODIFICATION_VERB_ATTRIBUTES.Split('|').Contains(attribute.Name?.ToString()))
+                        dataModification = true;
 
-                if (!validateAntiForgeryToken && string.Compare(attribute.Name?.ToString(), _ANTI_FORGERY_TOKEN_ATTRIBUTE) == 0)
-                    validateAntiForgeryToken = true;
+                    //Check for anti forgery token method
+                    if (!validateAntiForgeryToken && string.Compare(attribute.Name?.ToString(), _ANTI_FORGERY_TOKEN_ATTRIBUTE) == 0)
+                        validateAntiForgeryToken = true;
+
+                    //Check for anoynmous attribute (reduces fps)
+                    if (!anonymousMethod && string.Compare(attribute.Name?.ToString(), _ANONYMOUS_ATTRIBUTE) == 0)
+                        anonymousMethod = true;
+                }
             }
 
-            return dataModification && !validateAntiForgeryToken;
+            return dataModification && !validateAntiForgeryToken && !anonymousMethod;
         }
     }
 }

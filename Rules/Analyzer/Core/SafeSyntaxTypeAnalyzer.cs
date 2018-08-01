@@ -9,7 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +24,7 @@ namespace Puma.Security.Rules.Analyzer.Core
         private IEnumerable<CleanseMethod> GetSafeSyntaxTypes()
         {
             var sources = new List<CleanseMethod>();
-            
+
             sources.Add(new CleanseMethod(TaintFlags.System, typeof(PredefinedTypeSyntax).Name, "System", "Decimal", ""));
             sources.Add(new CleanseMethod(TaintFlags.System, typeof(PredefinedTypeSyntax).Name, "System", "Double", ""));
             sources.Add(new CleanseMethod(TaintFlags.System, typeof(PredefinedTypeSyntax).Name, "System", "DateTime", ""));

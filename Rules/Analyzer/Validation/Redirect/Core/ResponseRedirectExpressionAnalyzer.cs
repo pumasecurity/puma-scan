@@ -13,12 +13,13 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Redirect.Core
 {
     internal class ResponseRedirectExpressionAnalyzer : IResponseRedirectExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!syntax.ToString().Contains("Redirect")) return false;
 
@@ -32,7 +33,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.Redirect.Core
                     var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(argSyntax);
                     if (expressionAnalyzer.CanIgnore(model, argSyntax))
                         return false;
-                    if (expressionAnalyzer.CanSuppress(model, argSyntax))
+                    if (expressionAnalyzer.CanSuppress(model, argSyntax, ruleId))
                         return false;
                 }
                 return true;

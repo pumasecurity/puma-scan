@@ -14,11 +14,13 @@ using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Crypto.Core
 {
     internal class DesExpressionAnalyzer : IDesExpressionAnalzyer
     {
-        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             //Check for the type
             if (!ContainsTypeName(syntax)) return false;
@@ -33,11 +35,14 @@ namespace Puma.Security.Rules.Analyzer.Crypto.Core
 
         private static bool ContainsTypeName(ObjectCreationExpressionSyntax syntax)
         {
-            return string.Compare(syntax?.Type.ToString(), "DESCryptoServiceProvider", StringComparison.Ordinal) == 0;
+            return syntax.Type.ToString().Contains("DESCryptoServiceProvider");
         }
 
         private bool IsType(ISymbol symbol)
         {
+            if (symbol == null)
+                return false;
+
             return symbol.ContainingNamespace.ToString().Equals("System.Security.Cryptography");
         }
     }

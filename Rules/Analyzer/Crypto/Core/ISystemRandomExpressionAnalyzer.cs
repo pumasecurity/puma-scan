@@ -12,10 +12,13 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
+
 namespace Puma.Security.Rules.Analyzer.Crypto.Core
 {
     internal interface ISystemRandomExpressionAnalyzer
     {
-        bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax);
+        bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId);
     }
 }

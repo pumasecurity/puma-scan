@@ -11,7 +11,7 @@
     <RootNamespace>Puma.Security.Rules</RootNamespace>
     <AssemblyName>Puma.Security.Rules</AssemblyName>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,7 +32,19 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\Core\BaseCodeBlockAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\Core\IProcessStartCreationExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\Core\ProcessStartCreationExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\ProcessStartCreationAnalyzer.cs" />
+    <Compile Include="Common\Extensions\DiagnosticIdExtensions.cs" />
+    <Compile Include="Common\Extensions\MethodDeclarationSyntaxExtensions.cs" />
+    <Compile Include="Common\Extensions\NamedTypeSymbolExtensions.cs" />
+    <Compile Include="Common\Extensions\SyntaxNodeExtensions.cs" />
+    <Compile Include="Analyzer\CompilationAnalyzerExtensions.cs" />
     <Compile Include="Analyzer\Core\BaseConfigurationFileAnalyzer.cs" />
     <Compile Include="Analyzer\Configuration\Compilation\CompilationAnalyzer.cs" />
     <Compile Include="Analyzer\Configuration\Cookies\RequireSslAnalyzer.cs" />
@@ -61,9 +73,13 @@
     <Compile Include="Analyzer\Core\BaseSyntaxNodeAnalyzer.cs" />
     <Compile Include="Analyzer\Core\CleansedMethodsProvider.cs" />
     <Compile Include="Analyzer\Core\ConditionalExpressionSyntaxAnalyzer.cs" />
+    <Compile Include="Analyzer\Core\ElementAccessExpressionSyntaxAnalyzer.cs" />
     <Compile Include="Analyzer\Crypto\Core\ISystemRandomExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Crypto\Core\SystemRandomExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Crypto\SystemRandomDiagnosticAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectorySearcherFilterAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectorySearcherFilterAssignmentExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\LdapDirectorySearcherFilterAssignmentAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\ISqlCommandObjectCreationExpressionVulnerableSyntaxNodeFactory.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\SqlCommandObjectCreationExpressionVulnerableSyntaxNodeFactory.cs" />
     <Compile Include="Analyzer\Core\ICleansedMethodsProvider.cs" />
@@ -88,6 +104,7 @@
     <Compile Include="Analyzer\Core\InvocationExpressionSyntaxAnalyzer.cs" />
     <Compile Include="Analyzer\Core\LiteralExpressionSyntaxAnalyzer.cs" />
     <Compile Include="Analyzer\Core\MemberAccessExpressionSyntaxAnalyzer.cs" />
+    <Compile Include="Analyzer\Core\QueryExpressionSyntaxAnalyzer.cs" />
     <Compile Include="Analyzer\Core\ISanitizedSourceAnalyzer.cs" />
     <Compile Include="Analyzer\Core\Specialized\IsArgumentOnlyExpression.cs" />
     <Compile Include="Analyzer\Core\SanitizedSourceAnalyzer.cs" />
@@ -106,10 +123,10 @@
     <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectoryEntryPathInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectoryEntryPathInjectionExpressionAnalyzer.cs" />
-    <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectorySearcherInjectionExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\Core\LdapDirectorySearcherCreationExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\EfQueryCommandInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\IEfQueryCommandInjectionExpressionAnalyzer.cs" />
-    <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectorySearcherInjectionExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\Core\ILdapDirectorySearcherCreationExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\ILinqSqlInjectionExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\ISqlCommandInjectionAssignmentExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\Core\ISqlCommandInjectionObjectCreationExpressionAnalyzer.cs" />
@@ -132,14 +149,21 @@
     <Compile Include="Analyzer\Validation\RequestValidation\Core\IAllowHtmlExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\RequestValidation\Core\IValidateInputExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\RequestValidation\Core\ValidateInputExpressionAnalyzer.cs" />
+    <Compile Include="Common\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Configuration\Core\CleanseMethod.cs" />
+    <Compile Include="Core\IAdditionalTextAnalyzerRegisterService.cs" />
+    <Compile Include="Core\IConfigurationFileAnalyzerRegisterService.cs" />
+    <Compile Include="Core\ISyntaxNodeAnalysisReporterService.cs" />
+    <Compile Include="Core\ISyntaxNodeAnalyzerRegisterService.cs" />
+    <Compile Include="Core\AdditionalTextAnalyzerRegisterService.cs" />
+    <Compile Include="Core\ConfigurationFileAnalyzerRegisterService.cs" />
+    <Compile Include="Core\SyntaxNodeAnalysisReporterService.cs" />
+    <Compile Include="Core\SyntaxNodeAnalyzerRegisterService.cs" />
+    <Compile Include="Core\PumaAnalysisContext.cs" />
+    <Compile Include="PumaAppBuilder.cs" />
     <Compile Include="Configuration\Core\TaintFlags.cs" />
-    <Compile Include="Configuration\Core\TaintedSource.cs" />
-    <Compile Include="Core\Crypto\Asymmetric.cs" />
-    <Compile Include="Core\Crypto\Hash.cs" />
-    <Compile Include="Common\DateTimeService.cs" />
-    <Compile Include="Common\IDateTimeService.cs" />
-    <Compile Include="Core\Crypto\Symmetric.cs" />
+    <Compile Include="Core\DiagnosticSuite.cs" />
+    <Compile Include="Core\PumaCompilationAnalysisContext.cs" />
     <Compile Include="Analyzer\Configuration\Identity\PasswordValidatorAnalyzer.cs" />
     <Compile Include="Analyzer\Configuration\Identity\PasswordLockoutAnalyzer.cs" />
     <Compile Include="Analyzer\Core\Factories\ArgumentVulnerableSyntaxNodeFactory.cs" />
@@ -161,7 +185,6 @@
     <Compile Include="Analyzer\Core\Factories\IAssignmentExpressionVulnerableSyntaxNodeFactory.cs" />
     <Compile Include="Analyzer\Core\Factories\IBinaryFormatterExpressionVulnerableSyntaxNodeFactory.cs" />
     <Compile Include="Analyzer\Core\Factories\IInvocationExpressionVulnerableSyntaxNodeFactory.cs" />
-    <Compile Include="Analyzer\Core\BaseCodeBlockAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Deserialization\BinaryFormatterAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Deserialization\Core\BinaryFormatterExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Deserialization\Core\IBinaryFormatterExpressionAnalyzer.cs" />
@@ -170,7 +193,7 @@
     <Compile Include="Analyzer\Injection\Deserialization\NewtonsoftJsonTypeNameHandlingAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\LdapDirectoryEntryPathAssignmentAnalzyer.cs" />
     <Compile Include="Analyzer\Injection\Ldap\LdapDirectoryEntryPathCreationAnalyzer.cs" />
-    <Compile Include="Analyzer\Injection\Ldap\LdapDirectorySearcherAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Ldap\LdapDirectorySearcherCreationAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\EfQueryInjectionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Sql\LinqSqlInjectionAnalyzer.cs" />
     <Compile Include="Analyzer\Injection\Xss\LabelTextAnalyzer.cs" />
@@ -189,19 +212,17 @@
     <Compile Include="Analyzer\Validation\Path\Core\FileStreamExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\FileWriteExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\FileReadExpressionAnalyzer.cs" />
-    <Compile Include="Analyzer\Validation\Path\Core\FilePathResultExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Validation\Path\Core\MvcFileResultExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\IFileDeleteExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\IFileOpenExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\IFileStreamExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\IFileWriteExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Path\Core\IFileReadExpressionAnalyzer.cs" />
-    <Compile Include="Analyzer\Validation\Path\Core\IFilePathResultExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Validation\Path\Core\IMvcFileResultExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Redirect\Core\MvcRedirectExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Redirect\Core\IMvcRedirectExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Redirect\Core\IResponseRedirectExpressionAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\Redirect\Core\ResponseRedirectExpressionAnalyzer.cs" />
-    <Compile Include="Core\BaseConfigurationFileDiagnosticSuite.cs" />
-    <Compile Include="Core\BaseMarkupDiagnosticSuite.cs" />
     <Compile Include="Analyzer\Injection\Xss\ResponseWriteAnalyzer.cs" />
     <Compile Include="Analyzer\Core\Factories\InvocationExpressionVulnerableSyntaxNodeFactory.cs" />
     <Compile Include="Analyzer\Core\Factories\IObjectCreationExpressionVulnerableSyntaxNodeFactory.cs" />
@@ -217,8 +238,6 @@
     <Compile Include="Analyzer\Validation\RequestValidation\AllowHtmlAnalyzer.cs" />
     <Compile Include="Analyzer\Validation\RequestValidation\ValidateInputAnalyzer.cs" />
     <Compile Include="Analyzer\Core\VulnerableSyntaxNode.cs" />
-    <Compile Include="Core\BaseDiagnosticSuite.cs" />
-    <Compile Include="Core\BaseSyntaxDiagnosticSuite.cs" />
     <Compile Include="Core\ConfigurationFiles\ConfigurationFileParser.cs" />
     <Compile Include="Core\ConfigurationFiles\ConfigurationFileTransformCommand.cs" />
     <Compile Include="Core\ConfigurationFiles\ShouldUpdateConfigurationFile.cs" />
@@ -226,7 +245,7 @@
     <Compile Include="Common\Extensions\ConfigurationFileExtensions.cs" />
     <Compile Include="Common\Extensions\MethodSymbolExtensions.cs" />
     <Compile Include="Common\Utils.cs" />
-    <Compile Include="DependencyResolution\PumaApp.cs" />
+    <Compile Include="PumaApp.cs" />
     <Compile Include="Diagnostics\DiagnosticDescriptorFactory.cs" />
     <Compile Include="Diagnostics\DiagnosticFactory.cs" />
     <Compile Include="Diagnostics\SupportedDiagnosticAttribute.cs" />
@@ -238,13 +257,6 @@
     <Compile Include="Model\DiagnosticInfo.cs" />
     <Compile Include="Model\MarkupFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RuleOptions.cs" />
-    <Compile Include="Suites\CryptoDiagnosticSuite.cs" />
-    <Compile Include="Suites\DeserializationDiagnosticSuite.cs" />
-    <Compile Include="Suites\LdapInjectionDiagnosticSuite.cs" />
-    <Compile Include="Suites\PathTamperingDiagnosticSuite.cs" />
-    <Compile Include="Suites\SqlInjectionDiagnosticSuite.cs" />
-    <Compile Include="Suites\UnvalidatedRedirectDiagnosticSuite.cs" />
     <Compile Include="Regex\BaseRegexHelper.cs" />
     <Compile Include="Regex\IRegexHelper.cs" />
     <Compile Include="Regex\Mvc\HtmlRawRegexHelper.cs" />
@@ -256,19 +268,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Suites\ConfigurationDiagnosticSuite.cs" />
-    <Compile Include="Suites\CookiesConfigurationDiagnosticSuite.cs" />
-    <Compile Include="Suites\CsrfDiagnosticSuite.cs" />
-    <Compile Include="Suites\FormsConfigurationDiagnosticSuite.cs" />
-    <Compile Include="Suites\HttpRuntimeConfigurationDiagnosticSuite.cs" />
-    <Compile Include="Suites\IdentityDiagnosticSuite.cs" />
-    <Compile Include="Suites\MvcMarkupDiagnosticSuite.cs" />
-    <Compile Include="Suites\CertificateValidationDiagnosticSuite.cs" />
-    <Compile Include="Suites\PagesConfigurationDiagnosticSuite.cs" />
-    <Compile Include="Suites\RequestValidationDiagnosticSuite.cs" />
-    <Compile Include="Suites\SessionStateConfigurationDiagnosticSuite.cs" />
-    <Compile Include="Suites\WebFormsMarkupDiagnosticSuite.cs" />
-    <Compile Include="Suites\WebFormsXssDiagnosticSuite.cs" />
+    <Compile Include="RuleOptions.cs" />
+    <Compile Include="Suites\Core\CommandInjectionAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\ConfigurationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\CookiesConfigurationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\CryptoAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\CsrfAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\DeserializationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\FormsConfigurationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\HttpRuntimeConfigurationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\IAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\IdentityAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\LdapInjectionAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\MvcMarkupAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\PagesConfigurationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\PathTamperingAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\PumaDiagnosticSuite.cs" />
+    <Compile Include="Suites\Core\RequestValidationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\SessionStateConfigurationAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\SqlInjectionAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\UnvalidatedRedirectAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\WebFormsMarkupAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\WebFormsXssAnalyzerSuiteFactory.cs" />
+    <Compile Include="Suites\Core\CertificateValidationAnalyzerSuiteFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -278,92 +300,188 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Diagnostic.nuspec">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="tools\install.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="tools\uninstall.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeAnalysis, Version=1.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.3.2\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CodeAnalysis, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.3.2\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces, Version=1.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.1.3.2\lib\net45\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.Workspaces, Version=1.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.1.3.2\lib\net45\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CodeAnalysis.VisualBasic, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.VisualBasic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.Workspaces.Desktop, Version=1.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.1.3.2\lib\net45\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.Workspaces.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.2.8.2\lib\net46\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces.Desktop, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.2.8.2\lib\net46\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.XmlTransform, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Composition.AttributedModel, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.AttributedModel.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
     </Reference>
-    <Reference Include="System.Composition.Convention, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Composition.Convention, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.Convention.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
     </Reference>
-    <Reference Include="System.Composition.Hosting, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Composition.Hosting, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.Hosting.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
     </Reference>
-    <Reference Include="System.Composition.Runtime, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Composition.Runtime, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.Runtime.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="System.Composition.TypedParts, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Composition.TypedParts, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.TypedParts.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
     </Reference>
     <Reference Include="System.configuration" />
-    <Reference Include="System.Reflection.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.1.2.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.FileVersionInfo.4.3.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.StackTrace.4.3.0\lib\net46\System.Diagnostics.StackTrace.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Expressions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reflection, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.4.2\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.3.0\lib\net46\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Thread.4.3.0\lib\net46\System.Threading.Thread.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Analyzer\Core\DataSource\" />
-    <Folder Include="Analyzer\Injection\Cmd\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

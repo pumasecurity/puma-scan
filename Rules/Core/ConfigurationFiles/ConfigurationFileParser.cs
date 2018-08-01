@@ -17,19 +17,22 @@ using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Core.ConfigurationFiles
 {
-	public interface IConfigurationFileParser
+    internal interface IConfigurationFileParser
 	{
 		Model.ConfigurationFile Parse(AdditionalText src, string basePath, string workingDirectory);
 	}
 
-	public class ConfigurationFileParser : IConfigurationFileParser
+    internal class ConfigurationFileParser : IConfigurationFileParser
 	{
 		private readonly IShouldUpdateConfigurationFile _shouldUpdate;
 		private readonly IConfigurationFileTransformCommand _transformer;
 
-        public ConfigurationFileParser() : this(new ShouldUpdateConfigurationFile(), new ConfigurationFileTransformCommand()) { }
+	    internal ConfigurationFileParser() : this(new ShouldUpdateConfigurationFile(),
+	        new ConfigurationFileTransformCommand())
+	    {
+	    }
 
-        private ConfigurationFileParser(IShouldUpdateConfigurationFile shouldUpdate,
+	    private ConfigurationFileParser(IShouldUpdateConfigurationFile shouldUpdate,
 			IConfigurationFileTransformCommand transformer)
 		{
 			_shouldUpdate = shouldUpdate;
@@ -44,16 +47,16 @@ namespace Puma.Security.Rules.Core.ConfigurationFiles
 			file.BaseConfigurationPath = src.Path;
 			file.BaseConfigurationDocument = XDocument.Load(file.BaseConfigurationPath, LoadOptions.SetLineInfo);
 
-			//Construct the path to the prod transform file
-			var productionTransform = string.IsNullOrEmpty(RuleOptions.ProductionBuildConfiguration)
-				? null
-				: Path.Combine(
-					Path.GetDirectoryName(file.BaseConfigurationPath)
-					, string.Format("{0}.{1}{2}", Path.GetFileNameWithoutExtension(file.BaseConfigurationPath)
-					    , RuleOptions.ProductionBuildConfiguration, Path.GetExtension(file.BaseConfigurationPath)));
+            //Construct the path to the prod transform file
+		    var productionTransform = string.IsNullOrEmpty(RuleOptions.ProductionBuildConfiguration)
+		        ? null
+		        : Path.Combine(
+		            Path.GetDirectoryName(file.BaseConfigurationPath)
+		            , string.Format("{0}.{1}{2}", Path.GetFileNameWithoutExtension(file.BaseConfigurationPath)
+		                , RuleOptions.ProductionBuildConfiguration, Path.GetExtension(file.BaseConfigurationPath)));
 
-			//If transform file exists, run the transform and set the prod document
-			if (!string.IsNullOrEmpty(productionTransform) && File.Exists(productionTransform))
+            //If transform file exists, run the transform and set the prod document
+            if (!string.IsNullOrEmpty(productionTransform) && File.Exists(productionTransform))
 			{
 				//Set the prod transform path
 				file.ProductionTransformPath = productionTransform;

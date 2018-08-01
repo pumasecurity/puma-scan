@@ -9,9 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
-using System.Linq;
+
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Analyzer.Core.Factories
 {
@@ -20,7 +20,7 @@ namespace Puma.Security.Rules.Analyzer.Core.Factories
         public VulnerableSyntaxNode Create(LocalDeclarationStatementSyntax syntaxNode, params string[] messageArgs)
         {
             if (syntaxNode == null) throw new ArgumentNullException(nameof(syntaxNode));
-            
+
             return new VulnerableSyntaxNode(syntaxNode, messageArgs);
         }
     }

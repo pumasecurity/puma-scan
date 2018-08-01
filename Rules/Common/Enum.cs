@@ -52,6 +52,9 @@ namespace Puma.Security.Rules.Common
         SEC0028,
         SEC0029,
         SEC0030,
+        SEC0031,
+        SEC0032,
+        SEC0033,
         //leaving a gap to prevent merge issues.
         SEC0100,
         SEC0101,
@@ -68,6 +71,10 @@ namespace Puma.Security.Rules.Common
         SEC0112,
         SEC0113,
         SEC0114,
-        SEC0115
+        SEC0115,
+        SEC0116,
+        SEC0117,
+        SEC0118,
+        SEC0119
     }
 }

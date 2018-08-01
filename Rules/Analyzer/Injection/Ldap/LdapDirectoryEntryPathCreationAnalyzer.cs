@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Analyzer.Core;
+
 using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Analyzer.Injection.Ldap.Core;
 using Puma.Security.Rules.Common;
@@ -34,6 +35,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap
         private LdapDirectoryEntryPathCreationAnalyzer(
             ILdapDirectoryEntryPathInjectionExpressionAnalyzer expressionSyntaxAnalyzer,
             IObjectCreationExpressionVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
+            
         {
             _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
             _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
@@ -41,11 +43,11 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap
 
         public SyntaxKind SinkKind => SyntaxKind.ObjectCreationExpression;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as ObjectCreationExpressionSyntax;
 
-            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, this.GetDiagnosticId()))
                 return;
 
             if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))

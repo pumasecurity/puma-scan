@@ -11,11 +11,13 @@
 
 using Microsoft.CodeAnalysis;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal interface ISyntaxNodeAnalyzer
     {
-        bool CanSuppress(SemanticModel model, SyntaxNode syntax);
+        bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId);
 
         bool CanIgnore(SemanticModel model, SyntaxNode syntax);
     }

@@ -15,15 +15,16 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Analyzer
 {
-    public interface ISyntaxAnalyzer : ICompilationAnalyzer
+    internal interface ISyntaxAnalyzer : ICompilationAnalyzer
     {
         SyntaxKind SinkKind { get; }
 
         ConcurrentStack<VulnerableSyntaxNode> VulnerableSyntaxNodes { get; }
 
-        void GetSinks(SyntaxNodeAnalysisContext context);
+        void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId);
     }
 }

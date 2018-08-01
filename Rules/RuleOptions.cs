@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
@@ -9,17 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Puma.Security.Rules
 {
-    /// <summary>
-    /// TODO: Create a options JSON file to configure these values read in at runtime
-    /// </summary>
     public class RuleOptions
     {
         private static int _sessionExpirationMax = 30;

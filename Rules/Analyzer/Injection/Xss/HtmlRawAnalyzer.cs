@@ -13,10 +13,9 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using Microsoft.CodeAnalysis.Diagnostics;
-
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Core;
 using Puma.Security.Rules.Diagnostics;
 using Puma.Security.Rules.Filters;
 using Puma.Security.Rules.Model;
@@ -32,7 +31,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Xss
         private readonly IFileExtensionFilter _mvcMarkupFileFilter;
 
         internal HtmlRawAnalyzer() : this(new HtmlRawRegexHelper(), new MvcMarkupFileFilter()) { }
-
+        
         private HtmlRawAnalyzer(IRegexHelper htmlRawRegexHelper, IFileExtensionFilter mvcMarkupFileFilter)
         {
             _htmlRawRegexHelper = htmlRawRegexHelper;
@@ -41,8 +40,9 @@ namespace Puma.Security.Rules.Analyzer.Injection.Xss
 
         public ConcurrentStack<DiagnosticInfo> VulnerableAdditionalText { get; } = new ConcurrentStack<DiagnosticInfo>();
 
-        public void OnCompilationEnd(CompilationAnalysisContext context)
+        public void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext)
         {
+            var context = pumaContext.RosylnContext;
             if (!context.Options.AdditionalFiles.Any())
                 return;
 

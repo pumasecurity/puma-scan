@@ -10,6 +10,7 @@
  */
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -17,11 +18,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Puma.Security.Rules")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Puma Scan Community Edition")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Puma Security, LLC")]
 [assembly: AssemblyProduct("Puma.Security.Rules")]
-[assembly: AssemblyCopyright("Copyright ©  2016 - 2017")]
+[assembly: AssemblyCopyright("Copyright ©  2016 - 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

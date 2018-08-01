@@ -19,6 +19,7 @@ using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Analyzer.Validation.Csrf.Core;
 using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Common.Extensions;
 using Puma.Security.Rules.Diagnostics;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Csrf
@@ -40,12 +41,12 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf
 
         public SyntaxKind SinkKind => SyntaxKind.MethodDeclaration;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as MethodDeclarationSyntax;
 
             //Grab the method's return type for the location value
-            var returnType = Utils.GetMethodReturnType(syntax);
+            var returnType = syntax.GetMethodReturnType();
 
             if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, returnType))
                 return;

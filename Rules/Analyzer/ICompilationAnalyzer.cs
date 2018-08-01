@@ -9,12 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Microsoft.CodeAnalysis.Diagnostics;
+using Puma.Security.Rules.Core;
 
 namespace Puma.Security.Rules.Analyzer
 {
     public interface ICompilationAnalyzer
     {
-        void OnCompilationEnd(CompilationAnalysisContext context);
+        void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext);
     }
 }

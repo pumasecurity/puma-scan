@@ -13,13 +13,16 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 {
     internal class EfQueryCommandInjectionExpressionAnalyzer : IEfQueryCommandInjectionExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
+        public SyntaxNode Source { get; set; }
+
+        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!ContainsEfRawSqlCommands(syntax)) return false;
 
@@ -29,22 +32,33 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 
             if (syntax.ArgumentList != null && syntax.ArgumentList.Arguments.Any())
             {
-                var commandTextArg = syntax.ArgumentList.Arguments[0];
+                var commandTextArg = syntax.ArgumentList.Arguments[0].Expression;
 
                 var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(commandTextArg);
-                if (expressionAnalyzer.CanSuppress(model, commandTextArg))
+
+                if (expressionAnalyzer.CanSuppress(model, commandTextArg, ruleId))
                     return false;
+
+                //Set source to analyze and return for further analysis
+                Source = commandTextArg;
+                return true;
             }
 
-            return true;
+            //Default return false
+            return false;
         }
 
         private bool IsSymbolEfRawSqlCommand(IMethodSymbol symbol)
         {
-            return symbol.IsMethod("System.Data.Entity.Database", "SqlQuery") ||
-                   symbol.IsMethod("System.Data.Entity.DbSet<TEntity>", "SqlQuery") ||
-                   symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommand") ||
-                   symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommandAsync");
+            return symbol != null && (
+                       symbol.IsMethod("System.Data.Entity.Database", "SqlQuery") ||
+                       symbol.IsMethod("System.Data.Entity.DbSet<TEntity>", "SqlQuery") ||
+                       symbol.IsMethod("Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade", "SqlQuery") ||
+                       symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommand") ||
+                       symbol.IsMethod("Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade", "ExecuteSqlCommand") ||
+                       symbol.IsMethod("System.Data.Entity.Database", "ExecuteSqlCommandAsync") ||
+                       symbol.IsMethod("Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade", "ExecuteSqlCommandAsync") ||
+                       symbol.OriginalDefinition.IsMethod("System.Linq.IQueryable<TEntity>", "FromSql"));
         }
 
 
@@ -52,7 +66,8 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
         {
             return syntax.ToString().Contains("SqlQuery") ||
                    syntax.ToString().Contains("ExecuteSqlCommand") ||
-                   syntax.ToString().Contains("ExecuteSqlCommandAsync");
+                   syntax.ToString().Contains("ExecuteSqlCommandAsync") ||
+                   syntax.ToString().Contains("FromSql");
         }
     }
 }

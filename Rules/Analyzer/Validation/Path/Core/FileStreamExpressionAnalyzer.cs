@@ -13,13 +13,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Path.Core
 {
     internal class FileStreamExpressionAnalyzer : IFileStreamExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!syntax.ToString().Contains("FileStream")) return false;
 
@@ -32,7 +33,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.Path.Core
                     var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(argSyntax);
                     if (expressionAnalyzer.CanIgnore(model, argSyntax))
                         return false;
-                    if (expressionAnalyzer.CanSuppress(model, argSyntax))
+                    if (expressionAnalyzer.CanSuppress(model, argSyntax, ruleId))
                         return false;
                 }
                 return true;

@@ -40,13 +40,13 @@ namespace Puma.Security.Rules.Analyzer.Crypto
 
         public SyntaxKind SinkKind => SyntaxKind.ObjectCreationExpression;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as ObjectCreationExpressionSyntax;
 
-            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 return;
-            
+
             if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                 VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
         }

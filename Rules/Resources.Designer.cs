@@ -61,15 +61,6 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to License.
-        /// </summary>
-        internal static string Analyzer_Category_License {
-            get {
-                return ResourceManager.GetString("Analyzer_Category_License", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         internal static string Analyzer_Category_None {
@@ -142,7 +133,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Displaying stack traces in the browser can leak information to attackers and help them gain information for launching additional attacks. Enable custom errors by setting the mode to On or RemoteOnly: &lt;customErrors mode=&quot;On|RemoteOnly&quot; /&gt;.
+        ///   Looks up a localized string similar to Displaying stack traces in the browser can leak information to attackers and help them gain information for launching additional attacks. Enable custom errors by setting the mode to On or RemoteOnly: &lt;customErrors mode=&quot;On|RemoteOnly&quot; /&gt;..
         /// </summary>
         internal static string Analyzer_SEC0002_Description {
             get {
@@ -646,7 +637,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The machine key element defines keys to use for encryption and decryption of authentication cookies, view state, and verification of session state identification. The validation and decryption key values should not be stored in configuration files in cleartext. Encrypt the machineKey section of the configuration file using aspnet_regiis.exe. .
+        ///   Looks up a localized string similar to The machine key element defines keys to use for encryption and decryption of authentication cookies, view state, and verification of session state identification. The validation and decryption key values should not be stored in configuration files in cleartext. Encrypt the machineKey section of the configuration file using aspnet_regiis.exe..
         /// </summary>
         internal static string Analyzer_SEC0016_Description {
             get {
@@ -970,7 +961,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information..
+        ///   Looks up a localized string similar to The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption..
         /// </summary>
         internal static string Analyzer_SEC0025_Description {
             get {
@@ -979,7 +970,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption..
+        ///   Looks up a localized string similar to The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information..
         /// </summary>
         internal static string Analyzer_SEC0025_MessageFormat {
             get {
@@ -1042,7 +1033,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm..
+        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. NOTE: SHA2 is still not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
         /// </summary>
         internal static string Analyzer_SEC0027_Description {
             get {
@@ -1051,9 +1042,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
-        ///
-        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
+        ///   Looks up a localized string similar to The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm..
         /// </summary>
         internal static string Analyzer_SEC0027_MessageFormat {
             get {
@@ -1080,7 +1069,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context. Consider upgrading the algorithm to at least SHA2..
+        ///   Looks up a localized string similar to Consider upgrading the algorithm to at least SHA2.Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. NOTE: SHA2 is still not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
         /// </summary>
         internal static string Analyzer_SEC0028_Description {
             get {
@@ -1089,9 +1078,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. 
-        ///
-        ///NOTE. This not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice..
+        ///   Looks up a localized string similar to The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context..
         /// </summary>
         internal static string Analyzer_SEC0028_MessageFormat {
             get {
@@ -1118,7 +1105,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse.
+        ///   Looks up a localized string similar to Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse..
         /// </summary>
         internal static string Analyzer_SEC0029_Description {
             get {
@@ -1163,7 +1150,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None..
+        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None..
         /// </summary>
         internal static string Analyzer_SEC0030_MessageFormat {
             get {
@@ -1177,6 +1164,44 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0030_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0030_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0031-command-injection-process-start.
+        /// </summary>
+        internal static string Analyzer_SEC0031_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0031_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server&apos;s operating system.
+        ///
+        ///Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to whitelist safe characters and escape evil characters..
+        /// </summary>
+        internal static string Analyzer_SEC0031_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0031_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untrusted data is passed to the Process.Start fileName or arguments parameter..
+        /// </summary>
+        internal static string Analyzer_SEC0031_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0031_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Injection Process Start.
+        /// </summary>
+        internal static string Analyzer_SEC0031_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0031_Title", resourceCulture);
             }
         }
         
@@ -1454,7 +1479,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The System.Data.SqlClient.SqlCommand class allows applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to The SQL Command communicates directly with the backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection attacks..
         /// </summary>
         internal static string Analyzer_SEC0107_Description {
             get {
@@ -1589,7 +1614,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec0111-path-tampering-mvc-file-path-result.
+        ///   Looks up a localized string similar to sec0111-path-tampering-mvc-file-result.
         /// </summary>
         internal static string Analyzer_SEC0111_Anchor {
             get {
@@ -1607,7 +1632,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unvalidated file paths are passed to the Controller FilePathResult action, which can allow arbitrary file downloads from the server..
+        ///   Looks up a localized string similar to Unvalidated file path parameter is passed to the Controller {0} action, which can allow arbitrary file downloads from the server..
         /// </summary>
         internal static string Analyzer_SEC0111_MessageFormat {
             get {
@@ -1697,7 +1722,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec0114-ldap-injection.
+        ///   Looks up a localized string similar to sec0114-ldap-injection-directory-entry.
         /// </summary>
         internal static string Analyzer_SEC0114_Anchor {
             get {
@@ -1706,7 +1731,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding methods Encoder.LdapDistinguishedNameEncode() or Encoder.LdapFilterEncode()..
+        ///   Looks up a localized string similar to LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method Encoder.LdapDistinguishedNameEncode()..
         /// </summary>
         internal static string Analyzer_SEC0114_Description {
             get {
@@ -1715,7 +1740,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Untrusted data is passed to the LDAP Path or Filter expression..
+        ///   Looks up a localized string similar to Untrusted data is passed to the LDAP DirectoryEntry path expression..
         /// </summary>
         internal static string Analyzer_SEC0114_MessageFormat {
             get {
@@ -1724,7 +1749,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LDAP Injection.
+        ///   Looks up a localized string similar to LDAP Injection Directory Entry.
         /// </summary>
         internal static string Analyzer_SEC0114_Title {
             get {
@@ -1765,6 +1790,150 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0115_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0115_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0116-path-tampering-unvalidated-file-path.
+        /// </summary>
+        internal static string Analyzer_SEC0116_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0116_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker..
+        /// </summary>
+        internal static string Analyzer_SEC0116_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0116_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unvalidated file paths are passed to a {0} API, which can allow unauthorized file system operations (e.g. read, write, delete) to be performed on unintended server files..
+        /// </summary>
+        internal static string Analyzer_SEC0116_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0116_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path Tampering Unvalidated File Path.
+        /// </summary>
+        internal static string Analyzer_SEC0116_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0116_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0117-ldap-injection-path-assignment.
+        /// </summary>
+        internal static string Analyzer_SEC0117_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0117_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method  Encoder.LdapDistinguishedNameEncode()..
+        /// </summary>
+        internal static string Analyzer_SEC0117_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0117_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untrusted data is assigned to the LDAP DirectoryEntry Path property..
+        /// </summary>
+        internal static string Analyzer_SEC0117_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0117_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection Path Assignment.
+        /// </summary>
+        internal static string Analyzer_SEC0117_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0117_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0118-ldap-injection-directory-searcher.
+        /// </summary>
+        internal static string Analyzer_SEC0118_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0118_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP filter encoding method Encoder.LdapFilterEncode()..
+        /// </summary>
+        internal static string Analyzer_SEC0118_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0118_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untrusted data is passed to the LDAP DirectorySearcher filter expression..
+        /// </summary>
+        internal static string Analyzer_SEC0118_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0118_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection Directory Searcher.
+        /// </summary>
+        internal static string Analyzer_SEC0118_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0118_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0119-ldap-injection-directory-searcher.
+        /// </summary>
+        internal static string Analyzer_SEC0119_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0119_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Filter without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP filter encoding method Encoder.LdapFilterEncode()..
+        /// </summary>
+        internal static string Analyzer_SEC0119_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0119_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untrusted data is passed to the LDAP DirectoryEntry Filter property.
+        /// </summary>
+        internal static string Analyzer_SEC0119_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0119_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LDAP Injection Filter Assignment.
+        /// </summary>
+        internal static string Analyzer_SEC0119_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0119_Title", resourceCulture);
             }
         }
     }

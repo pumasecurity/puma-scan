@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Puma.Security.Rules.Filters
 {
-    public class ConfigurationFileFilter : IFileExtensionFilter
+    internal class ConfigurationFileFilter : IFileExtensionFilter
     {
         public const string EXTENSION = ".config";
 

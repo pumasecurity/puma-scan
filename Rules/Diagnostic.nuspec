@@ -14,7 +14,7 @@
     <developmentDependency>true</developmentDependency>
     <releaseNotes>https://www.pumascan.com/community/installation.html#release-notes</releaseNotes>
     <copyright>Copyright 2016 - 2018 Puma Security, LLC</copyright>
-    <tags>Puma.Security.Rules, Professional, .NET Security Analyzer, Security, Code, Analyzers, OWASP</tags>
+    <tags>Puma.Security.Rules, .NET Security Analyzer, Security, Code, Analyzers, OWASP</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="10.0.3" />
     </dependencies>

@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Analyzer.Core;
+
 using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Analyzer.Validation.Path.Core;
 using Puma.Security.Rules.Common;
@@ -26,14 +27,15 @@ namespace Puma.Security.Rules.Analyzer.Validation.Path
     [SupportedDiagnostic(DiagnosticId.SEC0111)]
     internal class FilePathResultAnalyzer : BaseCodeBlockAnalyzer, ISyntaxAnalyzer
     {
-        private readonly IFilePathResultExpressionAnalyzer _expressionSyntaxAnalyzer;
+        private readonly IMvcFileResultExpressionAnalyzer _expressionSyntaxAnalyzer;
         private readonly IObjectCreationExpressionVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        internal FilePathResultAnalyzer() : this(new FilePathResultExpressionAnalyzer(), new ObjectCreationExpressionVulnerableSyntaxNodeFactory()) { }
-
+        internal FilePathResultAnalyzer() : this(new MvcFileResultExpressionAnalyzer(), new ObjectCreationExpressionVulnerableSyntaxNodeFactory()) { }
+      
         private FilePathResultAnalyzer(
-            IFilePathResultExpressionAnalyzer expressionSyntaxAnalyzer,
+            IMvcFileResultExpressionAnalyzer expressionSyntaxAnalyzer,
             IObjectCreationExpressionVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
+            
         {
             _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
             _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
@@ -41,15 +43,15 @@ namespace Puma.Security.Rules.Analyzer.Validation.Path
 
         public SyntaxKind SinkKind => SyntaxKind.ObjectCreationExpression;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as ObjectCreationExpressionSyntax;
 
-            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 return;
 
             if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
-                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
+                VulnerableSyntaxNodes.Push(new VulnerableSyntaxNode(syntax, _expressionSyntaxAnalyzer.Source, syntax.Type.ToString()));
         }
     }
 }

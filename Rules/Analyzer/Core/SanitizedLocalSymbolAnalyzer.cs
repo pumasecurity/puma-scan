@@ -23,11 +23,11 @@ namespace Puma.Security.Rules.Analyzer.Core
     {
         private readonly ICleansedMethodsProvider _cleansedMethodsProvider;
 
-        public SanitizedLocalSymbolAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
+        internal SanitizedLocalSymbolAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
         {
             _cleansedMethodsProvider = cleansedMethodsProvider;
         }
-        public bool IsSymbolSanitized(ILocalSymbol localSymbol, DiagnosticId ruleId = DiagnosticId.None)
+        public bool IsSymbolSanitized(ILocalSymbol localSymbol, DiagnosticId ruleId)
         {
             //Filter by namespace
             IEnumerable<CleanseMethod> methods = _cleansedMethodsProvider.GetByRuleId(ruleId).Where(i => string.Compare(i.Namespace, localSymbol.ContainingNamespace.ToString()) == 0);
@@ -35,7 +35,8 @@ namespace Puma.Security.Rules.Analyzer.Core
                 return false;
 
             //Filter by type: ContainingType (Namespace.Type)
-            methods = methods.Where(i => i.Type.Equals("*") || string.Compare(string.Join(".", i.Namespace, i.Type), localSymbol.ContainingType.ToDisplayString()) == 0);
+            //exection to rule for "string". ToDisplayName is "string" and not "System.String"
+            methods = methods.Where(i => i.Type.Equals("*") || string.Compare(string.Join(".", i.Namespace, i.Type).Replace("System.String", "string"), localSymbol.ContainingType.ToDisplayString()) == 0);
             if (methods.Count() == 0)
                 return false;
 

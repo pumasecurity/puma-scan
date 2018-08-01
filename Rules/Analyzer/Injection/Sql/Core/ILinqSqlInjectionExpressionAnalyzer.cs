@@ -12,10 +12,14 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 {
     internal interface ILinqSqlInjectionExpressionAnalyzer
     {
-        bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax);
+        SyntaxNode Source { get; set; }
+
+        bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId);
     }
 }

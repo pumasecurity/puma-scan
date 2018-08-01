@@ -14,6 +14,7 @@ using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+
 namespace Puma.Security.Rules.Analyzer.Configuration.Identity.Core
 {
     internal class PasswordValidatorExpressionAnalyzer : IPasswordValidatorExpressionAnalyzer
@@ -40,8 +41,12 @@ namespace Puma.Security.Rules.Analyzer.Configuration.Identity.Core
 
         private bool IsType(ISymbol symbol)
         {
+            if (symbol == null)
+                return false;
+
             return string.Compare(symbol.ContainingNamespace.ToString(), "Microsoft.AspNet.Identity") == 0;
         }
+
 
         private bool isValidPasswordComplexity(SemanticModel model, InitializerExpressionSyntax syntax)
         {

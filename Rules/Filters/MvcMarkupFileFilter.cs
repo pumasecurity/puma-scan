@@ -18,7 +18,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Filters
 {
-    public class MvcMarkupFileFilter : IFileExtensionFilter
+    internal class MvcMarkupFileFilter : IFileExtensionFilter
     {
         public const string CS_RAZOR_EXTENSION = ".cshtml";
         public const string VB_RAZOR_EXTENSION = ".vbhtml";

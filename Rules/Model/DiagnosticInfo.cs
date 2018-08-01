@@ -9,27 +9,35 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System.IO;
-
 using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Model
 {
-    public  class DiagnosticInfo
+    public class DiagnosticInfo
     {
-        public object[] Args { get; private set; }
-        public Location Location { get; private set; }
-
         public DiagnosticInfo(Location location, params object[] args)
         {
             Args = args;
             Location = location;
         }
 
-        public DiagnosticInfo(string path, int lineNumber, string elementText) : this(Location.None, path, lineNumber, elementText) { }
+        public DiagnosticInfo(string path, int lineNumber, string elementText) : this(Location.None, path, lineNumber,
+            elementText)
+        {
+        }
 
-        public DiagnosticInfo(string path, int lineNumber, string elementText, string arg) : this(Location.None, path, lineNumber, elementText, arg) { }
+        public DiagnosticInfo(string path, int lineNumber, string elementText, string arg) : this(Location.None, path,
+            lineNumber, elementText, arg)
+        {
+        }
 
-        public DiagnosticInfo(string path, int lineNumber, string elementText, params object[] args) : this(Location.None, path, lineNumber, elementText, args) { }
+        public DiagnosticInfo(string path, int lineNumber, string elementText, params object[] args) : this(
+            Location.None, path, lineNumber, elementText, args)
+        {
+        }
+
+        public object[] Args { get; }
+
+        public Location Location { get; }
     }
 }

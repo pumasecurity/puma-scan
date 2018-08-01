@@ -12,11 +12,13 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class LiteralExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<LiteralExpressionSyntax>
     {
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             return true;
         }

@@ -13,12 +13,13 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Xss.Core
 {
     internal class LabelTextAssignmentExpressionAnalyzer : ILabelTextAssignmentExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId)
         {
             var leftSyntax = syntax?.Left as MemberAccessExpressionSyntax;
 
@@ -31,7 +32,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Xss.Core
             var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(syntax.Right);
             if (expressionAnalyzer.CanIgnore(model, syntax.Right))
                 return false;
-            if (expressionAnalyzer.CanSuppress(model, syntax.Right))
+            if (expressionAnalyzer.CanSuppress(model, syntax.Right, ruleId))
                 return false;
 
             return true;

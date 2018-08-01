@@ -11,7 +11,7 @@
 
 namespace Puma.Security.Rules.Regex.WebForms
 {
-    public class DataBindingExpressionRegexHelper : BaseRegexHelper
+    internal class DataBindingExpressionRegexHelper : BaseRegexHelper
     {
         private const string Regex = "<%#(?!:)(.|\t|\r|\n)+?%>";
 

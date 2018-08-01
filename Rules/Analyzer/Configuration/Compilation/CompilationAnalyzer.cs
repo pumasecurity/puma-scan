@@ -12,8 +12,6 @@
 using System;
 using System.Xml.XPath;
 
-using Microsoft.CodeAnalysis.Diagnostics;
-
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
@@ -24,11 +22,11 @@ using Puma.Security.Rules.Model;
 namespace Puma.Security.Rules.Analyzer.Configuration.Compilation
 {
     [SupportedDiagnostic(DiagnosticId.SEC0001)]
-    public class CompilationAnalyzer : BaseConfigurationFileAnalyzer, IConfigurationFileAnalyzer
+    internal class CompilationAnalyzer : BaseConfigurationFileAnalyzer, IConfigurationFileAnalyzer
     {
         private const string COMPILATION_SEARCH_EXPRESSION = "configuration/system.web/compilation";
 
-        public void OnCompilationEnd(CompilationAnalysisContext context)
+        public void OnCompilationEnd(PumaCompilationAnalysisContext context)
         {
             foreach (var config in ConfigurationFiles)
             {

@@ -15,13 +15,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
     internal class LdapDirectoryEntryPathInjectionExpressionAnalyzer : ILdapDirectoryEntryPathInjectionExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!syntax.ToString().Contains("DirectoryEntry")) return false;
 
@@ -34,7 +35,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(argSyntax);
                     if (expressionAnalyzer.CanIgnore(model, argSyntax))
                         return false;
-                    if (expressionAnalyzer.CanSuppress(model, argSyntax))
+                    if (expressionAnalyzer.CanSuppress(model, argSyntax, ruleId))
                         return false;
                 }
 
@@ -46,7 +47,7 @@ namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
                     var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(filter.Right);
                     if (expressionAnalyzer.CanIgnore(model, filter.Right))
                         return false;
-                    if (expressionAnalyzer.CanSuppress(model, filter.Right))
+                    if (expressionAnalyzer.CanSuppress(model, filter.Right, ruleId))
                         return false;
                 }
 

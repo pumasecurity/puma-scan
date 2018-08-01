@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Analyzer.Core;
+
 using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Analyzer.Validation.Path.Core;
 using Puma.Security.Rules.Common;
@@ -23,7 +24,7 @@ using Puma.Security.Rules.Diagnostics;
 
 namespace Puma.Security.Rules.Analyzer.Validation.Path
 {
-    [SupportedDiagnostic(DiagnosticId.SEC0112)]
+    [SupportedDiagnostic(DiagnosticId.SEC0116)]
     internal class IOFileAnalyzer : BaseCodeBlockAnalyzer, ISyntaxAnalyzer
     {
         private readonly IFileDeleteExpressionAnalyzer _fileDeleteExpressionAnalyzer;
@@ -40,6 +41,7 @@ namespace Puma.Security.Rules.Analyzer.Validation.Path
             IFileOpenExpressionAnalyzer fileOpenExpressionAnalyzer,
             IFileDeleteExpressionAnalyzer fileDeleteExpressionAnalyzer,
             IInvocationExpressionVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
+            
         {
             _fileReadExpressionAnalyzer = fileReadExpressionAnalyzer;
             _fileWriteExpressionAnalyzer = fileWriteExpressionAnalyzer;
@@ -50,23 +52,23 @@ namespace Puma.Security.Rules.Analyzer.Validation.Path
 
         public SyntaxKind SinkKind => SyntaxKind.InvocationExpression;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as InvocationExpressionSyntax;
 
-            if (_fileReadExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (_fileReadExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax, "file read"));
 
-            if (_fileWriteExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (_fileWriteExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax, "file write"));
 
-            if (_fileOpenExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (_fileOpenExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax, "file open"));
 
-            if (_fileDeleteExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (_fileDeleteExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax, "file delete"));
         }

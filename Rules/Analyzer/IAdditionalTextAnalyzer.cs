@@ -15,7 +15,7 @@ using Puma.Security.Rules.Model;
 
 namespace Puma.Security.Rules.Analyzer
 {
-    public interface IAdditionalTextAnalyzer : ICompilationAnalyzer
+    internal interface IAdditionalTextAnalyzer : ICompilationAnalyzer
     {
         ConcurrentStack<DiagnosticInfo> VulnerableAdditionalText { get; }
     }

@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace Puma.Security.Rules.Regex
 {
-    public interface IRegexHelper
+    internal interface IRegexHelper
     {
         bool HasMatch(string source);
 

@@ -9,6 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 using Microsoft.CodeAnalysis;
@@ -39,6 +40,13 @@ namespace Puma.Security.Rules.Analyzer.Core
         public VulnerableSyntaxNode(SyntaxNode sink)
         {   
             Sink = sink;
+        }
+
+        public VulnerableSyntaxNode(SyntaxNode sink, SyntaxNode source, params string[] messageArgs)
+        {
+            Source = new List<SyntaxNode>() { source }.ToImmutableArray();
+            Sink = sink;
+            MessageArgs = messageArgs;
         }
 
         public ImmutableArray<SyntaxNode> Source { get; private set; }

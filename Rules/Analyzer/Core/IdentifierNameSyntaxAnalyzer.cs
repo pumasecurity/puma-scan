@@ -13,6 +13,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class IdentifierNameSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<IdentifierNameSyntax>
@@ -22,8 +24,8 @@ namespace Puma.Security.Rules.Analyzer.Core
 
         internal IdentifierNameSyntaxAnalyzer()
             : this(
-                new SanitizedSourceAnalyzer(),
-                new SafeSyntaxTypeAnalyzer())
+                  new SanitizedSourceAnalyzer(),
+                  new SafeSyntaxTypeAnalyzer())
         {
 
         }
@@ -39,17 +41,21 @@ namespace Puma.Security.Rules.Analyzer.Core
             var identifierNameSyntax = syntax as IdentifierNameSyntax;
             var symbolInfo = model.GetSymbolInfo(identifierNameSyntax);
 
-            if (_safeSyntaxTypeAnalyzer.IsSafeSyntaxType(symbolInfo)) return true;
+            if (_safeSyntaxTypeAnalyzer.IsSafeSyntaxType(symbolInfo))
+                return true;
+
             return base.CanIgnore(model, syntax);
         }
 
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             var identifierNameSyntax = syntax as IdentifierNameSyntax;
             var symbolInfo = model.GetSymbolInfo(identifierNameSyntax);
 
-            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(symbolInfo)) return true;
-            return base.CanSuppress(model, syntax);
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(symbolInfo, ruleId))
+                return true;
+
+            return base.CanSuppress(model, syntax, ruleId);
         }
     }
 }

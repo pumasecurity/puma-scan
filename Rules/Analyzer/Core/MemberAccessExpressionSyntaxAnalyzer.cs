@@ -12,6 +12,8 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class MemberAccessExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<MemberAccessExpressionSyntax>
@@ -36,17 +38,17 @@ namespace Puma.Security.Rules.Analyzer.Core
             if (_safeSyntaxTypeAnalyzer.IsSafeSyntaxType(model.GetSymbolInfo(memberAccessExpressionSyntax)))
                 return true;
 
-            return base.CanSuppress(model, syntax);
+            return base.CanIgnore(model, syntax);
         }
 
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             var memberAccessExpressionSyntax = syntax as MemberAccessExpressionSyntax;
 
-            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(model.GetSymbolInfo(memberAccessExpressionSyntax)))
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(model.GetSymbolInfo(memberAccessExpressionSyntax), ruleId))
                 return true;
 
-            return base.CanSuppress(model, syntax);
+            return base.CanSuppress(model, syntax, ruleId);
         }
     }
 }

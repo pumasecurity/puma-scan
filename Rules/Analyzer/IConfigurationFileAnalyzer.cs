@@ -16,7 +16,7 @@ using Puma.Security.Rules.Model;
 
 namespace Puma.Security.Rules.Analyzer
 {
-    public interface IConfigurationFileAnalyzer : ICompilationAnalyzer
+    internal interface IConfigurationFileAnalyzer : ICompilationAnalyzer
     {
         IEnumerable<ConfigurationFile> ConfigurationFiles { get; set; }
 

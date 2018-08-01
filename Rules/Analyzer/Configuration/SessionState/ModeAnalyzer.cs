@@ -12,8 +12,6 @@
 using System;
 using System.Xml.XPath;
 
-using Microsoft.CodeAnalysis.Diagnostics;
-
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
@@ -28,7 +26,7 @@ namespace Puma.Security.Rules.Analyzer.Configuration.SessionState
     {
         private const string SEARCH_EXPRESSION = "configuration/system.web/sessionState";
 
-        public void OnCompilationEnd(CompilationAnalysisContext context)
+        public void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext)
         {
             foreach (var config in ConfigurationFiles)
             {

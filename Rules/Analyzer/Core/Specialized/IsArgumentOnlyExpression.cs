@@ -21,11 +21,11 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
         bool Execute(SemanticModel model, InvocationExpressionSyntax syntax);
     }
 
-    internal class IsArgumentOnlyExpression : IIsArgumentOnlyExpression
+    public class IsArgumentOnlyExpression : IIsArgumentOnlyExpression
     {
         public bool Execute(SemanticModel model, InvocationExpressionSyntax syntax)
         {
-            if (ContainsArgumentOnlyMethod(syntax))
+            if (syntax.ToString().Contains("MapPath"))
             {
                 var symbol = model.GetSymbolInfo(syntax).Symbol as IMethodSymbol;
                 if (symbol != null)
@@ -36,17 +36,7 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
 
             return false;
         }
-        
-        private bool IsArgumentOnlyMethod(IMethodSymbol symbol)
-        {
-            return symbol.IsMethod("System.Web.HttpRequest", "MapPath") ||
-                   symbol.IsMethod("String", "Format");
-        }
 
-        private static bool ContainsArgumentOnlyMethod(InvocationExpressionSyntax syntax)
-        {
-            return syntax.ToString().Contains("Format") ||
-                   syntax.ToString().Contains("MapPath");
-        }
+        private bool IsArgumentOnlyMethod(IMethodSymbol symbol) => symbol.IsMethod("System.Web.HttpRequest", "MapPath") || symbol.IsMethod("System.Web.HttpServerUtility", "MapPath");
     }
 }

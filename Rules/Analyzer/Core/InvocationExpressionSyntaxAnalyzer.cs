@@ -15,7 +15,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core.Specialized;
-using Puma.Security.Rules.Common.Extensions;
+using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
@@ -25,12 +25,12 @@ namespace Puma.Security.Rules.Analyzer.Core
         private readonly ISyntaxNodeAnalyzer<SyntaxNode> _analyzer;
         private readonly IIsArgumentOnlyExpression _argsOnlyInvocationExpression;
 
-        internal InvocationExpressionSyntaxAnalyzer()
+        internal InvocationExpressionSyntaxAnalyzer() 
             : this(new SanitizedSourceAnalyzer(),
-                new IsArgumentOnlyExpression(),
-                new SyntaxNodeAnalyzer())
+                  new IsArgumentOnlyExpression(),
+                  new SyntaxNodeAnalyzer()) 
         {
-
+            
         }
 
         internal InvocationExpressionSyntaxAnalyzer(ISanitizedSourceAnalyzer sanitizedSourceAnalyzer, IIsArgumentOnlyExpression argsOnlyInvocationExpression, ISyntaxNodeAnalyzer<SyntaxNode> syntaxNodeAnalyzer)
@@ -40,38 +40,38 @@ namespace Puma.Security.Rules.Analyzer.Core
             _analyzer = syntaxNodeAnalyzer;
         }
 
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             var invocationExpressionSyntax = syntax as InvocationExpressionSyntax;
 
-            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(model.GetSymbolInfo(invocationExpressionSyntax)))
+            if (_sanitizedSourceAnalyzer.IsSymbolSanitized(model.GetSymbolInfo(invocationExpressionSyntax), ruleId))
                 return true;
 
-            var argsSafe = CanSuppressArguments(model, invocationExpressionSyntax.ArgumentList);
+            var argsSafe = CanSuppressArguments(model, invocationExpressionSyntax.ArgumentList, ruleId);
 
             var isArgsOnlyExpression = _argsOnlyInvocationExpression.Execute(model, invocationExpressionSyntax);
 
             if (isArgsOnlyExpression)
                 return argsSafe;
 
-            var isBodySafe = CanSuppressExpression(model, invocationExpressionSyntax.Expression);
+            var isBodySafe = CanSuppressExpression(model, invocationExpressionSyntax.Expression, ruleId);
 
             return argsSafe && isBodySafe;
         }
 
-        private bool CanSuppressExpression(SemanticModel model, SyntaxNode expression)
+        private bool CanSuppressExpression(SemanticModel model, SyntaxNode expression, DiagnosticId ruleId)
         {
-            return _analyzer.CanIgnore(model, expression) || _analyzer.CanSuppress(model, expression);
+            return _analyzer.CanIgnore(model, expression) || _analyzer.CanSuppress(model, expression, ruleId);
         }
 
-        private bool CanSuppressArguments(SemanticModel model, ArgumentListSyntax argumentList)
+        private bool CanSuppressArguments(SemanticModel model, ArgumentListSyntax argumentList, DiagnosticId ruleId)
         {
             if (!argumentList.Arguments.Any())
                 return true;
 
             var args = argumentList.Arguments;
 
-            return args.All(p => _analyzer.CanIgnore(model, p.Expression) || _analyzer.CanSuppress(model, p.Expression));
+            return args.All(p => _analyzer.CanIgnore(model, p.Expression) || _analyzer.CanSuppress(model, p.Expression, ruleId));
         }
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Analyzer.Configuration.Identity.Core
 {
-    public interface IPasswordLockoutExpressionAnalyzer
+    internal interface IPasswordLockoutExpressionAnalyzer
     {
         bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, out ArgumentSyntax location);
     }

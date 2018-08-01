@@ -11,7 +11,7 @@
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public abstract class BaseMarkupFileAnalyzer
+    internal abstract class BaseMarkupFileAnalyzer
     {
 
     }

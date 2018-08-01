@@ -16,7 +16,7 @@ using Puma.Security.Rules.Model;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
-    public abstract class BaseConfigurationFileAnalyzer
+    internal abstract class BaseConfigurationFileAnalyzer
     {
         public ConcurrentStack<DiagnosticInfo> VulnerableAdditionalText { get; } = new ConcurrentStack<DiagnosticInfo>();
 

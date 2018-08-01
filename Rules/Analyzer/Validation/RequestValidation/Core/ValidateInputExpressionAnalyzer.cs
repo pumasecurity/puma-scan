@@ -42,6 +42,9 @@ namespace Puma.Security.Rules.Analyzer.Validation.RequestValidation.Core
 
         private bool IsType(ISymbol symbol)
         {
+            if (symbol == null)
+                return false;
+
             return string.Compare(symbol.ContainingNamespace.ToString(), "System.Web.Mvc") == 0;
         }
     }

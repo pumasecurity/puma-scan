@@ -17,9 +17,9 @@ using Puma.Security.Rules.Model;
 
 namespace Puma.Security.Rules.Common.Extensions
 {
-    public static class ConfigurationFileExtensions
+    internal static class ConfigurationFileExtensions
     {
-        public static IXmlLineInfo GetProductionLineInfo(this ConfigurationFile file, XElement element, string xPathExpression)
+        internal static IXmlLineInfo GetProductionLineInfo(this ConfigurationFile file, XElement element, string xPathExpression)
         {
             //Get the line info from the element
             IXmlLineInfo lineInfo = element;

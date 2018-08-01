@@ -12,11 +12,13 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Crypto.Core
 {
     internal class EcbAssignmentExpressionAnalyzer : IEcbAssignmentExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId)
         {
             var leftSyntax = syntax?.Left as MemberAccessExpressionSyntax;
             if (leftSyntax == null || string.Compare(leftSyntax.Name.Identifier.ValueText, "Mode", true) != 0)

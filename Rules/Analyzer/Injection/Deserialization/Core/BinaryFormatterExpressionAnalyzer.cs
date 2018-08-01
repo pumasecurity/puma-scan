@@ -12,13 +12,14 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Deserialization.Core
 {
     internal class BinaryFormatterExpressionAnalyzer : IBinaryFormatterExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!ContainsBinaryFormatterCommands(syntax)) return false;
 

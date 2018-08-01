@@ -15,25 +15,34 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
     internal class LdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer : ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId)
         {
             var leftSyntax = syntax?.Left as MemberAccessExpressionSyntax;
 
-            if (leftSyntax == null || string.Compare(leftSyntax.Name.Identifier.ValueText, "Path", StringComparison.OrdinalIgnoreCase) != 0) return false;
+            if (leftSyntax == null)
+                return false;
+            
+            if(string.Compare(leftSyntax.Name.Identifier.ValueText, "Path", StringComparison.OrdinalIgnoreCase) != 0)
+                return false;
 
             var leftSymbol = model.GetSymbolInfo(leftSyntax).Symbol;
 
-            if (!leftSymbol.ToString().StartsWith("System.DirectoryServices.DirectoryEntry")) return false;
+            if (leftSymbol == null)
+                return false;
+
+            if (!leftSymbol.ToString().StartsWith("System.DirectoryServices.DirectoryEntry"))
+                return false;
 
             var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(syntax.Right);
             if (expressionAnalyzer.CanIgnore(model, syntax.Right))
                 return false;
-            if (expressionAnalyzer.CanSuppress(model, syntax.Right))
+            if (expressionAnalyzer.CanSuppress(model, syntax.Right, ruleId))
                 return false;
 
             return true;

@@ -37,10 +37,10 @@ namespace Puma.Security.Rules.Analyzer.Validation.Certificate
 
         private readonly IAssignmentExpressionVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        internal CertificateValidationAnalyzer() :
+        internal CertificateValidationAnalyzer() : 
             this(new WebRequestHandlerCertificateValidationExpressionAnalyzer(),
-                new ServicePointManagerCertificateValidationExpressionAnalyzer(),
-                new HttpWebRequestCertificateValidationExpressionAnalyzer(),
+                new ServicePointManagerCertificateValidationExpressionAnalyzer(), 
+                new HttpWebRequestCertificateValidationExpressionAnalyzer(), 
                 new AssignmentExpressionVulnerableSyntaxNodeFactory())
         {
         }
@@ -57,22 +57,21 @@ namespace Puma.Security.Rules.Analyzer.Validation.Certificate
             _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
         }
 
-
         public SyntaxKind SinkKind => SyntaxKind.AddAssignmentExpression;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as AssignmentExpressionSyntax;
 
-            if (_handlerCertificateValidationExpression.IsVulnerable(context.SemanticModel, syntax))
+            if (_handlerCertificateValidationExpression.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
 
-            if (_servicePointManagerCertificateValidationExpression.IsVulnerable(context.SemanticModel, syntax))
+            if (_servicePointManagerCertificateValidationExpression.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
 
-            if (_requestCertificateValidationExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax))
+            if (_requestCertificateValidationExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
                     VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
         }

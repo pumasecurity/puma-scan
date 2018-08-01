@@ -14,11 +14,13 @@ using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Crypto.Core
 {
     internal class SystemRandomExpressionAnalyzer : ISystemRandomExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax)
+        public bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             //Check for the SystemRandomServiceProvider type
             if (!ContainsTypeName(syntax)) return false;
@@ -38,6 +40,9 @@ namespace Puma.Security.Rules.Analyzer.Crypto.Core
 
         private bool IsType(ISymbol symbol)
         {
+            if (symbol == null)
+                return false;
+
             return symbol.ContainingNamespace.ToString().Equals("System");
         }
     }

@@ -12,9 +12,10 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+
 namespace Puma.Security.Rules.Analyzer.Configuration.Identity.Core
 {
-    public interface IPasswordValidatorExpressionAnalyzer
+    internal interface IPasswordValidatorExpressionAnalyzer
     {
         bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax);
     }

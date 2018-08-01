@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puma.Security.Rules", "Rules\Puma.Security.Rules.csproj", "{0D0530A0-368E-459D-9008-CDC66F093C2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puma.Security.Rules.Vsix", "Vsix\Puma.Security.Rules.Vsix.csproj", "{8B03C2D1-8552-4010-A219-6D6262F10BD1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puma.Security.Parser", "Puma.Security.Parser\Puma.Security.Parser.csproj", "{0CC7F8B1-B42D-4A95-A5A4-9D612CECF34D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puma.Security.Parser", "Puma.Security.Parser\Puma.Security.Parser.csproj", "{079331ED-D5A0-4CB3-9154-2345254D3337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{8B03C2D1-8552-4010-A219-6D6262F10BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B03C2D1-8552-4010-A219-6D6262F10BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B03C2D1-8552-4010-A219-6D6262F10BD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CC7F8B1-B42D-4A95-A5A4-9D612CECF34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CC7F8B1-B42D-4A95-A5A4-9D612CECF34D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CC7F8B1-B42D-4A95-A5A4-9D612CECF34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CC7F8B1-B42D-4A95-A5A4-9D612CECF34D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{079331ED-D5A0-4CB3-9154-2345254D3337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{079331ED-D5A0-4CB3-9154-2345254D3337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{079331ED-D5A0-4CB3-9154-2345254D3337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{079331ED-D5A0-4CB3-9154-2345254D3337}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

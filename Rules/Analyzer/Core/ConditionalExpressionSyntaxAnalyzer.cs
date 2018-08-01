@@ -12,13 +12,15 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Core
 {
     internal class ConditionalExpressionSyntaxAnalyzer : BaseSyntaxNodeAnalyzer<ConditionalExpressionSyntax>
     {
         private readonly ISyntaxNodeAnalyzer<SyntaxNode> _analyzer;
 
-        public ConditionalExpressionSyntaxAnalyzer()
+        internal ConditionalExpressionSyntaxAnalyzer()
         {
             _analyzer = new SyntaxNodeAnalyzer();
         }
@@ -31,12 +33,12 @@ namespace Puma.Security.Rules.Analyzer.Core
                    _analyzer.CanIgnore(model, conditionalExpressionSyntax.WhenFalse);
         }
 
-        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax)
+        public override bool CanSuppress(SemanticModel model, SyntaxNode syntax, DiagnosticId ruleId)
         {
             var conditionalExpressionSyntax = syntax as ConditionalExpressionSyntax;
 
-            return _analyzer.CanSuppress(model, conditionalExpressionSyntax.WhenTrue) &&
-                   _analyzer.CanSuppress(model, conditionalExpressionSyntax.WhenFalse);
+            return _analyzer.CanSuppress(model, conditionalExpressionSyntax.WhenTrue, ruleId) &&
+                   _analyzer.CanSuppress(model, conditionalExpressionSyntax.WhenFalse, ruleId);
         }
     }
 }

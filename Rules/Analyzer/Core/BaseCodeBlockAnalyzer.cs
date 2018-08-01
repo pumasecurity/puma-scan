@@ -9,13 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
 using System.Collections.Concurrent;
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+
+using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Core;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
@@ -24,12 +26,14 @@ namespace Puma.Security.Rules.Analyzer.Core
         public ConcurrentStack<VulnerableSyntaxNode> VulnerableSyntaxNodes { get; } =
             new ConcurrentStack<VulnerableSyntaxNode>();
 
-        public virtual void GetSinks(SyntaxNodeAnalysisContext context)
+        public virtual void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
         }
 
-        public virtual void OnCompilationEnd(CompilationAnalysisContext pumaContext)
+        public virtual void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext)
         {
+            var context = pumaContext.RosylnContext;
+
             if (VulnerableSyntaxNodes.IsEmpty)
                 return;
 
@@ -55,7 +59,7 @@ namespace Puma.Security.Rules.Analyzer.Core
                         .ToList<SyntaxNode>();
 
                     var matches = idMatches.Union(declarationMatches);
-                    var idModel = pumaContext.Compilation.GetSemanticModel(syntaxNode.SyntaxTree);
+                    var idModel = context.Compilation.GetSemanticModel(syntaxNode.SyntaxTree);
 
                     foreach (var match in matches)
                     {
@@ -64,7 +68,7 @@ namespace Puma.Security.Rules.Analyzer.Core
                         while (!canSuppress && indexNode != containingBlock)
                         {
                             var nodeAnalyzer = SyntaxNodeAnalyzerFactory.Create(indexNode);
-                            canSuppress = nodeAnalyzer.CanSuppress(idModel, indexNode);
+                            canSuppress = nodeAnalyzer.CanSuppress(idModel, indexNode, pumaContext.DiagnosticId);
 
                             indexNode = indexNode.Ancestors().FirstOrDefault();
                         }

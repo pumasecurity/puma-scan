@@ -16,7 +16,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Filters
 {
-    public interface IFileExtensionFilter
+    internal interface IFileExtensionFilter
     {
         IEnumerable<AdditionalText> GetFiles(ImmutableArray<AdditionalText> additionalFiles);
     }

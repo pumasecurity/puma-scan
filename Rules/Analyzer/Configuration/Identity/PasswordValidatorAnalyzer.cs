@@ -40,7 +40,7 @@ namespace Puma.Security.Rules.Analyzer.Configuration.Identity
 
         public SyntaxKind SinkKind => SyntaxKind.ObjectCreationExpression;
 
-        public override void GetSinks(SyntaxNodeAnalysisContext context)
+        public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
             var syntax = context.Node as ObjectCreationExpressionSyntax;
 

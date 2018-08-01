@@ -22,13 +22,13 @@ namespace Puma.Security.Rules.Analyzer.Core
     internal class SanitizedParameterSymbolAnalyzer : ISanitizedParameterSymbolAnalyzer
     {
         private readonly ICleansedMethodsProvider _cleansedMethodsProvider;
-
-        public SanitizedParameterSymbolAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
+       
+        internal SanitizedParameterSymbolAnalyzer(ICleansedMethodsProvider cleansedMethodsProvider)
         {
             _cleansedMethodsProvider = cleansedMethodsProvider;
         }
 
-        public bool IsSymbolSanitized(IParameterSymbol parameterSymbol, DiagnosticId ruleId = DiagnosticId.None)
+        public bool IsSymbolSanitized(IParameterSymbol parameterSymbol, DiagnosticId ruleId)
         {
             //Filter by namespace
             IEnumerable<CleanseMethod> methods = _cleansedMethodsProvider.GetByRuleId(ruleId).Where(i => string.Compare(i.Namespace, parameterSymbol.ContainingNamespace.ToString()) == 0);

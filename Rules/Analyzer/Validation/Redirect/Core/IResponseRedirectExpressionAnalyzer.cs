@@ -12,10 +12,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Validation.Redirect.Core
 {
     internal interface IResponseRedirectExpressionAnalyzer
     {
-        bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax);
+        bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId);
     }
 }

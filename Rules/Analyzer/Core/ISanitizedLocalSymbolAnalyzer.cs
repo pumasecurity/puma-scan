@@ -17,6 +17,6 @@ namespace Puma.Security.Rules.Analyzer.Core
 {
     internal interface ISanitizedLocalSymbolAnalyzer
     {
-        bool IsSymbolSanitized(ILocalSymbol symbol, DiagnosticId ruleId = DiagnosticId.None);
+        bool IsSymbolSanitized(ILocalSymbol symbol, DiagnosticId ruleId);
     }
 }

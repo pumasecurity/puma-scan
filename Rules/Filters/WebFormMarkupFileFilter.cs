@@ -18,7 +18,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Filters
 {
-    public class WebFormMarkupFileFilter : IFileExtensionFilter
+    internal class WebFormMarkupFileFilter : IFileExtensionFilter
     {
         private const string WEBFORMS_EXTENSION = ".aspx";
         private const string WEBCONTROL_EXTENSION = ".ascx";

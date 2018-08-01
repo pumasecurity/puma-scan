@@ -11,7 +11,7 @@
 
 namespace Puma.Security.Rules.Regex.WebForms
 {
-    public class ResponseWriteShortHandRegexHelper : BaseRegexHelper
+    internal class ResponseWriteShortHandRegexHelper : BaseRegexHelper
     {
         private const string Regex = "<%=(.|\t|\r|\n)+?%>";
 

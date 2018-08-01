@@ -13,7 +13,7 @@ using System.IO;
 
 namespace Puma.Security.Rules.Core.ConfigurationFiles
 {
-    public interface IShouldUpdateConfigurationFile
+    internal interface IShouldUpdateConfigurationFile
     {
         bool Execute(Model.ConfigurationFile file);
     }

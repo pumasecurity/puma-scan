@@ -17,6 +17,6 @@ namespace Puma.Security.Rules.Analyzer.Core
 {
     internal interface ISanitizedParameterSymbolAnalyzer
     {
-        bool IsSymbolSanitized(IParameterSymbol symbol, DiagnosticId ruleId = DiagnosticId.None);
+        bool IsSymbolSanitized(IParameterSymbol symbol, DiagnosticId ruleId);
     }
 }

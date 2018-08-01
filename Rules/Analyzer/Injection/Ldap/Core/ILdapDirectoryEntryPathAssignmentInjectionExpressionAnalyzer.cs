@@ -12,10 +12,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Puma.Security.Rules.Common;
+
 namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
 {
     internal interface ILdapDirectoryEntryPathAssignmentInjectionExpressionAnalyzer
     {
-        bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax);
+        bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId);
     }
 }

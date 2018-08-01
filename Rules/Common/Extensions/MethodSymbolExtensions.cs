@@ -13,18 +13,18 @@ using Microsoft.CodeAnalysis;
 
 namespace Puma.Security.Rules.Common.Extensions
 {
-    public static class MethodSymbolExtensions
+    internal static class MethodSymbolExtensions
     {
-        public static bool IsMethod(this IMethodSymbol symbol, string sourceObjectType, string methodName)
+        internal static bool IsMethod(this IMethodSymbol symbol, string sourceObjectType, string methodName)
         {
-            return symbol?.Name.ToLower() == methodName.ToLower() &&
-                   (symbol?.ReceiverType.ToString().ToLower() == sourceObjectType.ToLower() || symbol?.ReceiverType.OriginalDefinition.ToString().ToLower() == sourceObjectType.ToLower());
+            return symbol?.Name == methodName &&
+                   (symbol?.ReceiverType.ToString() == sourceObjectType || symbol?.ReceiverType.OriginalDefinition.ToString() == sourceObjectType);
         }
 
-        public static bool IsCtorFor(this IMethodSymbol symbol, string sourceObjectType)
+        internal static bool IsCtorFor(this IMethodSymbol symbol, string sourceObjectType)
         {
             return symbol?.MethodKind == MethodKind.Constructor &&
-                   symbol?.ReceiverType.ToString().ToLower() == sourceObjectType.ToLower();
+                   symbol?.ReceiverType.ToString() == sourceObjectType;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Puma.Security.Rules.Analyzer.Core
                 case ConditionalExpressionSyntax _:
                     return new ConditionalExpressionSyntaxAnalyzer();
                 case ElementAccessExpressionSyntax _:
+                    return new ElementAccessExpressionSyntaxAnalyzer();
                 case IdentifierNameSyntax _:
                     return new IdentifierNameSyntaxAnalyzer();
                 case InvocationExpressionSyntax _:
@@ -39,6 +40,8 @@ namespace Puma.Security.Rules.Analyzer.Core
                     return new MemberAccessExpressionSyntaxAnalyzer();
                 case ParameterSyntax _:
                     return new ParameterSyntaxNodeAnalyzer();
+                case QueryExpressionSyntax _:
+                    return new QueryExpressionSyntaxAnalyzer();
             }
 
             return new BaseSyntaxNodeAnalyzer<SyntaxNode>();

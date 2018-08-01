@@ -11,14 +11,17 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-
+using Puma.Security.Rules.Analyzer.Core;
+using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 {
     internal class LinqSqlInjectionExpressionAnalyzer : ILinqSqlInjectionExpressionAnalyzer
     {
-        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax)
+        public SyntaxNode Source { get; set; }
+
+        public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId)
         {
             if (!ContainsLinqExecuteCommands(syntax))
                 return false;
@@ -27,20 +30,21 @@ namespace Puma.Security.Rules.Analyzer.Injection.Sql.Core
 
             if (!IsSymbolLinqExecuteCommand(symbol)) return false;
 
-            /* THIS IS GOING TO BE PASSED TO THE DFA FOR ANALYSIS GOING FORWARD
-            if (syntax.ArgumentList.Arguments.Count == 1) //No params passed
+            if (syntax.ArgumentList != null && syntax.ArgumentList.Arguments.Any())
             {
-                return !(syntax.ArgumentList.Arguments[0].Expression is LiteralExpressionSyntax);
-            }
+                var commandTextArg = syntax.ArgumentList.Arguments[0].Expression;
 
-            if (syntax.ArgumentList.Arguments.Count > 1)
-                //params passed, code could still be doing some string concatation in first param, passing as safe for now
-            {
-                return syntax.ArgumentList.Arguments[0].Expression is BinaryExpressionSyntax;
-            }
-            */
+                var expressionAnalyzer = SyntaxNodeAnalyzerFactory.Create(commandTextArg);
 
-            return true;
+                if (expressionAnalyzer.CanSuppress(model, commandTextArg, ruleId))
+                    return false;
+
+                //Set source to analyze and return for further analysis
+                Source = commandTextArg;
+                return true;
+            }
+            
+            return false;
         }
 
         private static bool ContainsLinqExecuteCommands(InvocationExpressionSyntax syntax)
