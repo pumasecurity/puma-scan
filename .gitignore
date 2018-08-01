@@ -250,5 +250,3 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-/Rules/Pro/Suites/CertificateValidationDiagnosticSuitePro.cs
-/Rules/Pro/Analyzer/Validation/Certificate/CertificateValidationAnalyzerPro.cs
