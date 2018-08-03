@@ -25,7 +25,7 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
     {
         public bool Execute(SemanticModel model, InvocationExpressionSyntax syntax)
         {
-            if (syntax.ToString().Contains("MapPath"))
+            if (B(syntax))
             {
                 var symbol = model.GetSymbolInfo(syntax).Symbol as IMethodSymbol;
                 if (symbol != null)
@@ -37,6 +37,8 @@ namespace Puma.Security.Rules.Analyzer.Core.Specialized
             return false;
         }
 
-        private bool IsArgumentOnlyMethod(IMethodSymbol symbol) => symbol.IsMethod("System.Web.HttpRequest", "MapPath") || symbol.IsMethod("System.Web.HttpServerUtility", "MapPath");
+        private bool B(InvocationExpressionSyntax syntax)  => syntax.ToString().Contains("MapPath") || syntax.ToString().Contains("string.Format") || syntax.ToString().Contains("String.Format");
+
+        private bool IsArgumentOnlyMethod(IMethodSymbol symbol) => symbol.IsMethod("System.Web.HttpRequest", "MapPath") || symbol.IsMethod("System.Web.HttpServerUtility", "MapPath") || symbol.IsMethod("string", "Format");
     }
 }
