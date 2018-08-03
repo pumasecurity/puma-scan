@@ -14,8 +14,6 @@ using System.Collections.Immutable;
 using Puma.Security.Rules.Analyzer;
 using Puma.Security.Rules.Analyzer.Configuration.SessionState;
 
-using TimeoutAnalyzer = Puma.Security.Rules.Analyzer.Configuration.Forms.TimeoutAnalyzer;
-
 namespace Puma.Security.Rules.Suites.Core
 {
     public class SessionStateConfigurationAnalyzerSuiteFactory : IAnalyzerSuiteFactory

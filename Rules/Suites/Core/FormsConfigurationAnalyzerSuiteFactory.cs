@@ -14,8 +14,6 @@ using System.Collections.Immutable;
 using Puma.Security.Rules.Analyzer;
 using Puma.Security.Rules.Analyzer.Configuration.Forms;
 
-using RequireSslAnalyzer = Puma.Security.Rules.Analyzer.Configuration.Cookies.RequireSslAnalyzer;
-
 namespace Puma.Security.Rules.Suites.Core
 {
     public class FormsConfigurationAnalyzerSuiteFactory : IAnalyzerSuiteFactory
