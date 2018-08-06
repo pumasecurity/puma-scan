@@ -37,9 +37,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Analyzer\Core\BaseCodeBlockAnalyzer.cs" />
-    <Compile Include="Analyzer\Injection\Cmd\Core\IProcessStartCreationExpressionAnalyzer.cs" />
-    <Compile Include="Analyzer\Injection\Cmd\Core\ProcessStartCreationExpressionAnalyzer.cs" />
-    <Compile Include="Analyzer\Injection\Cmd\ProcessStartCreationAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\Core\IProcessStartInvocationExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\Core\IProcessStartInfoCreationExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\Core\ProcessStartInvocationExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\Core\ProcessStartInfoCreationExpressionAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\ProcessStartInvocationAnalyzer.cs" />
+    <Compile Include="Analyzer\Injection\Cmd\ProcessStartInfoCreationAnalyzer.cs" />
     <Compile Include="Common\Extensions\DiagnosticIdExtensions.cs" />
     <Compile Include="Common\Extensions\MethodDeclarationSyntaxExtensions.cs" />
     <Compile Include="Common\Extensions\NamedTypeSymbolExtensions.cs" />

@@ -16,10 +16,10 @@ using System.Collections.Generic;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Cmd.Core
 {
-    internal interface IProcessStartCreationExpressionAnalyzer
+    internal interface IProcessStartInvocationExpressionAnalyzer
     {
         bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, DiagnosticId ruleId);
 
-        SyntaxNode Source { get; set; }
+        List<SyntaxNode> Sources { get; set; }
     }
 }
