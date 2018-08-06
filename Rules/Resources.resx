@@ -670,10 +670,10 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>sec0030-deserialization-newtonsoft-json</value>
   </data>
   <data name="Analyzer_SEC0030_Description" xml:space="preserve">
-    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None.</value>
   </data>
   <data name="Analyzer_SEC0030_MessageFormat" xml:space="preserve">
-    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.</value>
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None.</value>
   </data>
   <data name="Analyzer_SEC0030_Title" xml:space="preserve">
     <value>Insecure Deserialization - Newtonsoft JSON</value>
