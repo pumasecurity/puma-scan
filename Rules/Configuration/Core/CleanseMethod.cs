@@ -9,14 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Puma.Security.Rules.Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Puma.Security.Rules.Configuration.Core
 {
@@ -40,13 +34,11 @@ namespace Puma.Security.Rules.Configuration.Core
         /// <summary>
         /// List of associated diagnostic ids (defualt of *)
         /// </summary>
-        [JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
         public List<DiagnosticId> RuleIds { get; set; }
 
         /// <summary>
         /// Taint flag type (Web, Web service, Database)
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
         public TaintFlags Flag { get; set; }
 
         public string Syntax { get; set; }

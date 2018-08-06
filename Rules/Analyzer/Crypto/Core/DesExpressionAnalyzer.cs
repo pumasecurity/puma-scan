@@ -35,7 +35,7 @@ namespace Puma.Security.Rules.Analyzer.Crypto.Core
 
         private static bool ContainsTypeName(ObjectCreationExpressionSyntax syntax)
         {
-            return syntax.Type.ToString().Contains("DESCryptoServiceProvider");
+            return syntax.Type.ToString().Equals("DESCryptoServiceProvider");
         }
 
         private bool IsType(ISymbol symbol)
