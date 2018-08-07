@@ -9,21 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using System;
-
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Core
 {
-    public class PumaCompilationAnalysisContext
+    public class PumaSyntaxNodeAnalysisContext
     {
-        public CompilationAnalysisContext RosylnContext { get; }
+        public SyntaxNodeAnalysisContext RosylnContext { get; }
 
         public DiagnosticId DiagnosticId { get; }
 
-        public PumaCompilationAnalysisContext(DiagnosticId diagnosticId, CompilationAnalysisContext context)
+        public PumaSyntaxNodeAnalysisContext(DiagnosticId diagnosticId, SyntaxNodeAnalysisContext context)
         {
             this.DiagnosticId = diagnosticId;
             this.RosylnContext = context;
