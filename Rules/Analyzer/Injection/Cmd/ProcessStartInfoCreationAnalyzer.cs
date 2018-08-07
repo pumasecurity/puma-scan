@@ -13,7 +13,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Puma.Security.Rules.Analyzer.Core;
-
 using Puma.Security.Rules.Analyzer.Core.Factories;
 using Puma.Security.Rules.Analyzer.Injection.Cmd.Core;
 using Puma.Security.Rules.Common;
@@ -27,37 +26,34 @@ using System.Threading.Tasks;
 
 namespace Puma.Security.Rules.Analyzer.Injection.Cmd
 {
-    [SupportedDiagnostic(DiagnosticId.SEC0031)]
-    internal class ProcessStartCreationAnalyzer : BaseCodeBlockAnalyzer, ISyntaxAnalyzer
+    [SupportedDiagnostic(DiagnosticId.SEC0032)]
+    internal class ProcessStartInfoCreationAnalyzer : BaseCodeBlockAnalyzer, ISyntaxAnalyzer
     {
-        private readonly IProcessStartCreationExpressionAnalyzer _expressionSyntaxAnalyzer;
-        private readonly IInvocationExpressionVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
+        public SyntaxKind SinkKind => SyntaxKind.ObjectCreationExpression;
 
-        internal ProcessStartCreationAnalyzer() : this(new ProcessStartCreationExpressionAnalyzer(), new InvocationExpressionVulnerableSyntaxNodeFactory()) { }
+        private readonly IProcessStartInfoCreationExpressionAnalyzer _expressionSyntaxAnalyzer;
+        private readonly IObjectCreationExpressionVulnerableSyntaxNodeFactory _vulnerableSyntaxNodeFactory;
 
-        private ProcessStartCreationAnalyzer(
-            IProcessStartCreationExpressionAnalyzer expressionSyntaxAnalyzer,
-            IInvocationExpressionVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
+
+        internal ProcessStartInfoCreationAnalyzer() : this(new ProcessStartInfoCreationExpressionAnalyzer(), new ObjectCreationExpressionVulnerableSyntaxNodeFactory()) { }
+
+        private ProcessStartInfoCreationAnalyzer(
+            IProcessStartInfoCreationExpressionAnalyzer expressionSyntaxAnalyzer,
+            IObjectCreationExpressionVulnerableSyntaxNodeFactory vulnerableSyntaxNodeFactory)
         {
             _expressionSyntaxAnalyzer = expressionSyntaxAnalyzer;
             _vulnerableSyntaxNodeFactory = vulnerableSyntaxNodeFactory;
         }
 
-        public SyntaxKind SinkKind => SyntaxKind.InvocationExpression;
-
         public override void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId)
         {
-            var syntax = context.Node as InvocationExpressionSyntax;
+            var syntax = context.Node as ObjectCreationExpressionSyntax;
 
             if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, ruleId))
                 return;
 
             if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
-                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(syntax));
-
-            //TODO: TRIED THIS WAY AS WELL TO TARGET PARAMETERS INDIVIDUALLY (LESS CHECKS)
-            //VulnerableSyntaxNodes.Push(new VulnerableSyntaxNode(syntax, _expressionSyntaxAnalyzer.Source));
+                VulnerableSyntaxNodes.Push(new VulnerableSyntaxNode(syntax, _expressionSyntaxAnalyzer.Sources.ToImmutableArray()));
         }
-
     }
 }

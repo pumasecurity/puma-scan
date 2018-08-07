@@ -34,7 +34,7 @@ namespace Puma.Security.Rules.Diagnostics
                 , severity
                 , true
                 , description
-                , string.Format("https://www.pumascan.com/rules.html#{0}", anchor));
+                , string.Format("https://www.pumascan.com/rules/#{0}", anchor));
         }
 
         private static string getCategoryResource(DiagnosticCategory cateogry)

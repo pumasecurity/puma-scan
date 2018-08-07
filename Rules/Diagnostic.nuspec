@@ -6,18 +6,15 @@
     <title>Puma Scan</title>
     <authors>Puma Security LLC</authors>
     <owners>Puma Security, LLC</owners>
-    <licenseUrl>https://www.pumascan.com/license</licenseUrl>
-    <projectUrl>https://www.pumascan.com/community</projectUrl>
-    <iconUrl>https://www.pumascan.com/images/logo.png</iconUrl>
+    <licenseUrl>https://github.com/pumasecurity/puma-scan/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/pumasecurity/puma-scan</projectUrl>
+    <iconUrl>https://www.pumascan.com/img/logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Diagnostic extension for the .NET Compiler Platform that performs static code analysis for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</description>
+    <description>Puma Scan is a software security analyzer providng real time, continuous source code analysis as development teams write and build code.</description>
     <developmentDependency>true</developmentDependency>
-    <releaseNotes>https://www.pumascan.com/community/installation.html#release-notes</releaseNotes>
+    <releaseNotes>https://github.com/pumasecurity/puma-scan/releases</releaseNotes>
     <copyright>Copyright 2016 - 2018 Puma Security, LLC</copyright>
-    <tags>Puma.Security.Rules, .NET Security Analyzer, Security, Code, Analyzers, OWASP</tags>
-    <dependencies>
-      <dependency id="Newtonsoft.Json" version="10.0.3" />
-    </dependencies>
+    <tags>Puma.Security.Rules, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
     </frameworkAssemblies>

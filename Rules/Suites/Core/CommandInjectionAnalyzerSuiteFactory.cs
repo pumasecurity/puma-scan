@@ -26,7 +26,8 @@ namespace Puma.Security.Rules.Suites.Core
         {
             return new ICompilationAnalyzer[]
             {
-                new ProcessStartCreationAnalyzer(),
+                new ProcessStartInvocationAnalyzer(),
+                new ProcessStartInfoCreationAnalyzer(),
             }.ToImmutableArray();
         }
     }

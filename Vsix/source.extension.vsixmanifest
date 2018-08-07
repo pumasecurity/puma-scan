@@ -3,14 +3,14 @@
     <Metadata>
         <Identity Id="Puma.Security.Rules.Vsix..b2502b26-45ba-4568-9efe-bad89faad3c5" Version="2.0" Language="en-US" Publisher="Puma Security, LLC"/>
         <DisplayName>Puma Scan</DisplayName>
-        <Description xml:space="preserve">Diagnostic extension for the .NET Compiler Platform ("Roslyn") that performs static code analysis for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
-        <MoreInfo>https://www.pumascan.com/community</MoreInfo>
+        <Description xml:space="preserve">Puma Scan is a software security analyzer providng real time, continuous source code analysis as development teams write and build code. Puma Scan hunts for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
+        <MoreInfo>https://www.pumascan.com/support/</MoreInfo>
         <License>License.txt</License>
-        <GettingStartedGuide>https://www.pumascan.com/community/installation.html</GettingStartedGuide>
-        <ReleaseNotes>https://www.pumascan.com/community/installation.html#release-notes</ReleaseNotes>
+        <GettingStartedGuide>https://www.pumascan.com/installation/#top-community</GettingStartedGuide>
+        <ReleaseNotes>https://github.com/pumasecurity/puma-scan/releases</ReleaseNotes>
         <Icon>logo-200x200.png</Icon>
         <PreviewImage>logo-200x200.png</PreviewImage>
-        <Tags>Security, Secure Coding, OWASP Top 10, Static Analysis, Puma, PumaScan, Puma Scan</Tags>
+        <Tags>Puma Scan Community, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Version="[14.0,16.0)" Id="Microsoft.VisualStudio.Pro" />

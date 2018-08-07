@@ -1141,7 +1141,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None..
+        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None..
         /// </summary>
         internal static string Analyzer_SEC0030_Description {
             get {
@@ -1150,7 +1150,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None..
+        ///   Looks up a localized string similar to The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None..
         /// </summary>
         internal static string Analyzer_SEC0030_MessageFormat {
             get {
@@ -1202,6 +1202,44 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0031_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0031_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0032-command-injection-process-start-info.
+        /// </summary>
+        internal static string Analyzer_SEC0032_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0032_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server&apos;s operating system.
+        ///
+        ///Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to whitelist safe characters and escape evil characters..
+        /// </summary>
+        internal static string Analyzer_SEC0032_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0032_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untrusted data is passed to the ProcessStartInfo fileName or arguments parameter..
+        /// </summary>
+        internal static string Analyzer_SEC0032_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0032_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Injection Process Start Info.
+        /// </summary>
+        internal static string Analyzer_SEC0032_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0032_Title", resourceCulture);
             }
         }
         
