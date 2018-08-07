@@ -11,22 +11,12 @@
 
 using System;
 
+using Puma.Security.Rules.Analyzer;
 
-namespace Puma.Security.Rules //Root namespace to make globally available
+namespace Puma.Security.Rules.Core
 {
-    public class PumaApp
+    internal interface IPumaSyntaxNodeAnalysisContextReporterService
     {
-        private static PumaApp _pumaApp;
-
-        internal PumaApp()
-        {
-            this.Id = Guid.NewGuid();
-
-            _pumaApp = this;
-        }
-
-        public Guid Id { get; }
-
-        public static PumaApp Instance => _pumaApp;
+        Action<PumaSyntaxNodeAnalysisContext> Report(ISyntaxAnalyzer analyzer);
     }
 }

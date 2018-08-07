@@ -11,15 +11,12 @@
 
 using System;
 
-using Microsoft.CodeAnalysis.Diagnostics;
-
 using Puma.Security.Rules.Analyzer;
-using Puma.Security.Rules.Common;
 
 namespace Puma.Security.Rules.Core
 {
-    internal interface ISyntaxNodeAnalysisReporterService
+    internal interface IPumaCompilationAnalysisReporterService
     {
-        Action<SyntaxNodeAnalysisContext> Report(ISyntaxAnalyzer analyzer, DiagnosticId ruleId);
+        Action<PumaCompilationAnalysisContext> Report(ISyntaxAnalyzer analyzer);
     }
 }

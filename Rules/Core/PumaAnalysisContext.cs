@@ -19,12 +19,18 @@ namespace Puma.Security.Rules.Core
     {
         internal readonly AnalysisContext Context;
 
-        public Guid CompilationId { get; }
-
         internal PumaAnalysisContext(AnalysisContext context)
         {
-            this.CompilationId = Guid.NewGuid();
             this.Context = context;
+        }
+
+        internal void RegisterCompilationStartAction(Action<PumaCompilationStartAnalysisContext> registerPumaActions)
+        {
+            Context.RegisterCompilationStartAction(c =>
+            {
+                var pumaCompilationStartAnalysisContext = new PumaCompilationStartAnalysisContext(c);
+                registerPumaActions.Invoke(pumaCompilationStartAnalysisContext);
+            });
         }
     }
 }

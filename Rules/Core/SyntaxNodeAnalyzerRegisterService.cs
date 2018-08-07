@@ -9,22 +9,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
+using System;
+
 using Puma.Security.Rules.Analyzer;
 
 namespace Puma.Security.Rules.Core
 {
     internal class SyntaxNodeAnalyzerRegisterService : ISyntaxNodeAnalyzerRegisterService
     {
-        private readonly ISyntaxNodeAnalysisReporterService _syntaxNodeAnalysisReporterService;
+        private readonly IPumaSyntaxNodeAnalysisContextReporterService _pumaSyntaxNodeAnalysisContextReporterService;
+        private readonly IPumaCompilationAnalysisReporterService _pumaCompilationAnalysisReporterService;
 
-        internal SyntaxNodeAnalyzerRegisterService() : this(new SyntaxNodeAnalysisReporterService())
+        internal SyntaxNodeAnalyzerRegisterService() : this(new PumaSyntaxNodeAnalysisContextReporterService(), new PumaCompilationAnalysisReporterService())
         {
 
         }
 
-        private SyntaxNodeAnalyzerRegisterService(ISyntaxNodeAnalysisReporterService syntaxNodeAnalysisReporterService)
+        private SyntaxNodeAnalyzerRegisterService(IPumaSyntaxNodeAnalysisContextReporterService pumaSyntaxNodeAnalysisContextReporterService, IPumaCompilationAnalysisReporterService pumaCompilationAnalysisReporterService)
         {
-            _syntaxNodeAnalysisReporterService = syntaxNodeAnalysisReporterService;
+            _pumaSyntaxNodeAnalysisContextReporterService = pumaSyntaxNodeAnalysisContextReporterService;
+            _pumaCompilationAnalysisReporterService = pumaCompilationAnalysisReporterService;
         }
 
         public void Register(PumaAnalysisContext pumaContext, ICompilationAnalyzer analyzer)
@@ -33,7 +37,17 @@ namespace Puma.Security.Rules.Core
             if (syntaxAnalyzer == null)
                 return;
 
-            pumaContext.Context.RegisterSyntaxNodeAction(_syntaxNodeAnalysisReporterService.Report(syntaxAnalyzer, syntaxAnalyzer.GetDiagnosticId()), syntaxAnalyzer.SinkKind);
+            pumaContext.RegisterCompilationStartAction(RegisterPumaActions(syntaxAnalyzer));
+        }
+
+        private Action<PumaCompilationStartAnalysisContext> RegisterPumaActions(ISyntaxAnalyzer syntaxAnalyzer)
+        {
+            return c =>
+            {
+                c.RegisterSyntaxNodeAction(_pumaSyntaxNodeAnalysisContextReporterService.Report(syntaxAnalyzer), syntaxAnalyzer.SinkKind, syntaxAnalyzer.GetDiagnosticId());
+
+                c.RegisterCompilationEndAction(_pumaCompilationAnalysisReporterService.Report(syntaxAnalyzer), syntaxAnalyzer.GetDiagnosticId());
+            };
         }
     }
 }

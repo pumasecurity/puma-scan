@@ -53,7 +53,7 @@ namespace Puma.Security.Rules.Core
             {
                 configurationFileAnalyzer.ConfigurationFiles = Parse(c);
 
-                var pumaContext = new PumaCompilationAnalysisContext(Guid.NewGuid(), configurationFileAnalyzer.GetDiagnosticId(), c);
+                var pumaContext = new PumaCompilationAnalysisContext(configurationFileAnalyzer.GetDiagnosticId(), c);
 
                 configurationFileAnalyzer.OnCompilationEnd(pumaContext);
                 while (!configurationFileAnalyzer.VulnerableAdditionalText.IsEmpty)

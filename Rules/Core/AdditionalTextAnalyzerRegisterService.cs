@@ -41,7 +41,7 @@ namespace Puma.Security.Rules.Core
 
             context.RegisterCompilationAction(c =>
             {
-                var pumaContext = new PumaCompilationAnalysisContext(Guid.NewGuid(), additionalTextAnalyzer.GetDiagnosticId(), c);
+                var pumaContext = new PumaCompilationAnalysisContext(additionalTextAnalyzer.GetDiagnosticId(), c);
                 additionalTextAnalyzer.OnCompilationEnd(pumaContext);
                 while (!additionalTextAnalyzer.VulnerableAdditionalText.IsEmpty)
                 {

@@ -11,22 +11,19 @@
 
 using System;
 
-using Microsoft.CodeAnalysis.Diagnostics;
-
-using Puma.Security.Rules.Common;
+using Puma.Security.Rules.Analyzer;
 
 namespace Puma.Security.Rules.Core
 {
-    public class PumaCompilationAnalysisContext
+    internal class PumaSyntaxNodeAnalysisContextReporterService : IPumaSyntaxNodeAnalysisContextReporterService
     {
-        public CompilationAnalysisContext RosylnContext { get; }
-
-        public DiagnosticId DiagnosticId { get; }
-
-        public PumaCompilationAnalysisContext(DiagnosticId diagnosticId, CompilationAnalysisContext context)
+        public Action<PumaSyntaxNodeAnalysisContext> Report(ISyntaxAnalyzer analyzer)
         {
-            this.DiagnosticId = diagnosticId;
-            this.RosylnContext = context;
+            return c =>
+            {
+                var syntaxContext = c.RosylnContext;
+                analyzer.GetSinks(syntaxContext, c.DiagnosticId);
+            };
         }
     }
 }
