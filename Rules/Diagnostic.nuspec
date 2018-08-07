@@ -23,5 +23,6 @@
   <files>
     <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.Build.*;**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
     <file src="tools\*.ps1" target="tools\" />
+    <file src="tools\parser\*.*" target="tools\parser\" exclude="tools\parser\*.pdb" />
   </files>
 </package>

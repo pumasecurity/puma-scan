@@ -316,6 +316,9 @@
     <None Include="tools\install.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="tools\parser\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="tools\uninstall.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -402,6 +405,12 @@
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
     </Exec>
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == Release (
+ if not exist "$(ProjectDir)\bin\$(ConfigurationName)\tools\parser" mkdir "$(ProjectDir)\bin\$(ConfigurationName)\tools\parser"
+ dotnet publish "$(ProjectDir)..\Puma.Security.Parser\Puma.Security.Parser.csproj" -c $(ConfigurationName) -o "$(ProjectDir)\bin\$(ConfigurationName)\tools\parser"
+)</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -9,8 +9,7 @@
     <AssemblyName>Puma.Security.Parser</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Puma.Security.Parser</PackageId>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <Company>Puma Security, LLC</Company>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
