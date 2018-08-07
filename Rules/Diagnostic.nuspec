@@ -21,7 +21,7 @@
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\portable50 and language specific analyzers in either analyzers\portable50\cs or analyzers\portable50\vb -->
   <files>
-    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.Build.*;**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.Build.*;**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*;**\System.IO.*;**\System.Threading.*" />
     <file src="tools\*.ps1" target="tools\" />
     <file src="tools\parser\*.*" target="tools\parser\" exclude="tools\parser\*.pdb" />
   </files>
