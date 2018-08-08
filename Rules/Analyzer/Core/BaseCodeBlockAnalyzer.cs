@@ -43,34 +43,43 @@ namespace Puma.Security.Rules.Analyzer.Core
                 var sources = vulnerableSyntaxNode.Source;
                 foreach (var syntaxNode in sources)
                 {
-                    var containingBlock = syntaxNode.FirstAncestorOrSelf<MethodDeclarationSyntax>();
-
-                    var idMatches = containingBlock
-                        .DescendantNodes()
-                        .OfType<IdentifierNameSyntax>()
-                        .Where(p => p.Identifier.ValueText == syntaxNode.ToString())
-                        .ToList<SyntaxNode>();
-
-                    var declarationMatches = containingBlock
-                        .DescendantNodes()
-                        .OfType<VariableDeclaratorSyntax>()
-                        .Where(p => p.Identifier.ValueText == syntaxNode.ToString())
-                        .Select(p => p.Initializer.Value)
-                        .ToList<SyntaxNode>();
-
-                    var matches = idMatches.Union(declarationMatches);
-                    var idModel = context.Compilation.GetSemanticModel(syntaxNode.SyntaxTree);
-
-                    foreach (var match in matches)
+                    var idsToMatchOn = syntaxNode.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
+                    foreach (var identifierNameSyntax in idsToMatchOn)
                     {
-                        var indexNode = match.AncestorsAndSelf().FirstOrDefault();
+                        var containingBlock = syntaxNode.FirstAncestorOrSelf<MethodDeclarationSyntax>();
 
-                        while (!canSuppress && indexNode != containingBlock)
+                        var idMatches = containingBlock
+                            .DescendantNodes()
+                            .OfType<IdentifierNameSyntax>()
+                            .Where(p => p.Identifier.ValueText == syntaxNode.ToString())
+                            .ToList<SyntaxNode>();
+
+                        var declarationMatches = containingBlock
+                            .DescendantNodes()
+                            .OfType<VariableDeclaratorSyntax>()
+                            .Where(p => p.Identifier.ValueText == identifierNameSyntax.ToString())
+                            .Select(p => p.Initializer.Value)
+                            .ToList<SyntaxNode>();
+
+                        var matches = idMatches.Union(declarationMatches);
+                        var idModel = context.Compilation.GetSemanticModel(syntaxNode.SyntaxTree);
+
+                        foreach (var match in matches)
                         {
-                            var nodeAnalyzer = SyntaxNodeAnalyzerFactory.Create(indexNode);
-                            canSuppress = nodeAnalyzer.CanSuppress(idModel, indexNode, pumaContext.DiagnosticId);
+                            var indexNode = match.AncestorsAndSelf().FirstOrDefault();
 
-                            indexNode = indexNode.Ancestors().FirstOrDefault();
+                            while (!canSuppress && indexNode != containingBlock)
+                            {
+                                var nodeAnalyzer = SyntaxNodeAnalyzerFactory.Create(indexNode);
+                                canSuppress = nodeAnalyzer.CanSuppress(idModel, indexNode, pumaContext.DiagnosticId);
+
+                                indexNode = indexNode.Ancestors().FirstOrDefault();
+                            }
+
+                            if (canSuppress)
+                            {
+                                break;
+                            }
                         }
 
                         if (canSuppress)
@@ -83,6 +92,7 @@ namespace Puma.Security.Rules.Analyzer.Core
                     {
                         break;
                     }
+
                 }
 
                 vulnerableSyntaxNode.Suppressed = canSuppress;
