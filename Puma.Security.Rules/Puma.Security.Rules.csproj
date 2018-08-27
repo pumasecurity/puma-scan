@@ -26,16 +26,6 @@
     <AssemblyName>Puma.Security.Rules</AssemblyName>
     <RootNamespace>Puma.Security.Rules</RootNamespace>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <None Remove="tools\parser\README.md" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="tools\parser\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
    
   <ItemGroup>
     <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
@@ -47,16 +37,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
-    <None Update="tools\parser\*.*" CopyToOutputDirectory="Always" Pack="true" />
+    <None Update="tools\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
+    <None Update="tools\parser\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
+    <None Include="$(OutputPath)\tools\parser\*.*" Pack="true" PackagePath="tools/parser" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="2.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="tools\parser\README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if $(ConfigurationName) == Release (&#xD;&#xA; if not exist &quot;$(ProjectDir)bin\$(ConfigurationName)\tools\parser&quot; mkdir &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; dotnet publish &quot;$(ProjectDir)..\Puma.Security.Parser\Puma.Security.Parser.csproj&quot; -c $(ConfigurationName) -o &quot;$(ProjectDir)\bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA;)" />
+    <Exec Command="if $(ConfigurationName) == Release (&#xD;&#xA; if not exist &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot; mkdir &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; dotnet publish &quot;$(ProjectDir)..\Puma.Security.Parser\Puma.Security.Parser.csproj&quot; -c $(ConfigurationName) -o &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; del $(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser\*.pdb&#xD;&#xA;)" />
   </Target>
 
 </Project>
