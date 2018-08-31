@@ -13,6 +13,13 @@ using CommandLine;
 
 namespace Puma.Security.Parser
 {
+
+    public enum ReportFormat
+    {
+        Text,
+        Sarif
+    }
+
     public class Options
     {
         [Option('w', "workspace", Required = true, HelpText = "Jenkins workspace root directory")]
@@ -23,5 +30,10 @@ namespace Puma.Security.Parser
 
         [Option('o', "output", Required = true, HelpText = "Output file name")]
         public string OutputFile { get; set; }
+
+        [Option('r', "report", Required = false, HelpText = "Report format. Text or Sarif")]
+        public  ReportFormat ReportFormat { get; set; }
+
+
     }
 }

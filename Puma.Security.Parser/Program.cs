@@ -1,19 +1,23 @@
-﻿/* 
+﻿/*
  * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
- * 
+ *
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
- * 
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using CommandLine;
+using Microsoft.CodeAnalysis.Sarif.Writers;
+using Newtonsoft.Json;
+using Puma.Security.Parser.Log;
+using Puma.Security.Parser.Sarif;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using CommandLine;
 
 namespace Puma.Security.Parser
 {
@@ -21,6 +25,7 @@ namespace Puma.Security.Parser
     {
         private const string _REGEX_PUMA_CATEGORY = @"(warning) (SEC)[\d]+:";
         private const string _REGEX_PUMA_ERROR_CODE = @"(SEC)[\d]+";
+        private const string _REGEX_RULE_SEVERITY = @"([^\s]+)";
         private const string _REGEX_FULL_WIN_FILE_PATH = @"\b[A-Z]:\\(?:[^\\/:*?""<>|\x00-\x1F]+\\)*[^\\/:*?""<>|\x00-\x1F\]]*";
         private const string _REGEX_WIN_DIRECTORY = @"([A-Z]:|\\\\[a-z0-9 %._-]+\\[a-z0-9 $%._-]+)?(\\?(?:[^\\/:*?""<>|\x00-\x1F]+\\)+)";
         private const string _REGEX_VS_RELATIVE_PATH = @"([^\\/:*?""<>|\x00-\x1F]+\\)*[^\\/:*?""<>|\x00-\x1F]+\(\d+,\d+\)";
@@ -41,10 +46,10 @@ namespace Puma.Security.Parser
                 return;
 
             //Parse instances from the build file
-            List<Instance> instances = parseBuildWarnings(o);
+            PumaLog instances = parseBuildWarnings(o);
 
             //Export instances to a new Jenkins formatted warnings file
-            exportInstances(o.Workspace, o.OutputFile, instances);
+            exportInstances(o, instances);
         }
 
         private static Options parseArgs(string[] args)
@@ -62,9 +67,9 @@ namespace Puma.Security.Parser
             }
         }
 
-        private static List<Instance> parseBuildWarnings(Options o)
+        private static PumaLog parseBuildWarnings(Options o)
         {
-            List<Instance> instances = new List<Instance>();
+            PumaLog instancelog = new PumaLog();
 
             using (FileStream stream = new FileStream(o.BuildFile, FileMode.Open))
             {
@@ -73,9 +78,9 @@ namespace Puma.Security.Parser
                     string line = null;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        Instance instance = parseWarning(line);
+                        PumaLogEntry instance = parseWarning(line);
                         if (instance != null)
-                            instances.Add(instance);
+                            instancelog.Add(instance);
                     }
 
                     //Kill the stream
@@ -86,10 +91,10 @@ namespace Puma.Security.Parser
                 stream.Dispose();
             }
 
-            return instances;
+            return instancelog;
         }
 
-        private static Instance parseWarning(string value)
+        private static PumaLogEntry parseWarning(string value)
         {
             //Cateogy must be for Puma (SEC####)
             if (!Regex.IsMatch(value, _REGEX_PUMA_CATEGORY))
@@ -104,22 +109,22 @@ namespace Puma.Security.Parser
 
             //Check the first part for a valid path (code warning) or missing data (non-code warning)
             Match mLocalPath = Regex.Match(parts[0], _REGEX_VS_RELATIVE_PATH);
-            Instance i = mLocalPath.Success ? parseCodeWarning(parts) : parseNonCodeWarning(parts);
+            PumaLogEntry i = mLocalPath.Success ? parseCodeWarning(parts) : parseNonCodeWarning(parts);
             return i;
         }
 
-        private static Instance parseCodeWarning(string[] values)
+        private static PumaLogEntry parseCodeWarning(string[] values)
         {
             /*
              * Example code warning
              * 1) Controllers\EmailTemplate\AttachmentService.cs(40,13): warning SEC0112: Unvalidated file paths are passed to a File API, which can allow unauthorized file system operations (e.g. read, write, delete) to be performed on unintended server files. [C:\Jenkins\workspace\Phisherman\Phisherman.Web\Phisherman.Web.csproj]
              */
             Match mLocalPath = Regex.Match(values[0], _REGEX_VS_RELATIVE_PATH);
-            if(!mLocalPath.Success)
+            if (!mLocalPath.Success)
                 return null;
 
-            Instance i = new Instance();
-            
+            PumaLogEntry i = new PumaLogEntry();
+
             //PART 1: Parse path, line, column from the local vs path
             string path = "";
             int lineNumber = 0;
@@ -133,12 +138,16 @@ namespace Puma.Security.Parser
 
             //PART 2: Parse category
             Match mCategory = Regex.Match(values[1], _REGEX_PUMA_ERROR_CODE);
-            if(mCategory.Success)
-                i.Category = mCategory.Value;
-            
+            if (mCategory.Success)
+                i.RuleId = mCategory.Value;
+
+            var mSeverity = Regex.Match(values[1], _REGEX_RULE_SEVERITY);
+            if (mSeverity.Success)
+                i.RuleSeverity = mSeverity.Value;
+
             //PART 3: Parse message and project
             string[] messages = values[2].Split(_VS_PROJECT_DELIMETER_OPEN);
-            if(messages.Length != 2)
+            if (messages.Length != 2)
                 return null;
 
             i.Message = messages[0];
@@ -146,36 +155,36 @@ namespace Puma.Security.Parser
             return i;
         }
 
-        private static Instance parseNonCodeWarning(string[] values)
+        private static PumaLogEntry parseNonCodeWarning(string[] values)
         {
             /* Example non-code warning
              * CSC : warning SEC0013: Pages ViewStateEncryptionMode disabled. C:\Jenkins\workspace\Phisherman\Phisherman.Web\Web.config(39): <pages> [C:\Jenkins\workspace\Phisherman\Phisherman.Web\Phisherman.Web.csproj]
              */
-            Instance i = new Instance();
+            PumaLogEntry i = new PumaLogEntry();
 
             //PART 2: Parse category
             Match mCategory = Regex.Match(values[1], _REGEX_PUMA_ERROR_CODE);
-            if(mCategory.Success)
-                i.Category = mCategory.Value;
-            
+            if (mCategory.Success)
+                i.RuleId = mCategory.Value;
+
             //PART 3: Parse message
             string[] messageMatches = Regex.Split(values[2], _REGEX_FULL_WIN_FILE_PATH, RegexOptions.IgnoreCase);
-            if(messageMatches.Length > 0)
+            if (messageMatches.Length > 0)
                 i.Message = messageMatches[0].Trim();
 
             //PART 4: Parse project
             Match mProject = Regex.Match(values[3], _REGEX_FULL_WIN_FILE_PATH);
-            if(mProject.Success)
+            if (mProject.Success)
                 i.Project = mProject.Value;
 
             //PART 3 CONTINUED: Parse path and line number
             Match mFilePath = Regex.Match(values[2], _REGEX_FULL_WIN_FILE_PATH, RegexOptions.IgnoreCase);
-            if(mFilePath.Success)
+            if (mFilePath.Success)
             {
                 string path = "";
                 int lineNumber = 0;
                 int columnNumber = 0;
-                if(parseVisualStudioPath(mFilePath.Value, out path, out lineNumber, out columnNumber))
+                if (parseVisualStudioPath(mFilePath.Value, out path, out lineNumber, out columnNumber))
                 {
                     i.Path = path;
                     i.LineNumber = lineNumber;
@@ -185,7 +194,7 @@ namespace Puma.Security.Parser
 
             //PART 3: FINAL: Make path relative to project root
             Match mProjectDir = Regex.Match(i.Project, _REGEX_WIN_DIRECTORY, RegexOptions.IgnoreCase);
-            if(mProject.Success)
+            if (mProject.Success)
                 i.Path = i.Path.Replace(mProjectDir.Value, "");
 
             return i;
@@ -209,33 +218,42 @@ namespace Puma.Security.Parser
             string[] locations = parts[1].TrimEnd(_VS_PATH_DELIMETER_CLOSE).Split(_VS_LOCATION_DELIMETER);
 
             //Grab line number and column number
-            if(locations.Length == 0)
+            if (locations.Length == 0)
                 return false;
 
-            if(locations.Length > 0)
+            if (locations.Length > 0)
                 int.TryParse(locations[0], out lineNumber);
 
-            if(locations.Length > 1)
+            if (locations.Length > 1)
                 int.TryParse(locations[1], out columnNumber);
 
             return true;
         }
 
-        private static void exportInstances(string workspace, string outputFile, List<Instance> instances)
+        private static void exportToSarifFormat(PumaLog pumaLog, string outputFileName)
         {
-            if(File.Exists(Path.Combine(workspace, outputFile)))
+            using (var outputTextStream = File.Create(outputFileName))
+            using (var outputTextWriter = new StreamWriter(outputTextStream))
+            using (var outputJson = new JsonTextWriter(outputTextWriter))
             {
-                Console.WriteLine(string.Format("Output file already exists at location {0}", Path.Combine(workspace, outputFile)));
-                return;
+                outputJson.Formatting = Formatting.Indented;
+                using (var output = new ResultLogJsonWriter(outputJson))
+                {
+                    PumaLogConverter converter = new PumaLogConverter();
+                    converter.Convert(pumaLog, output);
+                }
             }
+        }
 
-            using (FileStream stream = new FileStream(Path.Combine(workspace, outputFile), FileMode.CreateNew))
+        private static void exportToTextFile(PumaLog pumaLog, string outputFile)
+        {
+            using (FileStream stream = new FileStream(outputFile, FileMode.CreateNew))
             {
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    foreach(Instance i in instances)
+                    foreach (PumaLogEntry pumaLogEntry in pumaLog)
                     {
-                        string warning = getBuildWarning(i);
+                        string warning = getBuildWarning(pumaLogEntry);
                         writer.Write(warning);
                         writer.WriteLine();
                     }
@@ -247,12 +265,37 @@ namespace Puma.Security.Parser
 
                 //Kill the stream
                 stream.Dispose();
-            }            
+            }
         }
 
-        private static string getBuildWarning(Instance i)
+        private static void exportInstances(Options options, PumaLog pumaLog)
         {
-            return string.Format(_MS_BUILD_WARNING_FORMAT, i.Path, i.LineNumber, i.ColumnNumber, i.Category, i.Message, i.Project);
+            var outputFullPath = Path.Combine(options.Workspace, options.OutputFile);
+            if (File.Exists(outputFullPath))
+            {
+                Console.WriteLine(string.Format("Output file already exists at location {0}", outputFullPath));
+                return;
+            }
+
+            switch (options.ReportFormat)
+            {
+                case ReportFormat.Text:
+                    exportToTextFile(pumaLog, outputFullPath);
+                    break;
+
+                case ReportFormat.Sarif:
+                    exportToSarifFormat(pumaLog, outputFullPath);
+                    break;
+
+                default:
+                    Console.WriteLine("Unsupported Report format.");
+                    break;
+            }
+        }
+
+        private static string getBuildWarning(PumaLogEntry i)
+        {
+            return string.Format(_MS_BUILD_WARNING_FORMAT, i.Path, i.LineNumber, i.ColumnNumber, i.RuleId, i.Message, i.Project);
         }
     }
 }
