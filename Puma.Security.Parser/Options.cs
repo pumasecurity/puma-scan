@@ -16,7 +16,7 @@ namespace Puma.Security.Parser
 
     public enum ReportFormat
     {
-        Text,
+        MSBuild,
         Sarif
     }
 
@@ -31,7 +31,7 @@ namespace Puma.Security.Parser
         [Option('o', "output", Required = true, HelpText = "Output file name")]
         public string OutputFile { get; set; }
 
-        [Option('r', "report", Required = false, HelpText = "Report format. Text or Sarif")]
+        [Option('r', "report", Required = false, HelpText = "Report format. MSBuild or Sarif")]
         public  ReportFormat ReportFormat { get; set; }
 
 

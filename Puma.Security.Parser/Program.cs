@@ -279,7 +279,7 @@ namespace Puma.Security.Parser
 
             switch (options.ReportFormat)
             {
-                case ReportFormat.Text:
+                case ReportFormat.MSBuild:
                     exportToTextFile(pumaLog, outputFullPath);
                     break;
 
