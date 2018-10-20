@@ -32,7 +32,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Core\ConfigurationFiles\XmlTransform\SR.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
+    <EmbeddedResource Update="Core\ConfigurationFiles\XmlTransform\SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
   </ItemGroup>
 

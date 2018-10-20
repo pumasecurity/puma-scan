@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Diagnostics;
 using RegularExpressions = System.Text.RegularExpressions;
+using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {

@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Web.XmlTransform.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puma.Security.Parser", "Puma.Security.Parser\Puma.Security.Parser.csproj", "{D5AED582-DD4A-46A6-B6B7-27F094D87C47}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{D817A3BC-3329-49F2-BB4A-6CA03DEB632A}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		pumascan.sh = pumascan.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
