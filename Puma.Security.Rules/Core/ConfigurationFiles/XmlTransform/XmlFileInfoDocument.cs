@@ -248,22 +248,26 @@ namespace Microsoft.Web.XmlTransform
         {
             XmlWriter xmlWriter = null;
 
-            if (PreserveWhitespace)
+            try
             {
-                XmlFormatter.Format(this);
-                using (xmlWriter = new XmlAttributePreservingWriter(w, TextEncoding))
+                if (PreserveWhitespace)
                 {
+                    XmlFormatter.Format(this);
+                    xmlWriter = new XmlAttributePreservingWriter(w, TextEncoding);
                     WriteTo(xmlWriter);
                 }
-            }
-            else
-            {
-                using (XmlTextWriter textWriter = new XmlTextWriter(w, TextEncoding))
+                else
                 {
+                    XmlTextWriter textWriter = new XmlTextWriter(w, TextEncoding);
                     textWriter.Formatting = Formatting.Indented;
                     xmlWriter = textWriter;
                     WriteTo(xmlWriter);
                 }
+            }
+            finally
+            {
+                xmlWriter?.Flush();
+                xmlWriter?.Dispose();
             }
         }
 

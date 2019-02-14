@@ -278,8 +278,8 @@ namespace Microsoft.Web.XmlTransform
             }
 
             public override void Flush() {
-                //if(baseWriter != null)
-                    //baseWriter.Flush();
+                if(baseWriter != null)
+                    baseWriter.Flush();
             }
 
             public override void Close() {
