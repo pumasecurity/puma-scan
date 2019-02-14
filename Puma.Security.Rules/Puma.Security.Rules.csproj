@@ -8,19 +8,19 @@
   
   <PropertyGroup>
     <PackageId>Puma.Security.Rules</PackageId>
-    <PackageVersion>2.0.1.0</PackageVersion>
+    <PackageVersion>2.1.0.0</PackageVersion>
     <Authors>Puma Security LLC</Authors>
     <PackageLicenseUrl>https://github.com/pumasecurity/puma-scan/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/pumasecurity/puma-scan</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/pumasecurity/puma-scan/wiki</PackageProjectUrl>
     <PackageIconUrl>https://www.pumascan.com/img/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/pumasecurity/puma-scan</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>Puma Scan Community Edition is a free software security analyzer providng real time, continuous source code analysis as development teams write and build code. Puma Scan hunts for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
     <PackageReleaseNotes>https://github.com/pumasecurity/puma-scan/releases</PackageReleaseNotes>
-    <Copyright>Copyright 2016 - 2018 Puma Security, LLC</Copyright>
+    <Copyright>Copyright 2016 - 2019 Puma Security, LLC</Copyright>
     <PackageTags>Puma Scan, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <Version>2.0.1.0</Version>
+    <Version>2.1.0.0</Version>
     <Company>Puma Security LLC</Company>
     <Product>Puma Scan</Product>
     <AssemblyName>Puma.Security.Rules</AssemblyName>
@@ -32,17 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Core\ConfigurationFiles\XmlTransform\SR.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SR.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
-    <EmbeddedResource Update="Core\ConfigurationFiles\XmlTransform\SR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SR.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform</CustomToolNamespace>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
   </ItemGroup>
 

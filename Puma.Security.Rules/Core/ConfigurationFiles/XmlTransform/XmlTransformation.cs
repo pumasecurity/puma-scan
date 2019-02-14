@@ -3,7 +3,6 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
-using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {
@@ -133,7 +132,7 @@ namespace Microsoft.Web.XmlTransform
                                 PreprocessImportElement(context);
                                 break;
                             default:
-                                logger.LogWarning(element, SR.XMLTRANSFORMATION_UnknownXdtTag, element.Name);
+                                logger.LogWarning(element, "Unknown tag '{0}'", element.Name);
                                 break;
                         }
                     }
@@ -143,7 +142,7 @@ namespace Microsoft.Web.XmlTransform
                         }
 
                         logger.LogErrorFromException(ex);
-                        throw new XmlTransformationException(SR.XMLTRANSFORMATION_FatalTransformSyntaxError, ex);
+                        throw new XmlTransformationException("Fatal syntax error", ex);
                     }
                     finally {
                         context = null;
@@ -304,17 +303,17 @@ namespace Microsoft.Web.XmlTransform
                     }
                 }
 
-                throw new XmlNodeException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_ImportUnknownAttribute, attribute.Name), attribute);
+                throw new XmlNodeException(string.Format("Import tag does not support '{0}' attribute", attribute.Name), attribute);
             }
 
             if (assemblyName != null && path != null) {
-                throw new XmlNodeException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_ImportAttributeConflict), context.Element);
+                throw new XmlNodeException("Import tag cannot have both a 'path' and an 'assembly'", context.Element);
             }
             else if (assemblyName == null && path == null) {
-                throw new XmlNodeException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_ImportMissingAssembly), context.Element);
+                throw new XmlNodeException("Import tag must have a 'path' or an 'assembly'", context.Element);
             }
             else if (nameSpace == null) {
-                throw new XmlNodeException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_ImportMissingNamespace), context.Element);
+                throw new XmlNodeException("Import tag must have a 'namespace'", context.Element);
             }
             else {
                 if (assemblyName != null) {

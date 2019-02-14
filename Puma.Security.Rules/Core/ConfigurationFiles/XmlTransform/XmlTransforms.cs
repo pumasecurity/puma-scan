@@ -4,7 +4,6 @@ using System.Text;
 using System.Xml;
 using System.Diagnostics;
 using RegularExpressions = System.Text.RegularExpressions;
-using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {
@@ -12,7 +11,7 @@ namespace Microsoft.Web.XmlTransform
     {
         internal static void ExpectNoArguments(XmlTransformationLogger log, string transformName, string argumentString) {
             if (!String.IsNullOrEmpty(argumentString)) {
-                log.LogWarning(SR.XMLTRANSFORMATION_TransformDoesNotExpectArguments, transformName);
+                log.LogWarning("{0} does not expect arguments; ignoring", transformName);
             }
         }
 
@@ -20,7 +19,7 @@ namespace Microsoft.Web.XmlTransform
             Debug.Assert(applyTransformToAllTargets == false);
 
             if (targetNodes.Count > 1) {
-                log.LogWarning(SR.XMLTRANSFORMATION_TransformOnlyAppliesOnce, transformName);
+                log.LogWarning("Found multiple target elements, but the '{0}' Transform only applies to the first match", transformName);
             }
         }
     }
@@ -36,7 +35,7 @@ namespace Microsoft.Web.XmlTransform
                 TransformNode,
                 TargetNode);
 
-            Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageReplace, TargetNode.Name);
+            Log.LogMessage(MessageType.Verbose, "Replaced '{0}' element", TargetNode.Name);
         }
     }
 
@@ -55,7 +54,7 @@ namespace Microsoft.Web.XmlTransform
             XmlNode parentNode = TargetNode.ParentNode;
             parentNode.RemoveChild(TargetNode);
 
-            Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageRemove, TargetNode.Name);
+            Log.LogMessage(MessageType.Verbose, "Removed '{0}' element", TargetNode.Name);
         }
     }
 
@@ -81,7 +80,7 @@ namespace Microsoft.Web.XmlTransform
 
             TargetNode.AppendChild(TransformNode);
 
-            Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageInsert, TransformNode.Name);
+            Log.LogMessage(MessageType.Verbose, "Inserted '{0}' element", TransformNode.Name);
         }
     }
 
@@ -93,7 +92,7 @@ namespace Microsoft.Web.XmlTransform
             if (this.TargetChildNodes == null || this.TargetChildNodes.Count == 0)
             {
                 TargetNode.AppendChild(TransformNode);
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageInsert, TransformNode.Name);
+                Log.LogMessage(MessageType.Verbose, "Inserted '{0}' element", TransformNode.Name);
             }
         }
     }
@@ -112,21 +111,21 @@ namespace Microsoft.Web.XmlTransform
             get {
                 if (siblingElement == null) {
                     if (Arguments == null || Arguments.Count == 0) {
-                        throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_InsertMissingArgument, GetType().Name));
+                        throw new XmlTransformationException(string.Format("{0} requires an XPath argument", GetType().Name));
                     }
                     else if (Arguments.Count > 1) {
-                        throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_InsertTooManyArguments, GetType().Name));
+                        throw new XmlTransformationException(string.Format("Too many arguments to {0}", GetType().Name));
                     }
                     else {
                         string xpath = Arguments[0];
                         XmlNodeList siblings = TargetNode.SelectNodes(xpath);
                         if (siblings.Count == 0) {
-                            throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_InsertBadXPath, xpath));
+                            throw new XmlTransformationException(string.Format("No element in the source document matches '{0}'", xpath));
                         }
                         else {
                             siblingElement = siblings[0] as XmlElement;
                             if (siblingElement == null) {
-                                throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_InsertBadXPathResult, xpath));
+                                throw new XmlTransformationException(string.Format("No element in the source document matches '{0}'", xpath));
                             }
                         }
                     }
@@ -142,7 +141,7 @@ namespace Microsoft.Web.XmlTransform
         protected override void Apply() {
             SiblingElement.ParentNode.InsertAfter(TransformNode, SiblingElement);
 
-            Log.LogMessage(MessageType.Verbose, string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_TransformMessageInsert, TransformNode.Name));
+            Log.LogMessage(MessageType.Verbose, string.Format(System.Globalization.CultureInfo.CurrentCulture,"Inserted '{0}' element", TransformNode.Name));
         }
     }
 
@@ -151,7 +150,7 @@ namespace Microsoft.Web.XmlTransform
         protected override void Apply() {
             SiblingElement.ParentNode.InsertBefore(TransformNode, SiblingElement);
 
-            Log.LogMessage(MessageType.Verbose, string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_TransformMessageInsert, TransformNode.Name));
+            Log.LogMessage(MessageType.Verbose, string.Format(System.Globalization.CultureInfo.CurrentCulture,"Inserted '{0}' element", TransformNode.Name));
         }
     }
 
@@ -167,14 +166,14 @@ namespace Microsoft.Web.XmlTransform
                     TargetNode.Attributes.Append((XmlAttribute)transformAttribute.Clone());
                 }
 
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageSetAttribute, transformAttribute.Name);
+                Log.LogMessage(MessageType.Verbose, "Set '{0}' attribute", transformAttribute.Name);
             }
 
             if (TransformAttributes.Count > 0) {
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageSetAttributes, TransformAttributes.Count);
+                Log.LogMessage(MessageType.Verbose, "Set '{0}' attributes", TransformAttributes.Count);
             }
             else {
-                Log.LogWarning(SR.XMLTRANSFORMATION_TransformMessageNoSetAttributes);
+                Log.LogWarning("No attributes found to set");
             }
         }
     }
@@ -261,16 +260,16 @@ namespace Microsoft.Web.XmlTransform
                     TargetNode.Attributes.Append(newAttribute);
                 }
 
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageSetAttribute, transformAttribute.Name);
+                Log.LogMessage(MessageType.Verbose, "Set '{0}' attribute", transformAttribute.Name);
             }
 
             if (TransformAttributes.Count > 0)
             {
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageSetAttributes, TransformAttributes.Count);
+                Log.LogMessage(MessageType.Verbose, "Set '{0}' attributes", TransformAttributes.Count);
             }
             else
             {
-                Log.LogWarning(SR.XMLTRANSFORMATION_TransformMessageNoSetAttributes);
+                Log.LogWarning("No attributes found to set");
             }
         }
 
@@ -437,7 +436,7 @@ namespace Microsoft.Web.XmlTransform
                             }
                             else
                             {
-                                throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_MatchAttributeDoesNotExist, match));
+                                throw new XmlTransformationException(string.Format("No attribute '{0}' exists for the Match Locator", match));
                             }
                         }
                     }
@@ -608,14 +607,14 @@ namespace Microsoft.Web.XmlTransform
             foreach (XmlAttribute attribute in TargetAttributes) {
                 TargetNode.Attributes.Remove(attribute);
 
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageRemoveAttribute, attribute.Name);
+                Log.LogMessage(MessageType.Verbose, "Removed '{0}' attribute", attribute.Name);
             }
 
             if (TargetAttributes.Count > 0) {
-                Log.LogMessage(MessageType.Verbose, SR.XMLTRANSFORMATION_TransformMessageRemoveAttributes, TargetAttributes.Count);
+                Log.LogMessage(MessageType.Verbose, "Removed '{0}' attributes", TargetAttributes.Count);
             }
             else {
-                Log.LogWarning(TargetNode, SR.XMLTRANSFORMATION_TransformMessageNoRemoveAttributes);
+                Log.LogWarning(TargetNode, "No attributes found to remove");
             }
         }
     }

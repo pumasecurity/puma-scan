@@ -278,22 +278,26 @@ namespace Microsoft.Web.XmlTransform
             }
 
             public override void Flush() {
-                baseWriter.Flush();
+                //if(baseWriter != null)
+                    //baseWriter.Flush();
             }
 
             public override void Close() {
-                baseWriter.Close();
+                if(baseWriter != null)
+                    baseWriter.Close();
             }
         }
         #endregion
 
         #region XmlWriter implementation
         public override void Close() {
-            xmlWriter.Close();
+            if(xmlWriter != null)
+                xmlWriter.Close();
         }
 
         public override void Flush() {
-            xmlWriter.Flush();
+            if(xmlWriter != null)
+                xmlWriter.Flush();
         }
 
         public override string LookupPrefix(string ns) {

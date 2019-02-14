@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk
+FROM microsoft/dotnet:2.2.2-sdk
 
 # Create directory for the source code
 RUN mkdir /source

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Diagnostics;
-using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {
@@ -71,7 +69,7 @@ namespace Microsoft.Web.XmlTransform
             if (attributes.Count == 0 && warnIfEmpty) {
                 Debug.Assert(arguments.Count == 1, "Should only call warnIfEmpty==true with one argument");
                 if (arguments.Count == 1) {
-                    Log.LogWarning(SR.XMLTRANSFORMATION_TransformArgumentFoundNoAttributes, arguments[0]);
+                    Log.LogWarning("Argument '{0}' did not match any attributes", arguments[0]);
                 }
             }
 

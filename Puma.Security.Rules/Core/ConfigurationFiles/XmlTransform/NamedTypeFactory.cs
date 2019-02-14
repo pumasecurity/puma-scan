@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 using System.IO;
-using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {
@@ -43,15 +41,15 @@ namespace Microsoft.Web.XmlTransform
             if (!String.IsNullOrEmpty(typeName)) {
                 Type type = GetType(typeName);
                 if (type == null) {
-                    throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_UnknownTypeName, typeName, typeof(ObjectType).Name));
+                    throw new XmlTransformationException(string.Format("'{0}' is not a type of {1}", typeName, typeof(ObjectType).Name));
                 }
                 else if (!type.IsSubclassOf(typeof(ObjectType))) {
-                    throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_IncorrectBaseType, type.FullName, typeof(ObjectType).Name));
+                    throw new XmlTransformationException(string.Format("'{0}' is not a type of {1}", type.FullName, typeof(ObjectType).Name));
                 }
                 else {
                     ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
                     if (constructor == null) {
-                        throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_NoValidConstructor, type.FullName));
+                        throw new XmlTransformationException(string.Format("Type '{0}' must have a no-argument constructor to be instantiated by the transformation engine", type.FullName));
                     }
                     else {
                         return constructor.Invoke(new object[] { }) as ObjectType;
@@ -72,7 +70,7 @@ namespace Microsoft.Web.XmlTransform
                             foundType = regType;
                         }
                         else {
-                            throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_AmbiguousTypeMatch, typeName));
+                            throw new XmlTransformationException(string.Format("Type '{0}' was found in more than one assembly", typeName));
                         }
                     }
                 }

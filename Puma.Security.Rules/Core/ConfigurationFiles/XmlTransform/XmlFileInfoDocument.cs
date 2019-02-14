@@ -247,30 +247,23 @@ namespace Microsoft.Web.XmlTransform
         public override void Save(Stream w)
         {
             XmlWriter xmlWriter = null;
-            try
+
+            if (PreserveWhitespace)
             {
-                if (PreserveWhitespace)
+                XmlFormatter.Format(this);
+                using (xmlWriter = new XmlAttributePreservingWriter(w, TextEncoding))
                 {
-                    XmlFormatter.Format(this);
-                    using (xmlWriter = new XmlAttributePreservingWriter(w, TextEncoding))
-                    {
-                        WriteTo(xmlWriter);
-                    }
-                }
-                else
-                {
-                    using (XmlTextWriter textWriter = new XmlTextWriter(w, TextEncoding))
-                    {
-                        textWriter.Formatting = Formatting.Indented;
-                        xmlWriter = textWriter;
-                        WriteTo(xmlWriter);
-                    }
+                    WriteTo(xmlWriter);
                 }
             }
-            finally
+            else
             {
-                xmlWriter?.Flush();
-                xmlWriter?.Close();
+                using (XmlTextWriter textWriter = new XmlTextWriter(w, TextEncoding))
+                {
+                    textWriter.Formatting = Formatting.Indented;
+                    xmlWriter = textWriter;
+                    WriteTo(xmlWriter);
+                }
             }
         }
 

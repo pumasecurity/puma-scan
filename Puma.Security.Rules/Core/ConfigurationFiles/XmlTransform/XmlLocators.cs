@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Globalization;
-using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {
@@ -42,7 +39,7 @@ namespace Microsoft.Web.XmlTransform
                     }
                 }
                 else {
-                    throw new XmlTransformationException(string.Format(System.Globalization.CultureInfo.CurrentCulture,SR.XMLTRANSFORMATION_MatchAttributeDoesNotExist, key));
+                    throw new XmlTransformationException(string.Format("No attribute '{0}' exists for the Match Locator", key));
                 }
             }
 

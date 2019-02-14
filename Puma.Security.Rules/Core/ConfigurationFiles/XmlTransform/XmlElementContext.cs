@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.IO;
-using System.Globalization;
-using Puma.Security.Rules.Core.ConfigurationFiles.XmlTransform;
 
 namespace Microsoft.Web.XmlTransform
 {
@@ -315,7 +312,7 @@ namespace Microsoft.Web.XmlTransform
                 return match.Groups["name"].Captures[0].Value;
             }
             else {
-                throw new XmlTransformationException(SR.XMLTRANSFORMATION_BadAttributeValue);
+                throw new XmlTransformationException("Transform and Locator attributes must contain only a type name, or a type name followed by a list of attributes in parentheses.");
             }
         }
 
