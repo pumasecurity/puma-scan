@@ -6,7 +6,7 @@
 Puma Scan is a .NET software secure code analysis tool providing real time, continuous source code analysis as development teams write code. In Visual Studio, vulnerabilities are immediately displayed in the development environment as spell check and compiler warnings, preventing security bugs from entering your applications. Puma Scan also integrates into the build to provide security analysis at compile time.
 
 # Documentation
-The Puma Scan Community Edition install instructions and documentation can be found here: [https://www.pumascan.com/support](https://www.pumascan.com/support)
+The Puma Scan Community Edition install instructions and documentation can be found on the [GitHub Wiki](https://github.com/pumasecurity/puma-scan/wiki).
 
 # License Agreement
 The Puma Scan Community Edition is licensed under the Mozilla Public License (MPL) version 2.0.
