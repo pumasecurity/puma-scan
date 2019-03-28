@@ -6,11 +6,14 @@ RUN mkdir /source
 # Directory for the results
 RUN mkdir /results
 
+# Directory for the puma tools
+RUN mkdir /tools
+
 # Install puma into the image
-COPY ./Puma.Security.Rules/bin/Release/Puma.Security.Rules.2.0.1.nupkg /tools
-COPY /Docker/pumascan.sh /tools
+COPY ./Puma.Security.Rules/bin/Release/Puma.Security.Rules.2.1.0.nupkg /tools
+COPY ./pumascan.sh /tools
 
 WORKDIR /tools
 
-# NO IDEA HOW TO PASS ARGES INTO THIS SCRIPT FROM DOCKER COMMAND??
+# TODO: PASS ARGES FROM DOCKER RUN INTO THIS SCRIPT AS ARGS
 ENTRYPOINT ["pumascan.sh", "$ARGS"]

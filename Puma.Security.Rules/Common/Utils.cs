@@ -42,7 +42,7 @@ namespace Puma.Security.Rules.Common
         internal static string GetPumaLocalAppDataPath()
         {
             var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                , "Microsoft", "VisualStudio", Assembly.GetExecutingAssembly().GetName().Name);
+                , "PumaSecurity", "Community");
 
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
