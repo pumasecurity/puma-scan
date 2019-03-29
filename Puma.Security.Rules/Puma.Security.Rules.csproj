@@ -40,6 +40,7 @@
     <None Update="tools\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Update="tools\parser\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Include="$(OutputPath)\tools\parser\*.*" Pack="true" PackagePath="tools/parser" />
+    <None Include="$(OutputPath)\..\..\..\..\packages\Microsoft.Web.Xdt.3.0.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
