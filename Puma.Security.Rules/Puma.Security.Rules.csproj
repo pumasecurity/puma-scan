@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>Puma.Security.Rules</PackageId>
+    <PackageVersion>2.1.0.0</PackageVersion>
+    <Authors>Puma Security LLC</Authors>
+    <PackageLicenseUrl>https://github.com/pumasecurity/puma-scan/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/pumasecurity/puma-scan/wiki</PackageProjectUrl>
+    <PackageIconUrl>https://www.pumascan.com/img/logo.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/pumasecurity/puma-scan</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Description>Puma Scan Community Edition is a free software security analyzer providng real time, continuous source code analysis as development teams write and build code. Puma Scan hunts for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
+    <PackageReleaseNotes>https://github.com/pumasecurity/puma-scan/releases</PackageReleaseNotes>
+    <Copyright>Copyright 2016 - 2019 Puma Security, LLC</Copyright>
+    <PackageTags>Puma Scan, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</PackageTags>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <Version>2.1.0.0</Version>
+    <Company>Puma Security LLC</Company>
+    <Product>Puma Scan</Product>
+    <AssemblyName>Puma.Security.Rules</AssemblyName>
+    <RootNamespace>Puma.Security.Rules</RootNamespace>
+  </PropertyGroup>
+   
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
+    <EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tools\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
+    <None Update="tools\parser\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
+    <None Include="$(OutputPath)\tools\parser\*.*" Pack="true" PackagePath="tools/parser" />
+    <None Include="$(OutputPath)\..\..\..\..\packages\Microsoft.Web.Xdt.3.0.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.9.0" />
+    <PackageReference Include="Microsoft.Web.Xdt" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tools\parser\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Release (&#xD;&#xA; if not exist &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot; mkdir &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; dotnet publish &quot;$(ProjectDir)..\Puma.Security.Parser\Puma.Security.Parser.csproj&quot; -c $(ConfigurationName) -o &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; del $(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser\*.pdb&#xD;&#xA;)" />
+  </Target>
+
+</Project>

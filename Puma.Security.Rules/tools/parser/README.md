@@ -4,7 +4,7 @@ The Puma.Security.Parser utility to parse MSBuild results and export the Puma Sc
 
 ## Prerequisites
 
-.NET Core must be installed on the machine running the parser.
+.NET Core 2.1 must be installed on the machine running the parser.
 
 ## Command
 
