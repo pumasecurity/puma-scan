@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
@@ -9,15 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-using Puma.Security.Rules.Common;
-
-namespace Puma.Security.Rules.Analyzer.Injection.Ldap.Core
+namespace Puma.Security.Rules.Common.Extensions
 {
-    internal interface ILdapDirectoryEntryPathInjectionExpressionAnalyzer
+    internal static class ExpressionSyntaxExtensions
     {
-        bool IsVulnerable(SemanticModel model, ObjectCreationExpressionSyntax syntax, DiagnosticId ruleId);
+        internal static bool IsFalse(this ExpressionSyntax syntax)
+        {
+            return syntax is LiteralExpressionSyntax && syntax?.Kind() == SyntaxKind.FalseLiteralExpression;
+        }
     }
 }

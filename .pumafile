@@ -1,9 +1,10 @@
 {
-  "Version": "1.2.1",
+  "Version": "1.3.0",
   "LogLevel": "Error",
   "GeneralSettings": {
     "DataflowAnalysisEnabled": true,
     "DataflowAnalysisReportIndeterminates": false,
+    "DataflowAnalysisNodeMaxDepth": 9,
     "ProductionConfigurationTransform": "Release"
   },
   "RuleOptions": [
@@ -51,11 +52,11 @@
     },
     {
       "Id": "SEC0007",
-      "TimeoutMax": 30,
       "Name": "Forms Authentication Weak Timeout",
       "RiskRating": "Low",
       "Severity": "Warning",
-      "Enabled": true
+      "Enabled": true,
+      "TimeoutMax": 30
     },
     {
       "Id": "SEC0008",
@@ -122,15 +123,15 @@
     },
     {
       "Id": "SEC0017",
+      "Name": "Weak Password Complexity",
+      "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true,
       "Length": 10,
       "RequireNumber": true,
       "RequireLowerCase": true,
       "RequireUpperCase": true,
-      "RequireSpecialCharacter": true,
-      "Name": "Weak Password Complexity",
-      "RiskRating": "Medium",
-      "Severity": "Warning",
-      "Enabled": true
+      "RequireSpecialCharacter": true
     },
     {
       "Id": "SEC0018",
@@ -148,11 +149,11 @@
     },
     {
       "Id": "SEC0020",
-      "TimeoutMax": 30,
       "Name": "Weak Session Timeout",
       "RiskRating": "Low",
       "Severity": "Warning",
-      "Enabled": true
+      "Enabled": true,
+      "TimeoutMax": 30
     },
     {
       "Id": "SEC0021",
@@ -184,14 +185,14 @@
     },
     {
       "Id": "SEC0025",
-      "Name": "Weak Cryptography Algorithm (DES)",
+      "Name": "Weak Symmetric Algorithm",
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
     },
     {
       "Id": "SEC0026",
-      "Name": "Insecure Cipher Mode - Electronic Codebook (ECB)",
+      "Name": "Weak Cipher Mode",
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
@@ -212,7 +213,7 @@
     },
     {
       "Id": "SEC0029",
-      "Name": "Insecure Deserialization - BinaryFormatter",
+      "Name": "Insecure Deserialization",
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
@@ -249,6 +250,27 @@
       "Id": "SEC0034",
       "Name": "HTTP Cookie Accessible via Script",
       "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0035",
+      "Name": "XPathDocument External Entity Expansion (XXE)",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0036",
+      "Name": "XML Reader External Entity Expansion (XXE)",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0037",
+      "Name": "XmlDocument External Entity Expansion (XXE)",
+      "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
     },
@@ -391,6 +413,95 @@
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
+    },
+    {
+      "Id": "SEC0120",
+      "Name": "Missing Authorization Attribute",
+      "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0121",
+      "Name": "CORS Allow Origin Wildcard",
+      "RiskRating": "Low",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0122",
+      "Name": "JWT Signature Validation Disabled",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0123",
+      "Name": "JWT Expiration Disabled",
+      "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0124",
+      "Name": "Weak Cipher Mode Padding",
+      "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0125",
+      "Name": "Weak RSA Key Length",
+      "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0126",
+      "Name": "SQL Injection: Dynamic NHibernate Query",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0127",
+      "Name": "XPath Injection",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0128",
+      "Name": "LDAP Authentication Disabled",
+      "RiskRating": "Medium",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0129",
+      "Name": "Server-side Request Forgery",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0130",
+      "Name": "Hard-coded Credential",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true
+    },
+    {
+      "Id": "SEC0131",
+      "Name": "Hard-coded Secret",
+      "RiskRating": "High",
+      "Severity": "Warning",
+      "Enabled": true,
+      "Patterns": [
+        "^[Ky][Ee][Yy]$",
+        "^[Ii][Vv]$",
+        "^[Pp][Aa][Ss][Ww][Oo][Rr][Dd]$"
+      ]
     }
   ],
   "Exceptions": [],

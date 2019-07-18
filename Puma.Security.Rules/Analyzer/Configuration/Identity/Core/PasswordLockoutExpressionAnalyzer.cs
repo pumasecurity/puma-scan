@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -11,6 +11,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Puma.Security.Rules.Common.Extensions;
 
 namespace Puma.Security.Rules.Analyzer.Configuration.Identity.Core
 {
@@ -18,47 +19,66 @@ namespace Puma.Security.Rules.Analyzer.Configuration.Identity.Core
     {
         public bool IsVulnerable(SemanticModel model, InvocationExpressionSyntax syntax, out ArgumentSyntax location)
         {
-            var expression = syntax.Expression as MemberAccessExpressionSyntax;
+            //Default location object
             location = null;
 
+            var expression = syntax.Expression as MemberAccessExpressionSyntax;
+            if (expression == null)
+                return false;
+
             //Check for the name
-            if (!ContainsName(expression)) return false;
+            if (!ContainsPasswordSignIn(expression)) return false;
 
             //If we found it, verify the namespace
-            var symbol = model.GetSymbolInfo(expression).Symbol;
-            if (!IsType(symbol)) return false;
+            var symbol = model.GetSymbolInfo(expression).Symbol as IMethodSymbol;
 
-            var args = syntax.ArgumentList;
-            if (args == null || args.Arguments.Count < 4)
-                return false;
+            if (IsMvcType(symbol))
+            {
+                var args = syntax.ArgumentList;
+                if (args == null || args.Arguments.Count < 4)
+                    return false;
 
-            var passwordLockoutParm = args.Arguments[3];
-            var argExpression = passwordLockoutParm.Expression as LiteralExpressionSyntax;
+                var passwordLockoutParm = args.Arguments[3];
+                if (passwordLockoutParm.Expression.IsFalse())
+                {
+                    location = passwordLockoutParm;
+                    return true;
+                }
+            }
 
-            if (argExpression == null)
-                return false;
+            if (IsCoreType(symbol))
+            {
+                //Two options: PasswordSignInAsync (parm[3]) and CheckPasswordSignInAsync (parm[2]). Both
+                //are the last parameter
+                var args = syntax.ArgumentList;
+                if (args == null)
+                    return false;
 
-            var token = model.GetConstantValue(argExpression);
+                var passwordLockoutParm = args.Arguments.Last();
+                if (passwordLockoutParm.Expression.IsFalse())
+                {
+                    location = passwordLockoutParm;
+                    return true;
+                }
+            }
 
-            var vulnerable = token.HasValue && !(bool) token.Value;
-
-            if (vulnerable) location = passwordLockoutParm;
-
-            return vulnerable;
+            return false;
         }
 
-        private static bool ContainsName(MemberAccessExpressionSyntax syntax)
+        private static bool ContainsPasswordSignIn(MemberAccessExpressionSyntax syntax)
         {
-            var hasName = syntax?.Name.ToString().StartsWith("PasswordSignIn");
-            return hasName.HasValue && hasName.Value;
+            //OWIN: PasswordSignIn, Core: CheckPasswordSignIn
+            return syntax.Name.ToString().Contains("PasswordSignIn");
         }
 
-        private bool IsType(ISymbol symbol)
+        private bool IsMvcType(IMethodSymbol symbol)
         {
-            if (symbol == null)
-                return false;
+            return symbol.DoesMethodContain("Microsoft.AspNet.Identity.Owin", "PasswordSignIn", true);
+        }
 
-            return string.Compare(symbol.ContainingNamespace.ToString(), "Microsoft.AspNet.Identity.Owin") == 0;
+        private bool IsCoreType(IMethodSymbol symbol)
+        {
+            return symbol.DoesMethodContain("Microsoft.AspNetCore.Identity", "PasswordSignIn", true);
         }
     }
 }

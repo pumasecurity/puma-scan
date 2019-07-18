@@ -655,16 +655,18 @@ Label controls are often found in HTML contexts, but can also appear in other co
     <value>Weak Cryptography Algorithm (SHA1)</value>
   </data>
   <data name="Analyzer_SEC0029_Anchor" xml:space="preserve">
-    <value>sec0029-deserialization-binary-formatter</value>
+    <value>sec0029-insecure-deserialization</value>
   </data>
   <data name="Analyzer_SEC0029_Description" xml:space="preserve">
-    <value>Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse.</value>
+    <value>Deserializing untrusted data using a vulnerable library can allow attackers to execute arbitrary code and perform denial of service attacks against the server.
+
+Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the above dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data.</value>
   </data>
   <data name="Analyzer_SEC0029_MessageFormat" xml:space="preserve">
-    <value>Deserializing untrusted data using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse methods can lead to remote code execution and denial of service vulnerabilities.</value>
+    <value>Deserializing untrusted data with a vulnerable library can result in remote code execution and denial of service vulnerabilities.</value>
   </data>
   <data name="Analyzer_SEC0029_Title" xml:space="preserve">
-    <value>Insecure Deserialization - BinaryFormatter</value>
+    <value>Insecure Deserialization</value>
   </data>
   <data name="Analyzer_SEC0030_Anchor" xml:space="preserve">
     <value>sec0030-deserialization-newtonsoft-json</value>

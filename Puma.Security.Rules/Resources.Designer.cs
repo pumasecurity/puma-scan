@@ -1096,7 +1096,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec0029-deserialization-binary-formatter.
+        ///   Looks up a localized string similar to sec0029-insecure-deserialization.
         /// </summary>
         internal static string Analyzer_SEC0029_Anchor {
             get {
@@ -1105,7 +1105,9 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse..
+        ///   Looks up a localized string similar to Deserializing untrusted data using a vulnerable library can allow attackers to execute arbitrary code and perform denial of service attacks against the server.
+        ///
+        ///Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the above dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data..
         /// </summary>
         internal static string Analyzer_SEC0029_Description {
             get {
@@ -1114,7 +1116,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deserializing untrusted data using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse methods can lead to remote code execution and denial of service vulnerabilities..
+        ///   Looks up a localized string similar to Deserializing untrusted data with a vulnerable library can result in remote code execution and denial of service vulnerabilities..
         /// </summary>
         internal static string Analyzer_SEC0029_MessageFormat {
             get {
@@ -1123,7 +1125,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insecure Deserialization - BinaryFormatter.
+        ///   Looks up a localized string similar to Insecure Deserialization.
         /// </summary>
         internal static string Analyzer_SEC0029_Title {
             get {
