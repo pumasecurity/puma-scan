@@ -1096,7 +1096,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec0029-deserialization-binary-formatter.
+        ///   Looks up a localized string similar to sec0029-insecure-deserialization.
         /// </summary>
         internal static string Analyzer_SEC0029_Anchor {
             get {
@@ -1105,7 +1105,9 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deserializing untrusted data using the following BinaryFormatter methods can allow attackers to execute arbitrary code and perform denial of service attacks against the server - Deserialize, UnsafeDeserialize, UnsafeDeserializeMethodResponse..
+        ///   Looks up a localized string similar to Deserializing untrusted data using a vulnerable library can allow attackers to execute arbitrary code and perform denial of service attacks against the server.
+        ///
+        ///Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the above dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data..
         /// </summary>
         internal static string Analyzer_SEC0029_Description {
             get {
@@ -1114,7 +1116,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deserializing untrusted data using the Deserialize, UnsafeDeserialize, and UnsafeDeserializeMethodResponse methods can lead to remote code execution and denial of service vulnerabilities..
+        ///   Looks up a localized string similar to Deserializing untrusted data with a vulnerable library can result in remote code execution and denial of service vulnerabilities..
         /// </summary>
         internal static string Analyzer_SEC0029_MessageFormat {
             get {
@@ -1123,7 +1125,7 @@ namespace Puma.Security.Rules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insecure Deserialization - BinaryFormatter.
+        ///   Looks up a localized string similar to Insecure Deserialization.
         /// </summary>
         internal static string Analyzer_SEC0029_Title {
             get {
@@ -1972,6 +1974,118 @@ namespace Puma.Security.Rules {
         internal static string Analyzer_SEC0119_Title {
             get {
                 return ResourceManager.GetString("Analyzer_SEC0119_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0120-missing-authorize-attribute.
+        /// </summary>
+        internal static string Analyzer_SEC0120_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0120_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Authorization occurs when an application does not properly verify an authenticated user’s access to functionality, data, or resources. In many cases, applications do not check  policy, claim, or role-based access control rules during a request. This can allow attackers to invoke privileged functionality, such as changing their role or directly browsing to an administrative interface in the application.
+        ///
+        ///Restricting access to ASP.NET MVC, Web API, and .NET Core Controllers and Actions is achieved u [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Analyzer_SEC0120_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0120_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Action is missing the Authorization attribute and can be invoked by anonymous users..
+        /// </summary>
+        internal static string Analyzer_SEC0120_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0120_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Authorization Attribute.
+        /// </summary>
+        internal static string Analyzer_SEC0120_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0120_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0121-cors-any-origin-wildcard.
+        /// </summary>
+        internal static string Analyzer_SEC0121_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0121_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cross-Origin Resource Sharing (CORS) allows a service to disable the browser’s Same-origin policy, which prevents scripts on an attacker-controlled domain from accessing resources and data hosted on a different domain. The CORS Access-Control-Allow-Origin HTTP header specifies the domain with permission to invoke a cross-origin service and view the response data. Configuring the Access-Control-Allow-Origin header with a wildcard (*) can allow code running on an attacker-controlled domain to view responses c [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Analyzer_SEC0121_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0121_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not set the CORS Access-Control-Allow-Origin header to a wildcard (*)..
+        /// </summary>
+        internal static string Analyzer_SEC0121_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0121_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CORS Allow Origin Wildcard.
+        /// </summary>
+        internal static string Analyzer_SEC0121_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0121_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sec0122-jwt-signature-validation-disabled.
+        /// </summary>
+        internal static string Analyzer_SEC0122_Anchor {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0122_Anchor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The JSON Web Tokens (JWT) header and payload values are base64 encoded, which can be decoded, tampered, and replayed to gain access to protected resources. Web service APIs relying on JSON Web Tokens (JWT) for authentication and authorization must sign each JWT with a private key or secret. Each web service endpoint must require JWT signature validation prior to decoding and using the token to access protected resources.
+        ///
+        ///In ASP.NET Core, configure the Authentication service’s JwtBearer options to require [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Analyzer_SEC0122_Description {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0122_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure the JwtBearer options to require signed tokens..
+        /// </summary>
+        internal static string Analyzer_SEC0122_MessageFormat {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0122_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JWT Signature Validation Disabled.
+        /// </summary>
+        internal static string Analyzer_SEC0122_Title {
+            get {
+                return ResourceManager.GetString("Analyzer_SEC0122_Title", resourceCulture);
             }
         }
     }

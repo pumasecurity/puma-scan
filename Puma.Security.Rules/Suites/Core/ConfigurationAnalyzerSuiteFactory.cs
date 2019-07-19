@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 
 using Puma.Security.Rules.Analyzer;
 using Puma.Security.Rules.Analyzer.Configuration.Compilation;
+using Puma.Security.Rules.Analyzer.Configuration.Cors;
 using Puma.Security.Rules.Analyzer.Configuration.CustomErrors;
 using Puma.Security.Rules.Analyzer.Configuration.MachineKey;
 
@@ -26,7 +27,8 @@ namespace Puma.Security.Rules.Suites.Core
             {
                 new CompilationAnalyzer(),
                 new CustomErrorsAnalyzer(),
-                new MachineKeyAnalyzer()
+                new MachineKeyAnalyzer(),
+                new CorsAllowAnyOriginAnalyzer(),
             }.ToImmutableArray();
         }
     }

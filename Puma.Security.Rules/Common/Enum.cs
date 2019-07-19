@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -75,6 +75,9 @@ namespace Puma.Security.Rules.Common
         SEC0116,
         SEC0117,
         SEC0118,
-        SEC0119
+        SEC0119,
+        SEC0120,
+        SEC0121,
+        SEC0122
     }
 }

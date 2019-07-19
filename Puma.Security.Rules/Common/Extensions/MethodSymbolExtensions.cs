@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2018 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
  * 
  * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
  * Lead Developer: Eric Mead (eric.mead@pumascan.com)
@@ -19,6 +19,27 @@ namespace Puma.Security.Rules.Common.Extensions
         {
             return symbol?.Name == methodName &&
                    (symbol?.ReceiverType.ToString() == sourceObjectType || symbol?.ReceiverType.OriginalDefinition.ToString() == sourceObjectType);
+        }
+
+        internal static bool IsMethod(this IMethodSymbol symbol, string sourceObjectType, string methodName, bool checkNamespaceStartsWith)
+        {
+            return symbol != null &&
+                    symbol.Name == methodName &&
+                   (symbol.ReceiverType.ToString().StartsWith(sourceObjectType) || symbol.ReceiverType.OriginalDefinition.ToString().StartsWith(sourceObjectType));
+        }
+
+        internal static bool DoesMethodContain(this IMethodSymbol symbol, string sourceObjectType, string methodName)
+        {
+            return symbol != null &&
+                    symbol.Name.Contains(methodName) &&
+                   (symbol.ReceiverType.ToString() == sourceObjectType || symbol.ReceiverType.OriginalDefinition.ToString() == sourceObjectType);
+        }
+
+        internal static bool DoesMethodContain(this IMethodSymbol symbol, string sourceObjectType, string methodName, bool checkNamespaceStartsWith)
+        {
+            return symbol != null &&
+                    symbol.Name.Contains(methodName) &&
+                   (symbol.ReceiverType.ToString().StartsWith(sourceObjectType) || symbol.ReceiverType.OriginalDefinition.ToString().StartsWith(sourceObjectType));
         }
 
         internal static bool IsCtorFor(this IMethodSymbol symbol, string sourceObjectType)
