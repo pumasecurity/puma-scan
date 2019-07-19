@@ -17,11 +17,12 @@ using Puma.Security.Rules.Analyzer.AccessControl.Authorize.Core;
 using Puma.Security.Rules.Analyzer.Core;
 using Puma.Security.Rules.Common;
 using Puma.Security.Rules.Diagnostics;
+using System.Linq;
 
 namespace Puma.Security.Rules.Analyzer.AccessControl.Authorize
 {
     [SupportedDiagnostic(DiagnosticId.SEC0120)]
-    internal class AuthorizeAnalyzer : BaseSemanticAnalyzer
+    internal class AuthorizeAnalyzer : BaseSemanticAnalyzer, ISyntaxAnalyzer
     {
         private readonly IAuthorizeExpressionAnalyzer _mvcCoreAuthorizeExpressionAnalyzer;
 
@@ -40,7 +41,8 @@ namespace Puma.Security.Rules.Analyzer.AccessControl.Authorize
 
             foreach (SyntaxNode node in _mvcCoreAuthorizeExpressionAnalyzer.IsVulnerable(context.SemanticModel, syntax))
             {
-                VulnerableSyntaxNodes.Push(new VulnerableSyntaxNode(node));
+                if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != node.GetLocation()))
+                    VulnerableSyntaxNodes.Push(new VulnerableSyntaxNode(node));
             }
         }
     }

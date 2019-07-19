@@ -11,12 +11,12 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
+using Puma.Security.Rules.Common;
 
-namespace Puma.Security.Rules.Analyzer.AccessControl.Authorize.Core
+namespace Puma.Security.Rules.Analyzer.AccessControl.Jwt.Core
 {
-    interface IAuthorizeExpressionAnalyzer
+    internal interface IJwtSignatureExpressionAnalyzer
     {
-        List<SyntaxNode> IsVulnerable(SemanticModel model, ClassDeclarationSyntax syntax);
+        bool IsVulnerable(SemanticModel model, AssignmentExpressionSyntax syntax, DiagnosticId ruleId);
     }
 }

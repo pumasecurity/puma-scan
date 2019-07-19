@@ -41,6 +41,7 @@ namespace Puma.Security.Rules.Suites
         {
             var factories = new IAnalyzerSuiteFactory[]
             {
+                new AccessControlAnalyzerSuiteFactory(),
                 new CertificateValidationAnalyzerSuiteFactory(),
                 new CommandInjectionAnalyzerSuiteFactory(),
                 new ConfigurationAnalyzerSuiteFactory(),
