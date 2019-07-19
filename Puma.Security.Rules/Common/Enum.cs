@@ -77,6 +77,7 @@ namespace Puma.Security.Rules.Common
         SEC0118,
         SEC0119,
         SEC0120,
+        SEC0121,
         SEC0122
     }
 }
