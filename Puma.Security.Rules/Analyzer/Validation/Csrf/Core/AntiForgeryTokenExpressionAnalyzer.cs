@@ -12,6 +12,7 @@
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Puma.Security.Rules.Common;
@@ -22,23 +23,18 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf.Core
     internal class AntiForgeryTokenExpressionAnalyzer : IAntiForgeryTokenExpressionAnalyzer
     {
         private const string _MODIFICATION_VERB_ATTRIBUTES = "HttpDelete|HttpPatch|HttpPost|HttpPut";
-        private const string _ACTION_RESULT_NAMESPACE = "System.Web.Mvc.ActionResult";
+        private readonly string[] _ACTION_RESULT_NAMESPACES = new string[] { "System.Web.Mvc.ActionResult", "Microsoft.AspNetCore.Mvc.IActionResult", "Microsoft.AspNetCore.Mvc.ActionResult" };
         private const string _ANTI_FORGERY_TOKEN_ATTRIBUTE = "ValidateAntiForgeryToken";
         private const string _ANONYMOUS_ATTRIBUTE = "AllowAnonymous";
 
-        public bool IsVulnerable(SemanticModel model, MethodDeclarationSyntax syntax, IdentifierNameSyntax returnType)
+        public bool IsVulnerable(SemanticModel model, MethodDeclarationSyntax syntax)
         {
-            if (returnType == null)
+            //Quick check - public methods only
+            if (!syntax.Modifiers.Any(i => i.Kind() == SyntaxKind.PublicKeyword))
                 return false;
 
-            //Grab the return type symbol and return if it is not a named type
-            var symbol = model.GetSymbolInfo(returnType).Symbol as INamedTypeSymbol;
-            if (symbol == null)
-                return false;
-
-            //This could be expensive, but we need search to the base type and determine if this return type
-            //inherits from the System.Web.Mvc.ActionResult and verify if the return type is of type ActionResult
-            if (!symbol.SymbolInheritsFrom(_ACTION_RESULT_NAMESPACE))
+            //Verify the return type is an expected value.
+            if (syntax == null || !syntax.ContainsReturnType(model, _ACTION_RESULT_NAMESPACES))
                 return false;
 
             //Assuming a good design pattern where GET requests (no method decoration) actually

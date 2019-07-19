@@ -10,6 +10,7 @@
  */
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Common.Extensions
 {
@@ -18,6 +19,28 @@ namespace Puma.Security.Rules.Common.Extensions
         internal static SyntaxNode TrimTrivia(this SyntaxNode node)
         {
             return node.WithoutLeadingTrivia().WithoutTrailingTrivia();
+        }
+
+        internal static ClassDeclarationSyntax GetClassDeclaration(this SyntaxNode syntax)
+        {
+            while (true)
+            {
+                //Check the symbol type
+                if (syntax is ClassDeclarationSyntax)
+                    return syntax as ClassDeclarationSyntax;
+
+                //If no match, walk up the chain to the base type
+                if (syntax.Parent != null)
+                {
+                    syntax = syntax.Parent;
+                    continue;
+                }
+
+                //Break when the base type hits null
+                break;
+            }
+
+            return null;
         }
     }
 }

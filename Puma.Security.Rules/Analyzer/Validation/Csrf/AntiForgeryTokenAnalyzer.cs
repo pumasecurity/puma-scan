@@ -45,14 +45,11 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf
         {
             var syntax = context.Node as MethodDeclarationSyntax;
 
-            //Grab the method's return type for the location value
-            var returnType = syntax.GetMethodReturnType();
-
-            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax, returnType))
+            if (!_expressionSyntaxAnalyzer.IsVulnerable(context.SemanticModel, syntax))
                 return;
 
-            if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != returnType?.GetLocation()))
-                VulnerableSyntaxNodes.Push(_vulnerableSyntaxNodeFactory.Create(returnType));
+            if (VulnerableSyntaxNodes.All(p => p.Sink.GetLocation() != syntax?.GetLocation()))
+                VulnerableSyntaxNodes.Push(new VulnerableSyntaxNode(syntax.ReturnType));
         }
     }
 }

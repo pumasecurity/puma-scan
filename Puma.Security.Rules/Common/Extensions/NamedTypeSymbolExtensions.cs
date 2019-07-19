@@ -17,23 +17,55 @@ namespace Puma.Security.Rules.Common.Extensions
 {
     internal static class NamedTypeSymbolExtensions
     {
-        internal static bool SymbolInheritsFrom(this INamedTypeSymbol symbol, string baseTypeFullName)
+        internal static bool InheritsFrom(this INamedTypeSymbol symbol, params string[] args)
         {
-            while (true)
+            foreach (string s in args)
             {
-                //Check the symbol type
-                if (string.Compare(symbol.ToDisplayString(), baseTypeFullName, StringComparison.Ordinal) == 0)
-                    return true;
+                var tempSymbol = symbol;
 
-                //If no match, walk up the chain to the base type
-                if (symbol.BaseType != null)
+                while (true)
                 {
-                    symbol = symbol.BaseType;
-                    continue;
-                }
+                    //Check the symbol type
+                    if (string.Compare(tempSymbol.ToDisplayString(), s, StringComparison.Ordinal) == 0)
+                        return true;
 
-                //Break when the base type hits null
-                break;
+                    //If no match, walk up the chain to the base type
+                    if (tempSymbol.BaseType != null)
+                    {
+                        tempSymbol = tempSymbol.BaseType;
+                        continue;
+                    }
+
+                    //Break when the base type hits null
+                    break;
+                }
+            }
+
+            return false;
+        }
+
+        internal static bool InheritsStartsWith(this INamedTypeSymbol symbol, params string[] args)
+        {
+            foreach (string s in args)
+            {
+                var tempSymbol = symbol;
+
+                while (true)
+                {
+                    //Check the symbol type
+                    if (tempSymbol.ToDisplayString().StartsWith(s))
+                        return true;
+
+                    //If no match, walk up the chain to the base type
+                    if (tempSymbol.BaseType != null)
+                    {
+                        tempSymbol = tempSymbol.BaseType;
+                        continue;
+                    }
+
+                    //Break when the base type hits null
+                    break;
+                }
             }
 
             return false;

@@ -9,27 +9,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Puma.Security.Rules.Common.Extensions
 {
     internal static class MethodDeclarationSyntaxExtensions
     {
-        internal static IdentifierNameSyntax GetMethodReturnType(this MethodDeclarationSyntax syntax)
+        internal static bool ContainsReturnType(this MethodDeclarationSyntax syntax, SemanticModel model, params string[] args)
         {
-            IdentifierNameSyntax returnType = null;
-
-            if (syntax?.ReturnType is GenericNameSyntax)
+            foreach (SyntaxNode node in syntax.ReturnType.DescendantNodesAndSelf())
             {
-                var generic = syntax?.ReturnType as GenericNameSyntax;
-                if (generic.TypeArgumentList.Arguments.Count > 0)
-                    returnType = generic.TypeArgumentList.Arguments[0] as IdentifierNameSyntax;
+                //Grab the return type symbol and return if it is not a named type
+                var symbol = model.GetSymbolInfo(node).Symbol as INamedTypeSymbol;
+                if (symbol == null)
+                    continue;
+
+                //Check the symbol for the 
+                if (symbol.InheritsStartsWith(args))
+                    return true;
             }
 
-            if (syntax?.ReturnType is IdentifierNameSyntax)
-                returnType = syntax?.ReturnType as IdentifierNameSyntax;
-
-            return returnType;
+            return false;
         }
     }
 }

@@ -768,4 +768,48 @@ Defending against command injection in the .NET ecosystem is more difficult than
   <data name="Analyzer_SEC0032_Title" xml:space="preserve">
     <value>Command Injection Process Start Info</value>
   </data>
+  <data name="Analyzer_SEC0120_Anchor" xml:space="preserve">
+    <value>sec0120-missing-authorize-attribute</value>
+  </data>
+  <data name="Analyzer_SEC0120_Description" xml:space="preserve">
+    <value>Missing Authorization occurs when an application does not properly verify an authenticated user’s access to functionality, data, or resources. In many cases, applications do not check  policy, claim, or role-based access control rules during a request. This can allow attackers to invoke privileged functionality, such as changing their role or directly browsing to an administrative interface in the application.
+
+Restricting access to ASP.NET MVC, Web API, and .NET Core Controllers and Actions is achieved using the Authorize attribute. Actions missing the Authorize attribute can be invoked by anonymous users.</value>
+  </data>
+  <data name="Analyzer_SEC0120_MessageFormat" xml:space="preserve">
+    <value>The Action is missing the Authorization attribute and can be invoked by anonymous users.</value>
+  </data>
+  <data name="Analyzer_SEC0120_Title" xml:space="preserve">
+    <value>Missing Authorization Attribute</value>
+  </data>
+  <data name="Analyzer_SEC0121_Anchor" xml:space="preserve">
+    <value>sec0121-cors-any-origin-wildcard</value>
+  </data>
+  <data name="Analyzer_SEC0121_Description" xml:space="preserve">
+    <value>Cross-Origin Resource Sharing (CORS) allows a service to disable the browser’s Same-origin policy, which prevents scripts on an attacker-controlled domain from accessing resources and data hosted on a different domain. The CORS Access-Control-Allow-Origin HTTP header specifies the domain with permission to invoke a cross-origin service and view the response data. Configuring the Access-Control-Allow-Origin header with a wildcard (*) can allow code running on an attacker-controlled domain to view responses containing sensitive data.
+
+Avoid setting the Access-Control-Allow-Origin header to a wildcard (*). Instead, configure the service to validate the incoming Origin header value against a trusted list of domains. Return the incoming accepted domain in the Access-Control-Allow-Origin header value, otherwise default the Access-Control-Allow-Origin value to a known safe origin.</value>
+  </data>
+  <data name="Analyzer_SEC0121_MessageFormat" xml:space="preserve">
+    <value>Do not set the CORS Access-Control-Allow-Origin header to a wildcard (*).</value>
+  </data>
+  <data name="Analyzer_SEC0121_Title" xml:space="preserve">
+    <value>CORS Allow Origin Wildcard</value>
+  </data>
+  <data name="Analyzer_SEC0122_Anchor" xml:space="preserve">
+    <value>sec0122-jwt-signature-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0122_Description" xml:space="preserve">
+    <value>The JSON Web Tokens (JWT) header and payload values are base64 encoded, which can be decoded, tampered, and replayed to gain access to protected resources. Web service APIs relying on JSON Web Tokens (JWT) for authentication and authorization must sign each JWT with a private key or secret. Each web service endpoint must require JWT signature validation prior to decoding and using the token to access protected resources.
+
+In ASP.NET Core, configure the Authentication service’s JwtBearer options to require signed tokens:
+
+- RequireSignedTokens: Rejects JWTs that do not have a signature.</value>
+  </data>
+  <data name="Analyzer_SEC0122_MessageFormat" xml:space="preserve">
+    <value>Configure the JwtBearer options to require signed tokens.</value>
+  </data>
+  <data name="Analyzer_SEC0122_Title" xml:space="preserve">
+    <value>JWT Signature Validation Disabled</value>
+  </data>
 </root>

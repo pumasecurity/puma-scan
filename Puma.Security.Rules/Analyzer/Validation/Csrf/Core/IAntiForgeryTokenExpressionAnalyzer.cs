@@ -16,6 +16,6 @@ namespace Puma.Security.Rules.Analyzer.Validation.Csrf.Core
 {
     internal interface IAntiForgeryTokenExpressionAnalyzer
     {
-        bool IsVulnerable(SemanticModel model, MethodDeclarationSyntax syntax, IdentifierNameSyntax returnType);
+        bool IsVulnerable(SemanticModel model, MethodDeclarationSyntax syntax);
     }
 }
