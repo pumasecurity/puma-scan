@@ -8,7 +8,7 @@
   
   <PropertyGroup>
     <PackageId>Puma.Security.Rules</PackageId>
-    <PackageVersion>2.2.0.0</PackageVersion>
+    <PackageVersion>2.3.0.0</PackageVersion>
     <Authors>Puma Security LLC</Authors>
     <PackageLicenseUrl>https://github.com/pumasecurity/puma-scan/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/pumasecurity/puma-scan/wiki</PackageProjectUrl>
@@ -21,7 +21,7 @@
     <PackageTags>Puma Scan, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <Version>2.2.0.0</Version>
+    <Version>2.3.0.0</Version>
     <Company>Puma Security LLC</Company>
     <Product>Puma Scan</Product>
     <AssemblyName>Puma.Security.Rules</AssemblyName>

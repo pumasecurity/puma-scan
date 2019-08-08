@@ -10,8 +10,9 @@
  */
 
 using CommandLine;
+using System.Collections.Generic;
 
-namespace Puma.Security.Parser
+namespace Puma.Security.Parser.Models
 {
 
     public enum ReportFormat
@@ -34,6 +35,7 @@ namespace Puma.Security.Parser
         [Option('r', "report", Required = false, HelpText = "Report format. MSBuild or Sarif")]
         public  ReportFormat ReportFormat { get; set; }
 
-
+        [Option('e', "errors", Required = false, Separator = ',', HelpText = "List of rule ids to be treated as build errors, causing the task to fail. E.g. --errors SEC0029,SEC0108")]
+        public IEnumerable<string> Errors { get; set; }
     }
 }
