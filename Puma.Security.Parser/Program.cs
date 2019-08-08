@@ -13,10 +13,12 @@ using CommandLine;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Newtonsoft.Json;
 using Puma.Security.Parser.Log;
+using Puma.Security.Parser.Models;
 using Puma.Security.Parser.Sarif;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Puma.Security.Parser
@@ -39,17 +41,46 @@ namespace Puma.Security.Parser
 
         public static void Main(string[] args)
         {
+            ErrorCode status = ErrorCode.Success;
+
             //Read cmd line args
             Options o = parseArgs(args);
 
             if (o == null)
-                return;
+            {
+                status = ErrorCode.InvalidArguments;
+                Environment.Exit((int)status);
+            }
 
-            //Parse instances from the build file
-            PumaLog instances = parseBuildWarnings(o);
+            try
+            {
+                //Parse instances from the build file
+                PumaLog instances = parseBuildWarnings(o);
 
-            //Export instances to a new Jenkins formatted warnings file
-            exportInstances(o, instances);
+                //Write instances to disk in the requested format
+                exportInstances(o, instances);
+
+                //Check threhold requirements
+                if (o.Errors != null & o.Errors.Count() > 0)
+                {
+                    foreach (string error in o.Errors)
+                    {
+                        if (instances.Any(i => i.RuleId.Equals(error)))
+                        {
+                            status = ErrorCode.ErrorThreshold;
+                            Console.WriteLine($"Error threshold violation: {error}");
+                            Console.WriteLine($"Exit code: {(int)status} - {status}");
+                            Environment.Exit((int)status);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: { ex.ToString()}");
+                Console.WriteLine($"Exit code: {(int)status} - {status}");
+                Environment.Exit((int)status);
+            }
         }
 
         private static Options parseArgs(string[] args)
@@ -286,7 +317,6 @@ namespace Puma.Security.Parser
                 case ReportFormat.Sarif:
                     exportToSarifFormat(pumaLog, outputFullPath);
                     break;
-
                 default:
                     Console.WriteLine("Unsupported Report format.");
                     break;
