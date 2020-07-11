@@ -26,11 +26,6 @@ if (!(Test-Path $vsixsignPath -PathType Leaf)) {
 
 Write-Host "Starting extension signature..."
 
-& $vsixsignPath sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSPHRASE" /v ".\full\PumaSecurity.PumaScanPro.VisualStudio\bin\Release\PumaSecurity.PumaScanPro.VisualStudio.vsix"
-
-Write-Host "Copying end user installer to $env:ARTIFACTS_DIRECTORY\enduser\PumaScanPro_EndUser_$env:BUILD_VERSION.vsix"
-New-Item -Type Directory "$env:ARTIFACTS_DIRECTORY\enduser"
-Copy-Item -Path ".\full\PumaSecurity.PumaScanPro.VisualStudio\bin\Release\PumaSecurity.PumaScanPro.VisualStudio.vsix" -Destination "$env:ARTIFACTS_DIRECTORY\enduser\PumaScanPro_EndUser_$env:BUILD_VERSION.vsix"
-Copy-Item -Path ".\full\PumaSecurity.PumaScanPro.VisualStudio\Publish" -Destination "$env:ARTIFACTS_DIRECTORY\enduser\Publish" -Recurse
+& $vsixsignPath sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSPHRASE" /v ".\Puma.Security.Rules.Vsix\bin\Release\Puma.Security.Rules.Vsix.vsix"
 
 Write-Host "Finished extension signature..."
