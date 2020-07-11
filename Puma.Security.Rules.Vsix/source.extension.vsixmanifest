@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="Puma.Security.Rules.Vsix..b2502b26-45ba-4568-9efe-bad89faad3c5" Version="2.2.0.0" Language="en-US" Publisher="Puma Security, LLC"/>
         <DisplayName>Puma Scan</DisplayName>
-        <Description xml:space="preserve">Puma Scan Community Edition is a free software security analyzer providng real time, continuous source code analysis as development teams write and build code. Puma Scan hunts for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
+        <Description xml:space="preserve">Puma Scan Community Edition is a free extension that provides secure code analysis as development teams write code. Vulnerabilities are displayed as spell check and compiler warnings.</Description>
         <MoreInfo>https://github.com/pumasecurity/puma-scan</MoreInfo>
         <License>License.txt</License>
         <GettingStartedGuide>https://github.com/pumasecurity/puma-scan/wiki</GettingStartedGuide>
