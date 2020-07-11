@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/vsix-publish",
-  "categories": [ "Coding", "Security", "Tools" ],
+  "categories": [ "Coding", "Security" ],
   "identity": {
     "internalName": "PumaScan",
     "displayName": "Puma Scan Community"
