@@ -1,5 +1,7 @@
 ![Puma Scan](https://www.pumascan.com/img/logo-horiz.png)
 
+[![Build status](https://dev.azure.com/pumascan/Puma%20Scan/_apis/build/status/Puma%20Scan%20Community/Puma%20Scan%20Community%20-%20Release)](https://dev.azure.com/pumascan/Puma%20Scan/_build/latest?definitionId=24)
+
 [![Black Hat Arsenal](https://www.pumascan.com/img/bh-arsenal-2017.svg)](https://www.blackhat.com/asia-17/arsenal.html#eric-johnson) [![Black Hat Arsenal](https://www.pumascan.com/img/bh-arsenal-2018.svg)](https://www.blackhat.com/us-18/arsenal/schedule/index.html#puma-scan-12003)
 
 # Description
