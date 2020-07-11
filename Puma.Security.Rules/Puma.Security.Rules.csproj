@@ -23,14 +23,14 @@
     <DevelopmentDependency>true</DevelopmentDependency>
     <Version>2.3.1.0</Version>
     <Company>Puma Security LLC</Company>
-    <Product>Puma Scan</Product>
+    <Product>Puma Scan Community Edition</Product>
     <AssemblyName>Puma.Security.Rules</AssemblyName>
     <RootNamespace>Puma.Security.Rules</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="2.9.0" />
-    <PackageReference Include="Microsoft.Web.Xdt" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Web.Xdt" Version="3.1.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -46,7 +46,7 @@
     <None Update="tools\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Update="tools\parser\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Include="$(OutputPath)\tools\parser\*.*" Pack="true" PackagePath="tools/parser" />
-    <None Include="$(OutputPath)\..\..\..\..\packages\Microsoft.Web.Xdt.3.0.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\..\..\..\..\packages\Microsoft.Web.Xdt.3.1.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
