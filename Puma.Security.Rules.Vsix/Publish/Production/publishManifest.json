@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/vsix-publish",
+  "categories": [ "Coding", "Security", "Tools" ],
+  "identity": {
+    "internalName": "PumaScan",
+    "displayName": "Puma Scan Community"
+  },
+  "overview": "overview.md",
+  "priceCategory": "free",
+  "publisher": "PumaSecurity",
+  "private": false,
+  "qna": false
+}

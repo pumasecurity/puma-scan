@@ -1,8 +1,9 @@
 /* 
- * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
  * 
- * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
- * Lead Developer: Eric Mead (eric.mead@pumascan.com)
+ * Project Leads:
+ * Eric Johnson (eric.johnson@pumascan.com)
+ * Eric Mead (eric.mead@pumascan.com)
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11,8 +12,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-
+using System.Xml;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Analyzer;
@@ -84,7 +86,22 @@ namespace Puma.Security.Rules.Core
             var workingDirectory = Utils.GetWorkingDirectory(context.Compilation.AssemblyName);
             var basePath = Utils.GetCommonRootPath(srcFiles);
 
-            return srcFiles.Select(src => _configurationFileParser.Parse(src, basePath, workingDirectory)).ToList();
+            
+            return srcFiles.Select(src =>
+            {
+                try
+                {
+                    return _configurationFileParser.Parse(src, basePath, workingDirectory);
+                }
+                catch (XmlException ex)
+                {
+                    // Failed to parse the XML
+                    Console.WriteLine($"Failed to parse the configuration file {src}.");
+                    Console.WriteLine(ex);
+                }
+
+                return null;
+            }).Where(s => s != null).ToList();
         }
     }
 }

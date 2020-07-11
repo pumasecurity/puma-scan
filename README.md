@@ -17,8 +17,16 @@ The Puma Scan Community Edition install instructions and documentation can be fo
 Interested in building your own rules and contributing back to the security community? Read our blog on [Building Your Own Security Analyzer](https://pumasecurity.io/resources/blog/contributing-to-puma-scan-community-edition/).
 
 # License Agreement
+
 The Puma Scan Community Edition is licensed under the Mozilla Public License (MPL) version 2.0.
 
 # Contributing
 
 Contributions are welcome. Fork and send us a pull request!
+
+# Contributors
+
+- [Eric Johnson](https://github.com/ejohn20) - Principal Security Engineer, Puma Security
+- [Eric Mead](https://github.com/meadisu27) - Principal Security Engineer, Puma Security
+- [Andrew Guggenberger](https://github.com/aguggenberger) - Senior Security Engineer
+- [Greg Pakes](https://github.com/gregpakes)

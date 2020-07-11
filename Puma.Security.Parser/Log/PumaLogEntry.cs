@@ -1,8 +1,9 @@
 /*
- * Copyright(c) 2016 - 2019 Puma Security, LLC (https://www.pumascan.com)
+ * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
  *
- * Project Leader: Eric Johnson (eric.johnson@pumascan.com)
- * Lead Developer: Eric Mead (eric.mead@pumascan.com)
+ * Project Leads:
+ * Eric Johnson (eric.johnson@pumascan.com)
+ * Eric Mead (eric.mead@pumascan.com)
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
