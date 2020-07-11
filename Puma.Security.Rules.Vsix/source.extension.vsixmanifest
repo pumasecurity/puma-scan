@@ -10,7 +10,7 @@
         <ReleaseNotes>https://github.com/pumasecurity/puma-scan/releases</ReleaseNotes>
         <Icon>logo-200x200.png</Icon>
         <PreviewImage>logo-200x200.png</PreviewImage>
-        <Tags>Puma Scan, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</Tags>
+        <Tags>Security;Secure Coding;OWASP;CWE;Code Scan;Puma;Puma Scan;Puma Scan Community;Static Analysis</Tags>
     </Metadata>
     <Installation>
       <InstallationTarget Version="[15.0.28010.2016,17.0)" Id="Microsoft.VisualStudio.Pro" />
