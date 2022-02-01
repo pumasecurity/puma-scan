@@ -13,7 +13,7 @@
     <ProjectGuid>{7DBF6327-917C-4528-996E-C04BA6924CF7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Puma.Security.Rules.Vsix.VS2022</RootNamespace>
+    <RootNamespace>Puma.Security.Rules.Vsix</RootNamespace>
     <AssemblyName>Puma.Security.Rules.Vsix.VS2022</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
