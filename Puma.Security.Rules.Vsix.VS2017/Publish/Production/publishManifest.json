@@ -2,8 +2,8 @@
   "$schema": "http://json.schemastore.org/vsix-publish",
   "categories": [ "Coding", "Security" ],
   "identity": {
-    "internalName": "PumaScan",
-    "displayName": "Puma Scan Community 2019"
+    "internalName": "PumaScan2017",
+    "displayName": "Puma Scan Community 2017"
   },
   "overview": "overview.md",
   "priceCategory": "free",
