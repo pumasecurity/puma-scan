@@ -36,7 +36,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Puma.Security.Rules.Vsix</RootNamespace>
-    <AssemblyName>Puma.Security.Rules.Vsix</AssemblyName>
+    <AssemblyName>Puma.Security.Rules.Vsix.2017</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
