@@ -62,12 +62,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Puma.Security.Rules\Puma.Security.Rules.csproj">
-      <Project>{b198b981-d039-43d2-8b84-2b4f1bc1a1ba}</Project>
-      <Name>Puma.Security.Rules</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\Puma.Security.Rules.Vsix\License.txt">
       <Link>License.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -78,6 +72,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Puma.Security.Rules.2022\Puma.Security.Rules.2022.csproj">
+      <Project>{31251bad-79d1-4f96-8320-308991e3d45c}</Project>
+      <Name>Puma.Security.Rules.2022</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

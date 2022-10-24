@@ -31,7 +31,7 @@
 		<Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[17.0,18.0)" DisplayName="C# and Visual Basic" />
 	</Prerequisites>
 	<Assets>
-		<Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Puma.Security.Rules.Vsix" Path="|Puma.Security.Rules|"/>
-		<Asset Type="Microsoft.VisualStudio.Analyzer" d:Source="Project" d:ProjectName="Puma.Security.Rules.Vsix" Path="|Puma.Security.Rules|"/>
+		<Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|Puma.Security.Rules.2022|"/>
+		<Asset Type="Microsoft.VisualStudio.Analyzer" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|Puma.Security.Rules.2022|"/>
 	</Assets>
 </PackageManifest>

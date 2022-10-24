@@ -24,7 +24,11 @@ if (!(Test-Path $vsixsignPath -PathType Leaf)) {
 	exit 4
 }
 
-Write-Host "Starting VS2017/19 extension signature..."
+Write-Host "Starting VS2017 extension signature..."
+
+& $vsixsignPath sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSPHRASE" /v ".\Puma.Security.Rules.Vsix.VS2017\bin\Release\Puma.Security.Rules.Vsix.VS2017.vsix"
+
+Write-Host "Starting VS2019 extension signature..."
 
 & $vsixsignPath sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSPHRASE" /v ".\Puma.Security.Rules.Vsix\bin\Release\Puma.Security.Rules.Vsix.vsix"
 

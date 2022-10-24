@@ -1,5 +1,5 @@
 {
-  "Version": "1.4.4",
+  "Version": "1.5.0",
   "LogLevel": "Error",
   "GeneralSettings": {
     "DataflowAnalysisEnabled": true,
@@ -284,7 +284,7 @@
     },
     {
       "Id": "SEC0039",
-      "Name": "Open Source Security",
+      "Name": "Vulnerable Package Reference",
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
@@ -354,7 +354,7 @@
     },
     {
       "Id": "SEC0110",
-      "Name": "Unvalidated Web Forms Redirect",
+      "Name": "Unvalidated Redirect",
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
@@ -513,42 +513,42 @@
     },
     {
       "Id": "SEC1000",
-      "Name": "Injection",
+      "Name": "JavaScript Injection: Unsafe Eval",
       "RiskRating": "High",
       "Severity": "Warning",
       "Enabled": true
     },
     {
       "Id": "SEC1001",
-      "Name": "Injection",
+      "Name": "JavaScript Injection: setTimeout",
       "RiskRating": "Medium",
       "Severity": "Warning",
       "Enabled": true
     },
     {
       "Id": "SEC1002",
-      "Name": "Injection",
+      "Name": "JavaScript Injection: setInterval",
       "RiskRating": "Medium",
       "Severity": "Warning",
       "Enabled": true
     },
     {
       "Id": "SEC1003",
-      "Name": "Cross-Site Scripting",
+      "Name": "JavaScript: Raw Write InnerHtml",
       "RiskRating": "Medium",
       "Severity": "Warning",
       "Enabled": true
     },
     {
       "Id": "SEC1004",
-      "Name": "Cross-Site Scripting",
+      "Name": "React: Dangerously Set Inner HTML",
       "RiskRating": "Medium",
       "Severity": "Warning",
       "Enabled": true
     },
     {
       "Id": "SEC1005",
-      "Name": "Cross-Site Scripting",
+      "Name": "Angular: Bypass Security Trust",
       "RiskRating": "Medium",
       "Severity": "Warning",
       "Enabled": true

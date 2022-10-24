@@ -1,0 +1,815 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Analyzer_Category_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Analyzer_Category_Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="Analyzer_Category_Syntax" xml:space="preserve">
+    <value>Syntax</value>
+  </data>
+  <data name="Analyzer_SEC0001_Description" xml:space="preserve">
+    <value>Binaries compiled in debug mode can leak detailed stack traces and debugging messages to attackers. Disable debug builds by setting the debug attribute to false.</value>
+  </data>
+  <data name="Analyzer_SEC0001_MessageFormat" xml:space="preserve">
+    <value>Debug compilation is enabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0001_Title" xml:space="preserve">
+    <value>Debug Build Enabled</value>
+  </data>
+  <data name="Analyzer_SEC0002_Description" xml:space="preserve">
+    <value>Displaying stack traces in the browser can leak information to attackers and help them gain information for launching additional attacks. Enable custom errors by setting the mode to On or RemoteOnly: &lt;customErrors mode="On|RemoteOnly" /&gt;.</value>
+  </data>
+  <data name="Analyzer_SEC0002_MessageFormat" xml:space="preserve">
+    <value>Custom errors are disabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0002_Title" xml:space="preserve">
+    <value>Custom Errors Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0003_Description" xml:space="preserve">
+    <value>Authentication cookies sent over HTTP connections can be stolen by attackers monitoring the network traffic, which can lead to session hijacking attacks. Configure "secure" cookies by setting the requireSSL attribute to true.</value>
+  </data>
+  <data name="Analyzer_SEC0003_MessageFormat" xml:space="preserve">
+    <value>Forms authentication does not set requireSSL to true. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0003_Title" xml:space="preserve">
+    <value>Forms Authentication Secure Cookie Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0004_Description" xml:space="preserve">
+    <value>Authentication cookies should not be sent in the URL. Doing so allows attackers to gain unauthorized access to authentication tokens (web server logs, referrer headers, and browser history) and more easily perform session fixation / hijacking attacks. Configure cookie-base authentication by setting the cookieless attribute to UseCookies.</value>
+  </data>
+  <data name="Analyzer_SEC0004_MessageFormat" xml:space="preserve">
+    <value>Forms authentication does not set the cookieless attribute to UseCookies. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0004_Title" xml:space="preserve">
+    <value>Forms Authentication Cookieless Session Enabled</value>
+  </data>
+  <data name="Analyzer_SEC0005_Description" xml:space="preserve">
+    <value>Enabling cross-application redirects can allow unvalidated redirect attacks via the returnUrl parameter during the login process. Disable cross-application redirects to by setting the enableCrossAppRedirects attribute to false.</value>
+  </data>
+  <data name="Analyzer_SEC0005_MessageFormat" xml:space="preserve">
+    <value>Forms authentication does not set the enableCrossAppRedirects attribute to false. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0005_Title" xml:space="preserve">
+    <value>Forms Authentication CrossAppRedirects Enabled</value>
+  </data>
+  <data name="Analyzer_SEC0006_Description" xml:space="preserve">
+    <value>Forms Authentication cookies must use strong encryption and message authentication code (MAC) validation to protect the cookie value from inspection and tampering. Configure the forms protection attribute to “All” to enable cookie data validation and encryption.</value>
+  </data>
+  <data name="Analyzer_SEC0006_MessageFormat" xml:space="preserve">
+    <value>Forms authentication cookie protection attribute is not set to All. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0006_Title" xml:space="preserve">
+    <value>Forms Authentication Weak Cookie Protection</value>
+  </data>
+  <data name="Analyzer_SEC0007_Description" xml:space="preserve">
+    <value>Excessive authentication timeout values provide attackers with a large window of opportunity to hijack user’s authentication tokens. Configure the forms timeout value to meet the timeout policy.</value>
+  </data>
+  <data name="Analyzer_SEC0007_MessageFormat" xml:space="preserve">
+    <value>Forms authentication timeout value exceeds the policy of {3} minutes. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0007_Title" xml:space="preserve">
+    <value>Forms Authentication Weak Timeout</value>
+  </data>
+  <data name="Analyzer_SEC0008_Description" xml:space="preserve">
+    <value>Disabling the HTTP Runtime header checking protection opens the application up to HTTP Header Injection (aka Response Splitting) attacks. Enable the header checking protection by setting the httpRuntime element's enableHeaderChecking attribute to true, which is the default value.</value>
+  </data>
+  <data name="Analyzer_SEC0008_MessageFormat" xml:space="preserve">
+    <value>HTTP header checking is disabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0008_Title" xml:space="preserve">
+    <value>HTTP Header Checking Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0009_Description" xml:space="preserve">
+    <value>The Version HTTP response header sends the ASP.NET framework version to the client's browser. This information can help an attacker identify vulnerabilities in the server's framework version and should be disabled in production. Disable the version response header by setting the httpRuntime element's enableVersionHeader attribute to false.</value>
+  </data>
+  <data name="Analyzer_SEC0009_MessageFormat" xml:space="preserve">
+    <value>The Version HTTP response header is enabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0009_Title" xml:space="preserve">
+    <value>Version HTTP Response Header Enabled</value>
+  </data>
+  <data name="Analyzer_SEC0100_Description" xml:space="preserve">
+    <value>Data is written to the browser using a raw write: &lt;%= var %&gt;. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).
+
+Instead of using a raw write, use the HTML encode inline shortcut (&lt;%: var %&gt;) to automatically HTML encode data before writing it to the browser.</value>
+  </data>
+  <data name="Analyzer_SEC0100_MessageFormat" xml:space="preserve">
+    <value>Raw inline expression writes unencoded data to the HTTP response. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0100_Title" xml:space="preserve">
+    <value>Raw Inline Expression</value>
+  </data>
+  <data name="Analyzer_SEC0101_Description" xml:space="preserve">
+    <value>Data is written to the browser using a raw binding expression: &lt;%# Item.Variable %&gt;. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).
+
+Instead of using a raw binding expression, use the HTML encoded binding shortcut (&lt;%#: Item.Variable %&gt;) to automatically HTML encode data before writing it to the browser.</value>
+  </data>
+  <data name="Analyzer_SEC0101_MessageFormat" xml:space="preserve">
+    <value>Raw binding expression writes unencoded data to the HTTP response. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0101_Title" xml:space="preserve">
+    <value>Raw Binding Expression</value>
+  </data>
+  <data name="Analyzer_SEC0102_Description" xml:space="preserve">
+    <value>Data is written to the browser using a raw Razor helper method: @Html.Raw(Model.Variable). This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).
+
+Instead of using the raw Razor helper method, use a Razor helper that performs automatic xHTML encoding before writing it to the browser.</value>
+  </data>
+  <data name="Analyzer_SEC0102_MessageFormat" xml:space="preserve">
+    <value>Raw Razor helper method writes unencoded data to the view. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0102_Title" xml:space="preserve">
+    <value>Raw Razor Method</value>
+  </data>
+  <data name="Analyzer_SEC0103_Description" xml:space="preserve">
+    <value>Data is written to the browser using the raw WriteLiteral method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).
+
+Instead of using the raw WriteLiteral method, use a Razor helper that performs automatic HTML encoding before writing it to the browser.</value>
+  </data>
+  <data name="Analyzer_SEC0103_MessageFormat" xml:space="preserve">
+    <value>Raw WriteLiteral method writes unencoded data to the view. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0103_Title" xml:space="preserve">
+    <value>Raw WriteLiteral Method</value>
+  </data>
+  <data name="Analyzer_SEC0010_Description" xml:space="preserve">
+    <value>Event validation prevents unauthorized post backs in web form applications. Disabling this feature can allow attackers to forge requests from controls not visible or enabled on a given web form. Enable event validation by setting the page element's eventValidation attribute to true.</value>
+  </data>
+  <data name="Analyzer_SEC0010_MessageFormat" xml:space="preserve">
+    <value>Event validation is disabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0010_Title" xml:space="preserve">
+    <value>Pages EventValidation Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0011_Description" xml:space="preserve">
+    <value>The ViewStateMac protection prevents tampering with the web forms view state and event validation hidden fields. Disabing this feature can allow attackers to manipluate these fields in the browser and bypass several security features in the .NET framework. Enable the view state mac protection by setting the page element's viewStateMac attribute to true.</value>
+  </data>
+  <data name="Analyzer_SEC0011_MessageFormat" xml:space="preserve">
+    <value>ViewStateMac is disabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0011_Title" xml:space="preserve">
+    <value>Pages ViewStateMac Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0012_Description" xml:space="preserve">
+    <value>The ValidateRequest protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation should be enabled by setting the page element's requestValidation attribute to true. Then, consider making exceptions or overriding the default behavior on individual request parameters.</value>
+  </data>
+  <data name="Analyzer_SEC0012_MessageFormat" xml:space="preserve">
+    <value>Validate request is disabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0012_Title" xml:space="preserve">
+    <value>Pages ValidateRequest Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0013_Description" xml:space="preserve">
+    <value>The web forms view state hidden field is base64 encoded by default, which can be easily decoded. Applications placing sensitive data into the view state are vulnerable to information leakage issues via the view state parameter.  The pages ViewStateEncryptionMode attribute allows an application encrypt the view state data with the .NET machine key.</value>
+  </data>
+  <data name="Analyzer_SEC0013_MessageFormat" xml:space="preserve">
+    <value>Pages ViewStateEncryptionMode disabled. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0013_Title" xml:space="preserve">
+    <value>Pages ViewStateEncryptionMode Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0014_Description" xml:space="preserve">
+    <value>Cookies containing authentication tokens, session tokens, and other state management credentials must be protected in transit across a network. Set the httpCookie element's requireSSL attribute to true to prevent the browser from transmitting cookies over HTTP.</value>
+  </data>
+  <data name="Analyzer_SEC0014_MessageFormat" xml:space="preserve">
+    <value>Insecure HTTP cookies {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0014_Title" xml:space="preserve">
+    <value>Insecure HTTP Cookie Transport</value>
+  </data>
+  <data name="Analyzer_SEC0015_Description" xml:space="preserve">
+    <value>Cookies that do not have the httpOnly attribute set are accessible in the browser by scripts. This can allow attackers to inject malicious scripts into the site and extract authentication cookie values to a remote server. Setting the httpCookie element's httpOnlyCookies element to true will help prevent client-side session hijacking attempts.</value>
+  </data>
+  <data name="Analyzer_SEC0015_MessageFormat" xml:space="preserve">
+    <value>Cookies accessible via script. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0015_Title" xml:space="preserve">
+    <value>Cookie Accessible via Script</value>
+  </data>
+  <data name="Analyzer_SEC0016_Description" xml:space="preserve">
+    <value>The machine key element defines keys to use for encryption and decryption of authentication cookies, view state, and verification of session state identification. The validation and decryption key values should not be stored in configuration files in cleartext. Encrypt the machineKey section of the configuration file using aspnet_regiis.exe.</value>
+  </data>
+  <data name="Analyzer_SEC0016_MessageFormat" xml:space="preserve">
+    <value>Machine key element is not encrypted. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0016_Title" xml:space="preserve">
+    <value>Cleartext Machine Key</value>
+  </data>
+  <data name="Analyzer_SEC0017_Description" xml:space="preserve">
+    <value>The Identity PasswordValidator settings do not meet the password complexity requirements. Weak passwords can be cracked much faster than complex passwords with sufficient length and complexity requirements.</value>
+  </data>
+  <data name="Analyzer_SEC0017_MessageFormat" xml:space="preserve">
+    <value>Password validator settings do not meet the requirements - Minimum Length ({0}), Numeric Character ({1}), Lowercase Character ({2}), Uppercase Character ({3}), Special Character ({4})</value>
+  </data>
+  <data name="Analyzer_SEC0017_Title" xml:space="preserve">
+    <value>Weak Password Complexity</value>
+  </data>
+  <data name="Analyzer_SEC0018_Description" xml:space="preserve">
+    <value>The Identity password lockout feature is disabled. This can allow brute force and dictionary attacks against user accounts. To enable the password lockout feature, set the shouldLockout parameter to true.</value>
+  </data>
+  <data name="Analyzer_SEC0018_MessageFormat" xml:space="preserve">
+    <value>Password lockout is disabled. To protect accounts from brute force attacks, set the shouldLockout parameter to true.</value>
+  </data>
+  <data name="Analyzer_SEC0018_Title" xml:space="preserve">
+    <value>Identity Password Lockout Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0104_Description" xml:space="preserve">
+    <value>Data is written to the browser using the raw Literal.Text method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).
+
+Literal controls are often found in HTML contexts, but can also appear in other contexts such as JavaScript, HTML Attribute, or URL. Fixing the vulnerability requires the appropriate Web Protection Library (aka AntiXSS) context-specific method to encode the data before setting the Literal.Text property.</value>
+  </data>
+  <data name="Analyzer_SEC0104_MessageFormat" xml:space="preserve">
+    <value>Unencoded Literal.Text property value.</value>
+  </data>
+  <data name="Analyzer_SEC0104_Title" xml:space="preserve">
+    <value>Unencoded Literal Text</value>
+  </data>
+  <data name="Analyzer_SEC0019_Description" xml:space="preserve">
+    <value>The AntiForgeryToken attribute protects applications using authentication cookies from CSRF attacks. Without the AntiForgeryToken attribute, attackers can submit forged requests on behalf of another authenticated user.</value>
+  </data>
+  <data name="Analyzer_SEC0019_MessageFormat" xml:space="preserve">
+    <value>The Action is missing the AntiForgeryToken attribute. If this action modifies data on the backend, it could be vulnerable to Cross-Site Request Forgery attacks.</value>
+  </data>
+  <data name="Analyzer_SEC0019_Title" xml:space="preserve">
+    <value>Missing AntiForgeryToken Attribute</value>
+  </data>
+  <data name="Analyzer_SEC0105_Description" xml:space="preserve">
+    <value>Data is written to the browser using the raw Label.Text method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).
+
+Label controls are often found in HTML contexts, but can also appear in other contexts such as JavaScript, HTML Attribute, or URL. Fixing the vulnerability requires the appropriate Web Protection Library (aka AntiXSS) context-specific method to encode the data before setting the Label.Text property.</value>
+  </data>
+  <data name="Analyzer_SEC0105_MessageFormat" xml:space="preserve">
+    <value>Unencoded Label.Text property value.</value>
+  </data>
+  <data name="Analyzer_SEC0105_Title" xml:space="preserve">
+    <value>Unencoded Label Text</value>
+  </data>
+  <data name="Analyzer_SEC0020_Description" xml:space="preserve">
+    <value>Excessive authentication timeout values provide attackers with a large window of opportunity to hijack user’s session tokens. Configure the session timeout value to meet your organization's timeout policy.</value>
+  </data>
+  <data name="Analyzer_SEC0020_MessageFormat" xml:space="preserve">
+    <value>Session timeout value exceeds the policy of {3} minutes. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0020_Title" xml:space="preserve">
+    <value>Weak Session Timeout</value>
+  </data>
+  <data name="Analyzer_SEC0021_Description" xml:space="preserve">
+    <value>The session StateServer mode transports session data insecurely to a remote server. The remote server also does not require system authentication to access the session data for an application. This risk depends entirely on the sensitivity of the data stored in the user's session. If the session data is considered sensitive, consider adding an external control (e.g. IPSEC) that provides mutual authentication and transport security.</value>
+  </data>
+  <data name="Analyzer_SEC0021_MessageFormat" xml:space="preserve">
+    <value>The session mode is set to StateServer. {0}({1}): {2}</value>
+  </data>
+  <data name="Analyzer_SEC0021_Title" xml:space="preserve">
+    <value>Session State Server Mode</value>
+  </data>
+  <data name="Analyzer_SEC0106_Description" xml:space="preserve">
+    <value>Concatenating untrusted data into a dynamic SQL string and calling vulnerable LINQ methods (e.g. ExecuteQuery, ExecuteCommand) can allow SQL Injection. To ensure calls to vulnerable LINQ methods are parameterized, pass parameters into the statement using the method’s second argument: params object[] parameters.</value>
+  </data>
+  <data name="Analyzer_SEC0106_MessageFormat" xml:space="preserve">
+    <value>SQL Injection - LINQ ExecuteQuery or ExecuteCommand method executes dynamic SQL without parameters.</value>
+  </data>
+  <data name="Analyzer_SEC0106_Title" xml:space="preserve">
+    <value>SQL Injection Dynamic LINQ Query</value>
+  </data>
+  <data name="Analyzer_SEC0107_Description" xml:space="preserve">
+    <value>The SQL Command communicates directly with the backend database without using an Object Relational Mapping (ORM) framework. There are several vulnerable methods (ExecuteReader, ExecuteNonQuery, ExecuteScalar) that allow dynamic SQL statements to be constructed and executed against the database. Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements. Use parameter placeholders or stored procedures to prevent SQL Injection attacks.</value>
+  </data>
+  <data name="Analyzer_SEC0107_MessageFormat" xml:space="preserve">
+    <value>SQL Injection - ADO.NET method is passed a dynamic SQL statement.</value>
+  </data>
+  <data name="Analyzer_SEC0107_Title" xml:space="preserve">
+    <value>SQL Injection ADO .NET</value>
+  </data>
+  <data name="Analyzer_SEC0108_Description" xml:space="preserve">
+    <value>Concatenating untrusted data into a dynamic SQL string and calling vulnerable Entity Framework (EF) methods (ExecuteSqlCommand, ExecuteSqlCommandAsync, SqlQuery) can allow SQL Injection. To ensure calls to vulnerable EF methods are parameterized, pass parameters into the statement using the  method’s second argument: params object[] parameters.</value>
+  </data>
+  <data name="Analyzer_SEC0108_MessageFormat" xml:space="preserve">
+    <value>SQL Injection - EF method executes dynamic SQL without parameters</value>
+  </data>
+  <data name="Analyzer_SEC0108_Title" xml:space="preserve">
+    <value>SQL Injection Dynamic EF Query</value>
+  </data>
+  <data name="Analyzer_SEC0109_Description" xml:space="preserve">
+    <value>Passing unvalidated redirect locations to the MVC Controller.Redirect method can allow attackers to send users to malicious web sites. This can allow attackers to perform phishing attacks and distribute malware to victims.</value>
+  </data>
+  <data name="Analyzer_SEC0109_MessageFormat" xml:space="preserve">
+    <value>Unvalidated redirect location is passed to the Controller.Redirect action.</value>
+  </data>
+  <data name="Analyzer_SEC0109_Title" xml:space="preserve">
+    <value>Unvalidated MVC Redirect</value>
+  </data>
+  <data name="Analyzer_SEC0110_Description" xml:space="preserve">
+    <value>Passing unvalidated redirect locations to the Response.Redirect method can allow attackers to send users to malicious web sites. This can allow attackers to perform phishing attacks and distribute malware to victims.</value>
+  </data>
+  <data name="Analyzer_SEC0110_MessageFormat" xml:space="preserve">
+    <value>Unvalidated redirect location is passed to the Response.Redirect method.</value>
+  </data>
+  <data name="Analyzer_SEC0110_Title" xml:space="preserve">
+    <value>Unvalidated WebForms Redirect</value>
+  </data>
+  <data name="Analyzer_SEC0111_Description" xml:space="preserve">
+    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
+  </data>
+  <data name="Analyzer_SEC0111_MessageFormat" xml:space="preserve">
+    <value>Unvalidated file path parameter is passed to the Controller {0} action, which can allow arbitrary file downloads from the server.</value>
+  </data>
+  <data name="Analyzer_SEC0111_Title" xml:space="preserve">
+    <value>Path Tampering File Path Result</value>
+  </data>
+  <data name="Analyzer_SEC0001_Anchor" xml:space="preserve">
+    <value>sec0001-debug-build-enabled</value>
+  </data>
+  <data name="Analyzer_SEC0002_Anchor" xml:space="preserve">
+    <value>sec0002-custom-errors-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0003_Anchor" xml:space="preserve">
+    <value>sec0003-forms-authentication-insecure-cookie</value>
+  </data>
+  <data name="Analyzer_SEC0004_Anchor" xml:space="preserve">
+    <value>sec0004-forms-authentication-cookieless-mode</value>
+  </data>
+  <data name="Analyzer_SEC0005_Anchor" xml:space="preserve">
+    <value>sec0005-forms-authentication-cross-app-redirects</value>
+  </data>
+  <data name="Analyzer_SEC0006_Anchor" xml:space="preserve">
+    <value>sec0006-forms-authentication-weak-cookie-protection</value>
+  </data>
+  <data name="Analyzer_SEC0007_Anchor" xml:space="preserve">
+    <value>sec0007-forms-authentication-weak-timeout</value>
+  </data>
+  <data name="Analyzer_SEC0008_Anchor" xml:space="preserve">
+    <value>sec0008-header-checking-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0009_Anchor" xml:space="preserve">
+    <value>sec0009-version-header-enabled</value>
+  </data>
+  <data name="Analyzer_SEC0010_Anchor" xml:space="preserve">
+    <value>sec0010-event-validation-disbled</value>
+  </data>
+  <data name="Analyzer_SEC0011_Anchor" xml:space="preserve">
+    <value>sec0011-view-state-mac-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0012_Anchor" xml:space="preserve">
+    <value>sec0012-request-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0013_Anchor" xml:space="preserve">
+    <value>sec0013-view-state-encryption-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0014_Anchor" xml:space="preserve">
+    <value>sec0014-insecure-http-cookies</value>
+  </data>
+  <data name="Analyzer_SEC0015_Anchor" xml:space="preserve">
+    <value>sec0015-cookies-accessible-via-script</value>
+  </data>
+  <data name="Analyzer_SEC0016_Anchor" xml:space="preserve">
+    <value>sec0016-cleartext-machine-key</value>
+  </data>
+  <data name="Analyzer_SEC0017_Anchor" xml:space="preserve">
+    <value>sec0017-identity-weak-password-complexity</value>
+  </data>
+  <data name="Analyzer_SEC0018_Anchor" xml:space="preserve">
+    <value>sec0018-identity-password-lockout-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0019_Anchor" xml:space="preserve">
+    <value>sec0019-missing-antiforgery-token-attribute</value>
+  </data>
+  <data name="Analyzer_SEC0020_Anchor" xml:space="preserve">
+    <value>sec0020-weak-session-timeout</value>
+  </data>
+  <data name="Analyzer_SEC0021_Anchor" xml:space="preserve">
+    <value>sec0021-state-server-mode</value>
+  </data>
+  <data name="Analyzer_SEC0100_Anchor" xml:space="preserve">
+    <value>sec0100-raw-inline-expression</value>
+  </data>
+  <data name="Analyzer_SEC0101_Anchor" xml:space="preserve">
+    <value>sec0101-raw-binding-expression</value>
+  </data>
+  <data name="Analyzer_SEC0102_Anchor" xml:space="preserve">
+    <value>sec0102-raw-razor-method</value>
+  </data>
+  <data name="Analyzer_SEC0103_Anchor" xml:space="preserve">
+    <value>sec0103-raw-writeliteral-method</value>
+  </data>
+  <data name="Analyzer_SEC0104_Anchor" xml:space="preserve">
+    <value>sec0104-unencoded-literal-text</value>
+  </data>
+  <data name="Analyzer_SEC0105_Anchor" xml:space="preserve">
+    <value>sec0105-unencoded-label-text</value>
+  </data>
+  <data name="Analyzer_SEC0106_Anchor" xml:space="preserve">
+    <value>sec0106-sql-injection-dynamic-linq-query</value>
+  </data>
+  <data name="Analyzer_SEC0107_Anchor" xml:space="preserve">
+    <value>sec0107-sql-injection-ado-net</value>
+  </data>
+  <data name="Analyzer_SEC0108_Anchor" xml:space="preserve">
+    <value>sec0108-sql-injection-dynamic-ef-query</value>
+  </data>
+  <data name="Analyzer_SEC0109_Anchor" xml:space="preserve">
+    <value>sec0109-unvalidated-mvc-redirect</value>
+  </data>
+  <data name="Analyzer_SEC0110_Anchor" xml:space="preserve">
+    <value>sec0110-unvalidated-web-forms-redirect</value>
+  </data>
+  <data name="Analyzer_SEC0111_Anchor" xml:space="preserve">
+    <value>sec0111-path-tampering-mvc-file-result</value>
+  </data>
+  <data name="Analyzer_SEC0112_Anchor" xml:space="preserve">
+    <value>sec0112-path-tampering-unvalidated-file-path</value>
+  </data>
+  <data name="Analyzer_SEC0112_Description" xml:space="preserve">
+    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
+  </data>
+  <data name="Analyzer_SEC0112_MessageFormat" xml:space="preserve">
+    <value>Unvalidated file paths are passed to a {0} API, which can allow unauthorized file system operations (e.g. read, write, delete) to be performed on unintended server files.</value>
+  </data>
+  <data name="Analyzer_SEC0112_Title" xml:space="preserve">
+    <value>Path Tampering Unvalidated File Path</value>
+  </data>
+  <data name="Analyzer_SEC0113_Anchor" xml:space="preserve">
+    <value>sec0113-certificate-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0113_Description" xml:space="preserve">
+    <value>Overriding the default framework certificate validation method can allow man-in-the middle attacks against user’s running the application on insecure network connections.</value>
+  </data>
+  <data name="Analyzer_SEC0113_MessageFormat" xml:space="preserve">
+    <value>The ServerCertificateValidationCallback method fails to properly validate the server's certificate.</value>
+  </data>
+  <data name="Analyzer_SEC0113_Title" xml:space="preserve">
+    <value>Certificate Validation Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0022_Anchor" xml:space="preserve">
+    <value>sec0022-model-request-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0022_Description" xml:space="preserve">
+    <value>The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the AllowHtml attribute. This property should have strict white list validation in place to restrict user input.</value>
+  </data>
+  <data name="Analyzer_SEC0022_MessageFormat" xml:space="preserve">
+    <value>The AllowHtml attribute disables the validate request security feature.</value>
+  </data>
+  <data name="Analyzer_SEC0022_Title" xml:space="preserve">
+    <value>Model Request Validation Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0023_Anchor" xml:space="preserve">
+    <value>sec0023-action-request-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0023_Description" xml:space="preserve">
+    <value>The request validation protection performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context. Request validation is disabled when using the [ValidateInput(false)] attribute. This action should have strict white list validation in place to restrict user input.</value>
+  </data>
+  <data name="Analyzer_SEC0023_MessageFormat" xml:space="preserve">
+    <value>Setting the ValidateInput method's first parameter to false disables the validate request security feature.</value>
+  </data>
+  <data name="Analyzer_SEC0023_Title" xml:space="preserve">
+    <value>Action Request Validation Disabled</value>
+  </data>
+  <data name="Analyzer_SEC0024_Anchor" xml:space="preserve">
+    <value>sec0024-unencoded-response-write</value>
+  </data>
+  <data name="Analyzer_SEC0024_Description" xml:space="preserve">
+    <value>Data is written to the browser using the raw HttpResponse.Write method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.). Fixing the vulnerability requires the AntiXssEncoder.HtmlEncode method to neutralize dangous data before writing it to the browser.</value>
+  </data>
+  <data name="Analyzer_SEC0024_MessageFormat" xml:space="preserve">
+    <value>Raw data is passed to the Response.Write method.</value>
+  </data>
+  <data name="Analyzer_SEC0024_Title" xml:space="preserve">
+    <value>Unencoded Response Write</value>
+  </data>
+  <data name="Analyzer_SEC0114_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method Encoder.LdapDistinguishedNameEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0114_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the LDAP DirectoryEntry path expression.</value>
+  </data>
+  <data name="Analyzer_SEC0114_Title" xml:space="preserve">
+    <value>LDAP Injection Directory Entry</value>
+  </data>
+  <data name="Analyzer_SEC0114_Anchor" xml:space="preserve">
+    <value>sec0114-ldap-injection-directory-entry</value>
+  </data>
+  <data name="Analyzer_SEC0025_Anchor" xml:space="preserve">
+    <value>sec0025-weak-algorithm-des</value>
+  </data>
+  <data name="Analyzer_SEC0025_Description" xml:space="preserve">
+    <value>The DESCryptoServiceProvider class uses the weak DES algorithm and is not an approved encryption algorithm. Use the AesManaged or AesCryptoServiceProvider algorithm for symmetric encryption.</value>
+  </data>
+  <data name="Analyzer_SEC0025_MessageFormat" xml:space="preserve">
+    <value>The DES algorithm is a weak encryption algorithm and not considered secure for protecting sensitive information.</value>
+  </data>
+  <data name="Analyzer_SEC0025_Title" xml:space="preserve">
+    <value>Weak Cryptography Algorithm (DES)</value>
+  </data>
+  <data name="Analyzer_SEC0026_Anchor" xml:space="preserve">
+    <value>sec0026-weak-cipher-mode-ecb</value>
+  </data>
+  <data name="Analyzer_SEC0026_Description" xml:space="preserve">
+    <value>The Electronic Codebook (ECB) mode encrypts blocks individually without using an initialization vector. Encrypting data in ECB mode fails to provide entropy for identical plaintext blocks being encrypted with the same encryption key. This can allow attackers to identify patterns and repetition in ciphertext, and may lead to the discovery of the original encryption key. Use the CipherMode.CBC option for symmetric block cipher operations.</value>
+  </data>
+  <data name="Analyzer_SEC0026_MessageFormat" xml:space="preserve">
+    <value>Electronic Codebook (ECB) mode is not secure for symmetric block cipher operations.</value>
+  </data>
+  <data name="Analyzer_SEC0026_Title" xml:space="preserve">
+    <value>Insecure Cipher Mode - Electronic Codebook (ECB)</value>
+  </data>
+  <data name="Analyzer_SEC0027_Anchor" xml:space="preserve">
+    <value>sec0027-weak-algorithm-md5</value>
+  </data>
+  <data name="Analyzer_SEC0027_Description" xml:space="preserve">
+    <value>Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. NOTE: SHA2 is still not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+  </data>
+  <data name="Analyzer_SEC0027_MessageFormat" xml:space="preserve">
+    <value>The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.</value>
+  </data>
+  <data name="Analyzer_SEC0027_Title" xml:space="preserve">
+    <value>Weak Cryptography Algorithm (MD5)</value>
+  </data>
+  <data name="Analyzer_SEC0028_Anchor" xml:space="preserve">
+    <value>sec0028-weak-algorithm-sha1</value>
+  </data>
+  <data name="Analyzer_SEC0028_Description" xml:space="preserve">
+    <value>Consider upgrading the algorithm to at least SHA2.Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations. NOTE: SHA2 is still not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the documentation for secure password hashing advice.</value>
+  </data>
+  <data name="Analyzer_SEC0028_MessageFormat" xml:space="preserve">
+    <value>The SHA1 algorithm has known collision weaknesses and should no longer be used in a security context.</value>
+  </data>
+  <data name="Analyzer_SEC0028_Title" xml:space="preserve">
+    <value>Weak Cryptography Algorithm (SHA1)</value>
+  </data>
+  <data name="Analyzer_SEC0029_Anchor" xml:space="preserve">
+    <value>sec0029-insecure-deserialization</value>
+  </data>
+  <data name="Analyzer_SEC0029_Description" xml:space="preserve">
+    <value>Deserializing untrusted data using a vulnerable library can allow attackers to execute arbitrary code and perform denial of service attacks against the server.
+
+Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the above dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data.</value>
+  </data>
+  <data name="Analyzer_SEC0029_MessageFormat" xml:space="preserve">
+    <value>Deserializing untrusted data with a vulnerable library can result in remote code execution and denial of service vulnerabilities.</value>
+  </data>
+  <data name="Analyzer_SEC0029_Title" xml:space="preserve">
+    <value>Insecure Deserialization</value>
+  </data>
+  <data name="Analyzer_SEC0030_Anchor" xml:space="preserve">
+    <value>sec0030-deserialization-newtonsoft-json</value>
+  </data>
+  <data name="Analyzer_SEC0030_Description" xml:space="preserve">
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None.</value>
+  </data>
+  <data name="Analyzer_SEC0030_MessageFormat" xml:space="preserve">
+    <value>The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the TypeNameHandling setting is set to a value other than None.</value>
+  </data>
+  <data name="Analyzer_SEC0030_Title" xml:space="preserve">
+    <value>Insecure Deserialization - Newtonsoft JSON</value>
+  </data>
+  <data name="Analyzer_SEC0115_Anchor" xml:space="preserve">
+    <value>sec0115-insecure-random-number-generator</value>
+  </data>
+  <data name="Analyzer_SEC0115_Description" xml:space="preserve">
+    <value>System.Random is a statistical random number generator that does not generate sufficiently random values for use in a security context. Generate values used in a security context (e.g., encryption keys, initialization vectors, random passwords, authentication tokens) using the System.Security.Cryptography.RNGCryptoServiceProvider.</value>
+  </data>
+  <data name="Analyzer_SEC0115_MessageFormat" xml:space="preserve">
+    <value>System.Random does not provide cryptographically random numbers. Consider using the System.Security.Cryptography.RNGCryptoServiceProvider for random values used in a security context.</value>
+  </data>
+  <data name="Analyzer_SEC0115_Title" xml:space="preserve">
+    <value>Insecure Random Number Generator</value>
+  </data>
+  <data name="Analyzer_SEC0116_Anchor" xml:space="preserve">
+    <value>sec0116-path-tampering-unvalidated-file-path</value>
+  </data>
+  <data name="Analyzer_SEC0116_Description" xml:space="preserve">
+    <value>Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.</value>
+  </data>
+  <data name="Analyzer_SEC0116_MessageFormat" xml:space="preserve">
+    <value>Unvalidated file paths are passed to a {0} API, which can allow unauthorized file system operations (e.g. read, write, delete) to be performed on unintended server files.</value>
+  </data>
+  <data name="Analyzer_SEC0116_Title" xml:space="preserve">
+    <value>Path Tampering Unvalidated File Path</value>
+  </data>
+  <data name="Analyzer_SEC0117_Anchor" xml:space="preserve">
+    <value>sec0117-ldap-injection-path-assignment</value>
+  </data>
+  <data name="Analyzer_SEC0117_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method  Encoder.LdapDistinguishedNameEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0117_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is assigned to the LDAP DirectoryEntry Path property.</value>
+  </data>
+  <data name="Analyzer_SEC0117_Title" xml:space="preserve">
+    <value>LDAP Injection Path Assignment</value>
+  </data>
+  <data name="Analyzer_SEC0118_Anchor" xml:space="preserve">
+    <value>sec0118-ldap-injection-directory-searcher</value>
+  </data>
+  <data name="Analyzer_SEC0118_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP filter encoding method Encoder.LdapFilterEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0118_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the LDAP DirectorySearcher filter expression.</value>
+  </data>
+  <data name="Analyzer_SEC0118_Title" xml:space="preserve">
+    <value>LDAP Injection Directory Searcher</value>
+  </data>
+  <data name="Analyzer_SEC0119_Anchor" xml:space="preserve">
+    <value>sec0119-ldap-injection-directory-searcher</value>
+  </data>
+  <data name="Analyzer_SEC0119_Description" xml:space="preserve">
+    <value>LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Filter without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized. Fixing the vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP filter encoding method Encoder.LdapFilterEncode().</value>
+  </data>
+  <data name="Analyzer_SEC0119_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the LDAP DirectoryEntry Filter property</value>
+  </data>
+  <data name="Analyzer_SEC0119_Title" xml:space="preserve">
+    <value>LDAP Injection Filter Assignment</value>
+  </data>
+  <data name="Analyzer_SEC0031_Anchor" xml:space="preserve">
+    <value>sec0031-command-injection-process-start</value>
+  </data>
+  <data name="Analyzer_SEC0031_Description" xml:space="preserve">
+    <value>Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server's operating system.
+
+Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to whitelist safe characters and escape evil characters.</value>
+  </data>
+  <data name="Analyzer_SEC0031_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the Process.Start fileName or arguments parameter.</value>
+  </data>
+  <data name="Analyzer_SEC0031_Title" xml:space="preserve">
+    <value>Command Injection Process Start</value>
+  </data>
+  <data name="Analyzer_SEC0032_Anchor" xml:space="preserve">
+    <value>sec0032-command-injection-process-start-info</value>
+  </data>
+  <data name="Analyzer_SEC0032_Description" xml:space="preserve">
+    <value>Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server's operating system.
+
+Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to whitelist safe characters and escape evil characters.</value>
+  </data>
+  <data name="Analyzer_SEC0032_MessageFormat" xml:space="preserve">
+    <value>Untrusted data is passed to the ProcessStartInfo fileName or arguments parameter.</value>
+  </data>
+  <data name="Analyzer_SEC0032_Title" xml:space="preserve">
+    <value>Command Injection Process Start Info</value>
+  </data>
+  <data name="Analyzer_SEC0120_Anchor" xml:space="preserve">
+    <value>sec0120-missing-authorize-attribute</value>
+  </data>
+  <data name="Analyzer_SEC0120_Description" xml:space="preserve">
+    <value>Missing Authorization occurs when an application does not properly verify an authenticated user’s access to functionality, data, or resources. In many cases, applications do not check  policy, claim, or role-based access control rules during a request. This can allow attackers to invoke privileged functionality, such as changing their role or directly browsing to an administrative interface in the application.
+
+Restricting access to ASP.NET MVC, Web API, and .NET Core Controllers and Actions is achieved using the Authorize attribute. Actions missing the Authorize attribute can be invoked by anonymous users.</value>
+  </data>
+  <data name="Analyzer_SEC0120_MessageFormat" xml:space="preserve">
+    <value>The Action is missing the Authorization attribute and can be invoked by anonymous users.</value>
+  </data>
+  <data name="Analyzer_SEC0120_Title" xml:space="preserve">
+    <value>Missing Authorization Attribute</value>
+  </data>
+  <data name="Analyzer_SEC0121_Anchor" xml:space="preserve">
+    <value>sec0121-cors-any-origin-wildcard</value>
+  </data>
+  <data name="Analyzer_SEC0121_Description" xml:space="preserve">
+    <value>Cross-Origin Resource Sharing (CORS) allows a service to disable the browser’s Same-origin policy, which prevents scripts on an attacker-controlled domain from accessing resources and data hosted on a different domain. The CORS Access-Control-Allow-Origin HTTP header specifies the domain with permission to invoke a cross-origin service and view the response data. Configuring the Access-Control-Allow-Origin header with a wildcard (*) can allow code running on an attacker-controlled domain to view responses containing sensitive data.
+
+Avoid setting the Access-Control-Allow-Origin header to a wildcard (*). Instead, configure the service to validate the incoming Origin header value against a trusted list of domains. Return the incoming accepted domain in the Access-Control-Allow-Origin header value, otherwise default the Access-Control-Allow-Origin value to a known safe origin.</value>
+  </data>
+  <data name="Analyzer_SEC0121_MessageFormat" xml:space="preserve">
+    <value>Do not set the CORS Access-Control-Allow-Origin header to a wildcard (*).</value>
+  </data>
+  <data name="Analyzer_SEC0121_Title" xml:space="preserve">
+    <value>CORS Allow Origin Wildcard</value>
+  </data>
+  <data name="Analyzer_SEC0122_Anchor" xml:space="preserve">
+    <value>sec0122-jwt-signature-validation-disabled</value>
+  </data>
+  <data name="Analyzer_SEC0122_Description" xml:space="preserve">
+    <value>The JSON Web Tokens (JWT) header and payload values are base64 encoded, which can be decoded, tampered, and replayed to gain access to protected resources. Web service APIs relying on JSON Web Tokens (JWT) for authentication and authorization must sign each JWT with a private key or secret. Each web service endpoint must require JWT signature validation prior to decoding and using the token to access protected resources.
+
+In ASP.NET Core, configure the Authentication service’s JwtBearer options to require signed tokens:
+
+- RequireSignedTokens: Rejects JWTs that do not have a signature.</value>
+  </data>
+  <data name="Analyzer_SEC0122_MessageFormat" xml:space="preserve">
+    <value>Configure the JwtBearer options to require signed tokens.</value>
+  </data>
+  <data name="Analyzer_SEC0122_Title" xml:space="preserve">
+    <value>JWT Signature Validation Disabled</value>
+  </data>
+</root>
