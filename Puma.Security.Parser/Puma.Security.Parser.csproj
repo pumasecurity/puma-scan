@@ -6,7 +6,7 @@
     <Company>Puma Security LLC</Company>
     <Product>Puma Scan Community Edition</Product>
     <AssemblyTitle>Puma Scan Build Parser</AssemblyTitle>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net6</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Puma.Security.Parser</AssemblyName>
     <OutputType>Exe</OutputType>
