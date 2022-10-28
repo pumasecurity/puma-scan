@@ -1,0 +1,1718 @@
+[
+  {
+    "Id": "SEC0001",
+    "Anchor": "sec0001-debug-build-enabled",
+    "Title": "Debug Build Enabled",
+    "Category": "Security Misconfiguration",
+    "Message": "Debug compilation is enabled. {0}({1}): {2}",
+    "Description": "Binaries compiled in debug mode can leak detailed stack traces and debugging messages to attackers.\n",
+    "Recommendation": "Disable debug builds by setting the debug attribute to false.\n",
+    "CWE": {
+      "Id": "11",
+      "Name": "ASP.NET Misconfiguration: Creating Debug Binary",
+      "Url": "https://cwe.mitre.org/data/definitions/11.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/s10awwz0(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the debug attribute is false.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <compilation debug=\"true\" targetFramework=\"4.5\"/>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Remove the debug attribute, or explicitly set the value to false.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <compilation debug=\"false\" targetFramework=\"4.5\"/>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0001-debug-build-enabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0002",
+    "Anchor": "sec0002-custom-errors-disabled",
+    "Title": "Custom Errors Disabled",
+    "Category": "Security Misconfiguration",
+    "Message": "Custom errors are disabled. {0}({1}): {2}",
+    "Description": "Displaying stack traces in the browser can leak information to attackers and help them gain information for launching additional attacks.\n",
+    "Recommendation": "Enable custom errors by setting the mode to On or RemoteOnly.\n",
+    "CWE": {
+      "Id": "12",
+      "Name": "ASP.NET Misconfiguration: Missing Custom Error Page",
+      "Url": "https://cwe.mitre.org/data/definitions/12.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/h0hfz6fc(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the mode attribute is RemoteOnly.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <customErrors mode=\"Off\" defaultRedirect=\"/home/error\"/>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the mode value to RemoteOnly or On, or simply remove the mode attribute.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <customErrors mode=\"RemoteOnly|On\" defaultRedirect=\"/home/error\"/>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0002-custom-errors-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0003",
+    "Anchor": "sec0003-forms-authentication-insecure-cookie",
+    "Title": "Forms Authentication: Insecure Cookie",
+    "Category": "Security Misconfiguration",
+    "Message": "Forms authentication does not set requireSSL to true. {0}({1}): {2}",
+    "Description": "Authentication cookies sent over HTTP connections can be stolen by attackers monitoring the network traffic, which can lead to session hijacking attacks.\n",
+    "Recommendation": "Configure **secure** cookies by setting the requireSSL attribute to **true**.\n",
+    "CWE": {
+      "Id": "614",
+      "Name": "Sensitive Cookie in HTTPS Session Without 'Secure' Attribute",
+      "Url": "https://cwe.mitre.org/data/definitions/614.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/1d3t3c61(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the requireSSL attribute is false.\n",
+        "Content": "```xml\n <system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" timeout=\"30\" />\n        </authentication>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the requireSSL value to true.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n      <forms loginUrl=\"~/Account/Login.aspx\" requireSSL=\"true\"/>\n    </authentication>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0003-forms-authentication-insecure-cookie",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0004",
+    "Anchor": "sec0004-forms-authentication-cookieless-mode",
+    "Title": "Forms Authentication: Cookieless Mode",
+    "Category": "Security Misconfiguration",
+    "Message": "Forms authentication does not set the cookieless attribute to UseCookies. {0}({1}): {2}",
+    "Description": "Authentication cookies should not be sent in the URL. Doing so allows attackers to gain unauthorized access to authentication tokens (web server logs, referrer headers, and browser history) and more easily perform session fixation / hijacking attacks.\n",
+    "Recommendation": "Configure cookie-based authentication by setting the *cookieless* attribute to **UseCookies**.\n",
+    "CWE": {
+      "Id": "598",
+      "Name": "Information Exposure Through Query Strings in GET Request",
+      "Url": "https://cwe.mitre.org/data/definitions/598.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/1d3t3c61(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the cookieless attribute is UseDeviceProfile, which can allow URL-based authentication tokens.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the cookieless attribute to UseCookies.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" cookieless=\"UseCookies\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0004-forms-authentication-cookieless-mode",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0005",
+    "Anchor": "sec0005-forms-authentication-cross-app-redirects",
+    "Title": "Forms Authentication: Cross App Redirects",
+    "Category": "Security Misconfiguration",
+    "Message": "Forms authentication does not set the enableCrossAppRedirects attribute to false. {0}({1}): {2}",
+    "Description": "Enabling cross-application redirects can allow unvalidated redirect attacks via the returnUrl parameter during the login process. \n",
+    "Recommendation": "Disable cross-application redirects to by setting the *enableCrossAppRedirects* attribute to **false**.\n",
+    "CWE": {
+      "Id": "601",
+      "Name": "URL Redirection to Untrusted Site",
+      "Url": "https://cwe.mitre.org/data/definitions/601.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/1d3t3c61(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The following example shows the *enableCrossAppRedirects* attribute set to true.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" enableCrossAppRedirects=\"true\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:**  Explicitly set the enableCrossAppRedirects attribute to false, or simply remove the insecure configuration. The default value for enableCrossAppRedirects is false.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" enableCrossAppRedirects=\"false\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0005-forms-authentication-cross-app-redirects",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0006",
+    "Anchor": "sec0006-forms-authentication-weak-cookie-protection",
+    "Title": "Forms Authentication: Weak Cookie Protection",
+    "Category": "Security Misconfiguration",
+    "Message": "Forms authentication cookie protection attribute is not set to All. {0}({1}): {2}",
+    "Description": "Forms Authentication cookies must use strong encryption and message authentication code (MAC) validation to protect the cookie value from inspection and tampering.\n",
+    "Recommendation": "Configure the forms element's *protection* attribute to **All** to enable cookie data validation and encryption.\n",
+    "CWE": {
+      "Id": "565",
+      "Name": "Reliance on Cookies without Validation and Integrity Checking",
+      "Url": "https://cwe.mitre.org/data/definitions/565.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/1d3t3c61(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *protection* attribute is *All*. Setting the value to any of the options below weakens the authentication cookie protections.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" protection=\"None|Encryption|Validation\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *protection* attribute to *All*, or simply remove the insecure configuration.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" protection=\"All\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0006-forms-authentication-weak-cookie-protection",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0007",
+    "Anchor": "sec0007-forms-authentication-weak-timeout",
+    "Title": "Forms Authentication: Weak Timeout",
+    "Category": "Security Misconfiguration",
+    "Message": "Forms authentication timeout value exceeds the policy of {3} minutes. {0}({1}): {2}",
+    "Description": "Excessive authentication timeout values provide attackers with a large window of opportunity to hijack user’s authentication tokens. \n",
+    "Recommendation": "Configure the forms timeout value to meet your organization's timeout policy. If your organization does not have a timeout policy, the following guidance can be used:<br/>\n\n  | App | Timeout |\n  |-----|---------|\n  | High Security | 15 minutes |\n  | Medium Security | 30 minutes |\n  | Low Security | 60 minutes |\n\n  The default forms authentication timeout value is *30* minutes.\n",
+    "CWE": {
+      "Id": "613",
+      "Name": "Insufficient Session Expiration",
+      "Url": "https://cwe.mitre.org/data/definitions/613.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/1d3t3c61(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The following examples shows the forms authentication cookie timeout set to 480 minutes (8 hours).\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" timeout=\"480\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *timeout* attribute to an appropriate value.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <authentication mode=\"Forms\">\n        <forms loginUrl=\"~/Account/Login.aspx\" timeout=\"15\" />\n    </authentication>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0007-forms-authentication-weak-timeout",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0008",
+    "Anchor": "sec0008-header-checking-disabled",
+    "Title": "Header Checking Disabled",
+    "Category": "Security Misconfiguration",
+    "Message": "HTTP header checking is disabled. {0}({1}): {2}",
+    "Description": "Disabling the HTTP Runtime header checking protection opens the application up to HTTP Header Injection (aka Response Splitting) attacks. \n",
+    "Recommendation": "Enable the header checking protection by setting the httpRuntime element's enableHeaderChecking attribute to true, which is the default value.\n",
+    "CWE": {
+      "Id": "113",
+      "Name": "Improper Neutralization of CRLF Sequences in HTTP Headers",
+      "Url": "https://cwe.mitre.org/data/definitions/113.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *enableHeaderChecking* attribute is *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpRuntime enableHeaderChecking=\"false\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *enableHeaderChecking* attribute to true, or simply remove the insecure configuration.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpRuntime enableHeaderChecking=\"true\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0008-header-checking-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0009",
+    "Anchor": "sec0009-version-header-enabled",
+    "Title": "Version Header Enabled",
+    "Category": "Security Misconfiguration",
+    "Message": "The Version HTTP response header is enabled. {0}({1}): {2}",
+    "Description": "The Version HTTP response header sends the ASP.NET framework version to the client's browser. This information can help an attacker identify vulnerabilities in the server's framework version and should be disabled in production.\n",
+    "Recommendation": "Disable the version response header by setting the httpRuntime element's *enableVersionHeader* attribute to **false**.\n",
+    "CWE": {
+      "Id": "200",
+      "Name": "Information Exposure",
+      "Url": "https://cwe.mitre.org/data/definitions/200.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/e1f13641(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *enableVersionHeader* attribute is *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpRuntime enableVersionHeader=\"true\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *enableVersionHeader* attribute to false, or simply remove the insecure configuration.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpRuntime enableVersionHeader=\"false\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0009-version-header-enabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0010",
+    "Anchor": "sec0010-event-validation-disabled",
+    "Title": "Event Validation Disabled",
+    "Category": "Security Misconfiguration",
+    "Message": "Event validation is disabled. {0}({1}): {2}",
+    "Description": "Event validation prevents unauthorized post backs in web form applications. Disabling this feature can allow attackers to forge requests from controls not visible or enabled on a given web form.\n",
+    "Recommendation": "Enable event validation by setting the page element's *eventValidation* attribute to **true**.\n",
+    "CWE": {
+      "Id": "807",
+      "Name": "Reliance on Untrusted Inputs in a Security Decision",
+      "Url": "https://cwe.mitre.org/data/definitions/807.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/950xf363(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *enableEventValidation* attribute is *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages enableEventValidation=\"false\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *enableEventValidation* attribute to true, or simply remove the insecure configuration.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages enableEventValidation=\"true\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0010-event-validation-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0011",
+    "Anchor": "sec0011-view-state-mac-disabled",
+    "Title": "View State Mac Disabled",
+    "Category": "Security Misconfiguration",
+    "Message": "ViewStateMac is disabled. {0}({1}): {2}",
+    "Description": "The ViewStateMac protection prevents tampering with the web forms view state and event validation hidden fields. Disabling this feature can allow attackers to manipulate these fields in the browser and bypass several security features in the .NET framework. \n",
+    "Recommendation": "Enable the view state mac protection by setting the page element's viewStateMac attribute to true.<br/>\n\n<i class=\"fa fa-info-circle\"></i> As of .NET version 4.5.1, the ViewStateMac can no longer be disabled.\n",
+    "CWE": {
+      "Id": "807",
+      "Name": "Reliance on Untrusted Inputs in a Security Decision",
+      "Url": "https://cwe.mitre.org/data/definitions/807.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/950xf363(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *enableViewStateMac* attribute is *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages enableViewStateMac=\"false\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *enableViewStateMac* attribute to true, or simply remove the insecure configuration.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages enableViewStateMac=\"true\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0011-view-state-mac-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0012",
+    "Anchor": "sec0012-request-validation-disabled",
+    "Title": "Request Validation Disabled",
+    "Category": "Security Misconfiguration",
+    "Message": "Validate request is disabled. {0}({1}): {2}",
+    "Description": "The ValidateRequest protection denies known malicious XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context.\n",
+    "Recommendation": "Request validation should be enabled by setting the page element's requestValidation attribute to true. Then, consider making exceptions or overriding the default behavior on individual request parameters.\n",
+    "CWE": {
+      "Id": "20",
+      "Name": "Improper Input Validation",
+      "Url": "https://cwe.mitre.org/data/definitions/20.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/950xf363(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *validateRequest* attribute is *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages validateRequest=\"false\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *validateRequest* attribute to true, or simply remove the insecure configuration.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages validateRequest=\"true\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0012-request-validation-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0013",
+    "Anchor": "sec0013-view-state-encryption-disabled",
+    "Title": "View State Encryption Disabled",
+    "Category": "Security Misconfiguration",
+    "Message": "Pages ViewStateEncryptionMode disabled. {0}({1}): {2}",
+    "Description": "The web forms view state hidden field is base64 encoded by default, which can be easily decoded. Applications placing sensitive data into the view state are vulnerable to information leakage issues via the view state parameter.\n",
+    "Recommendation": "Configure the pages element's *viewStateEncryptionMode* attribute to **Always** to encrypt the view state data with the .NET machine key.\n",
+    "CWE": {
+      "Id": "200",
+      "Name": "Information Exposure",
+      "Url": "https://cwe.mitre.org/data/definitions/200.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/950xf363(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *viewStateEncryptionMode* attribute is *Auto*, which only encrypts view state data for controls that request encryption.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages viewStateEncryptionMode=\"Never\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *viewStateEncryptionMode* attribute to *Always*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <pages viewStateEncryptionMode=\"Always\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0013-view-state-encryption-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0014",
+    "Anchor": "sec0014-insecure-http-cookies",
+    "Title": "Insecure HTTP Cookies",
+    "Category": "Security Misconfiguration",
+    "Message": "Insecure HTTP cookie configuration. {0}({1}): {2}",
+    "Description": "Cookies containing authentication tokens, session tokens, and other state management credentials must be protected in transit across a network.\n",
+    "Recommendation": "Set the httpCookie element's *requireSSL* attribute to **true** to prevent the browser from transmitting cookies over HTTP.\n",
+    "CWE": {
+      "Id": "614",
+      "Name": "Sensitive Cookie in HTTPS Session Without 'Secure' Attribute",
+      "Url": "https://cwe.mitre.org/data/definitions/614.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/library/ms228262(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *requireSSL* attribute is *false*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpCookies requireSSL=\"false\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *requireSSL* attribute to *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpCookies requireSSL=\"true\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0014-insecure-http-cookies",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0015",
+    "Anchor": "sec0015-cookies-accessible-via-script",
+    "Title": "Cookies Accessible Via Script",
+    "Category": "Security Misconfiguration",
+    "Message": "Cookies accessible via script. {0}({1}): {2}",
+    "Description": "Cookies that do not have the httpOnly attribute set are accessible in the browser by scripts. This can allow attackers to inject malicious scripts into the site and extract authentication cookie values to a remote server.\n",
+    "Recommendation": "Setting the httpCookie element's *httpOnlyCookies* attribute to **true** will help prevent client-side session hijacking attempts.\n",
+    "CWE": {
+      "Id": "1004",
+      "Name": "Sensitive Cookie Without 'HttpOnly' Flag",
+      "Url": "https://cwe.mitre.org/data/definitions/1004.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/library/ms228262(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *httpOnlyCookies* attribute is *false*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpCookies httpOnlyCookies=\"false\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *httpOnlyCookies* attribute to *true*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <httpCookies httpOnlyCookies=\"true\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0015-cookies-accessible-via-script",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0016",
+    "Anchor": "sec0016-cleartext-machine-key",
+    "Title": "Cleartext Machine Key",
+    "Category": "Security Misconfiguration",
+    "Message": "Machine key element is not encrypted. {0}({1}): {2}",
+    "Description": "The machine key element defines keys to use for encryption, decryption, and HMAC validation of authentication cookies, view state, event validation, and other framework fields. The validation and decryption key values should not be stored in configuration files in cleartext.<br/>\n\nCleartext machine key validation and decryption values became a high risk to .NET Web Forms applications when @jared_mclaren presented a talk titled <a href=\"https://illuminopi.com/talks/2019/04/20/rcevil-first-post.html\">RCEvil.NET - A Super Serial Story</a> at @BSidesIowa 2019. This talk released a tool that enables remote attackers knowing the machine keys to anonymously gain Remote Code Execution (RCE) on IIS web servers.\n",
+    "Recommendation": "Encrypt the machineKey section of the configuration file using aspnet_regiis.exe.\n",
+    "CWE": {
+      "Id": "312",
+      "Name": "Cleartext Storage of Sensitive Information",
+      "Url": "https://cwe.mitre.org/data/definitions/312.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/w8h3skw9(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** Secrets stored in the web.config file are not encrypted by default.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <machineKey validationKey=\"NOTASECRETANYMORE\" decryptionKey=\"NOTASECRETANYMORE\" validation=\"SHA1\" decryption=\"AES\"/>\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Use the aspnet_regiis.exe utility to encrypt the *machineKey* element of the configuration file. Run this command from the root of your app.\n\n```\nC:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\aspnet_regiis.exe -pef \"system.web/machineKey\" . -prov \"DataProtectionConfigurationProvider\"\n```\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <machineKey configProtectionProvider=\"DataProtectionConfigurationProvider\">\n        <EncryptedData>\n            <CipherData>\n                <CipherValue>85c0b357d397d3e63f03e5b6ae299d66</CipherValue>\n            </CipherData>\n        </EncryptedData>\n    </machineKey>\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0016-cleartext-machine-key",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0020",
+    "Anchor": "sec0020-weak-session-timeout",
+    "Title": "Weak Session Timeout",
+    "Category": "Security Misconfiguration",
+    "Message": "Session timeout value exceeds the policy of {3} minutes. {0}({1}): {2}",
+    "Description": "If session data is used by the application for authentication, excessive timeout values provide attackers with a large window of opportunity to hijack user’s session tokens. \n",
+    "Recommendation": "Configure the session timeout value to meet your organization's timeout policy. If your organization does not have a timeout policy, the following guidance can be used:<br/>\n\n  | App | Timeout |\n  |-----|---------|\n  | High Security | 15 minutes |\n  | Medium Security | 30 minutes |\n  | Low Security | 60 minutes |\n\nThe default session timeout value is 20 minutes.\n",
+    "CWE": {
+      "Id": "613",
+      "Name": "Insufficient Session Expiration",
+      "Url": "https://cwe.mitre.org/data/definitions/613.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/h6bb9cz9(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The example below shows an excessive timeout value of 480 minutes (8 hours).\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <sessionState timeout=\"480\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Explicitly set the *timeout* attribute to an appropriate value.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <sessionState timeout=\"15\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0020-weak-session-timeout",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0021",
+    "Anchor": "sec0021-state-server-mode",
+    "Title": "State Server Mode",
+    "Category": "Security Misconfiguration",
+    "Message": "The session mode is set to StateServer. {0}({1}): {2}",
+    "Description": "The session StateServer mode transports session data insecurely to a remote server. The remote server also does not require system authentication to access the session data for an application. This risk depends entirely on the sensitivity of the data stored in the user's session.\n",
+    "Recommendation": "If the session data is considered sensitive, consider adding an external control (e.g. IPSEC) that provides mutual authentication and transport security.\n",
+    "CWE": {
+      "Id": "319",
+      "Name": "Cleartext Transmission of Sensitive Information",
+      "Url": "https://cwe.mitre.org/data/definitions/319.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/h6bb9cz9(v=vs.100).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Configuration:** The default value for the *mode* attribute is *InProc*, which uses in memory session storage on the web server. Options such as *StateServer* allow another server to handle session management in a multi-node web farm scenario.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <sessionState mode=\"StateServer\" />\n    ...\n</system.web>\n```\n"
+      },
+      {
+        "Badge": "**Secure Configuration:** Use a different distributed session state provider, such as *SQLServer*, that supports system authentication and encrypted data transmission. Or, implement an external control for system to system authentication and secure transmission, such as *IPSec*.\n",
+        "Content": "```xml\n<system.web>\n    ...\n    <sessionState mode=\"SQLServer\" />\n    ...\n</system.web>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0021-state-server-mode",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0024",
+    "Anchor": "sec0024-unencoded-response-write",
+    "Title": "Unencoded Response Write",
+    "Category": "Cross-Site Scripting",
+    "Message": "Raw data is passed to the Response.Write method.",
+    "Description": "Data is written to the browser using the HttpResponse.Write method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "Ensure all dynamic data is properly encoded in the browser. Consider using the AntiXssEncoder library to neutralize dangerous data before writing it the browser. For example, the HtmlEncode method should be used to encode data displayed in an HTML context.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/1463ysyw(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the Raw Response.Write method writing a dynamic request parameter into HTML without HTML encoding.\n",
+        "Content": "```cs\nstring user = Request[\"user\"]?.ToString();\nResponse.Write(\"We're sorry\" + user + \"but that contest is not valid.  Please click your back button and try again.\");\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Ensure HTML encoding is applied prior to writing dynamic data into the browser's HTML context.\n",
+        "Content": "```cs\nstring user = Request[\"user\"]?.ToString();\nResponse.Write(\"We're sorry\" + Encoder.HtmlEncode(user) + \"but that contest is not valid.  Please click your back button and try again.\");\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0024-unencoded-response-write",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0100",
+    "Anchor": "sec0100-raw-inline-expression",
+    "Title": "Raw Inline Expression",
+    "Category": "Cross-Site Scripting",
+    "Message": "Raw inline expression writes unencoded data to the HTTP response. {0}({1}): {2}",
+    "Description": "Data is written to the browser using a raw write: <%= var %>. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "Instead of using a raw write, use the inline HTML encoded shortcut (<%: var %>) to automatically HTML encode data before writing it to the browser.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://software-security.sans.org/developer-how-to/developer-guide-xss"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows a raw inline expression writing a dynamic request parameter to the browser.\n",
+        "Content": "```\n<h2>\n    Welcome <%= Request[\"UserName\"].ToString() %>\n</h2>\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Replace the raw inline expression with the secure HTML encode inline shortcut.\n",
+        "Content": "```\n<h2>\n    Welcome <%: Request[\"UserName\"].ToString() %>\n</h2>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0100-raw-inline-expression",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0101",
+    "Anchor": "sec0101-raw-binding-expression",
+    "Title": "Raw Binding Expression",
+    "Category": "Cross-Site Scripting",
+    "Message": "Raw binding expression writes unencoded data to the HTTP response. {0}({1}): {2}",
+    "Description": "Data is written to the browser using a raw binding expression: <%# Item.Variable %>. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "Instead of using a raw binding expression, use the HTML encoded binding shortcut (<%#: Item.Variable %>) to automatically HTML encode data before writing it to the browser.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://software-security.sans.org/developer-how-to/developer-guide-xss"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows a raw binding expression writing a dynamic database value to the browser.\n",
+        "Content": "```\n<asp:GridView ID=\"gv\" runat=\"server\" ItemType=\"Data.Product\">\n    <Columns>\n        <asp:TemplateField HeaderText=\"Product\">\n            <ItemTemplate>\n                <%# Item.ProductName %>\n            </ItemTemplate>\n        </asp:TemplateField>\n    </Columns>\n</asp:GridView>\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Replace the raw binding expression with the secure HTML encode binding shortcut (<%#:).\n",
+        "Content": "```\n<asp:GridView ID=\"gv\" runat=\"server\" ItemType=\"Data.Product\">\n    <Columns>\n        <asp:TemplateField HeaderText=\"Product\">\n            <ItemTemplate>\n                <%#: Item.ProductName %>\n            </ItemTemplate>\n        </asp:TemplateField>\n    </Columns>\n</asp:GridView>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0101-raw-binding-expression",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0102",
+    "Anchor": "sec0102-raw-razor-method",
+    "Title": "Raw Razor Method",
+    "Category": "Cross-Site Scripting",
+    "Message": "Raw Razor helper method writes unencoded data to the view. {0}({1}): {2}",
+    "Description": "Data is written to the browser using a raw Razor helper method: @Html.Raw(Model.Variable). This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "Instead of using the raw Razor helper method, use a Razor helper that performs automatic HTML encoding before writing it to the browser.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://software-security.sans.org/developer-how-to/developer-guide-xss"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the Raw Razor helper method writing a dynamic value to the view.\n",
+        "Content": "```\n<div class=\"loginDisplay\">\n    @Html.Raw(string.Format(\"Welcome <span class=\\\"bold\\\">{0}</span>!\", Model.UserName))\n</div>\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Replace the Raw Razor method with a Razor helper method that automatically HTML encodes the output data.\n",
+        "Content": "```\n<div class=\"loginDisplay\">\n    Welcome <span class=\"bold\">@Model.UserName</span>!\n</div>\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0102-raw-razor-method",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0103",
+    "Anchor": "sec0103-raw-writeliteral-method",
+    "Title": "Raw WriteLiteral Method",
+    "Category": "Cross-Site Scripting",
+    "Message": "Raw WriteLiteral method writes unencoded data to the view. {0}({1}): {2}",
+    "Description": "Data is written to the browser using the raw WriteLiteral method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "Instead of using the raw WriteLiteral method, use a Razor helper that performs automatic HTML encoding before writing it to the browser.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.webpages.webpagebase.writeliteral(v=vs.111).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.web.webpages.html.htmlhelper_methods(v=vs.111).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the Raw WriteLiteral method writing a dynamic value to the view.\n",
+        "Content": "```\n<div class=\"loginDisplay\">\n@{\n    WriteLiteral(string.Format(\"Welcome <span class=\\\"bold\\\">{0}</span>!\", Model.UserName));\n}\n</div>\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Replace the WriteLiteral method with a Razor helper method that automatically HTML encodes the output data.\n",
+        "Content": "```\n<div class=\"loginDisplay\">\n    Welcome <span class=\"bold\">@Model.UserName</span>!\n</div>\n```         \n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0103-raw-writeliteral-method",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0104",
+    "Anchor": "sec0104-unencoded-webforms-property",
+    "Title": "Unencoded WebForms Property",
+    "Category": "Cross-Site Scripting",
+    "Message": "Unencoded WebForms property value.",
+    "Description": "Data is written to the browser using a WebForms property that does not perform output encoding. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "WebForms controls are often found in HTML contexts, but can also appear in other contexts such as JavaScript, HTML Attribute, or URL. Fixing the vulnerability requires the appropriate Web Protection Library (aka AntiXSS) context-specific method to encode the data before setting the WebForms property.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.security.antixss.antixssencoder(v=vs.110).aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the Literal.Text property set to a dynamic database value.\n",
+        "Content": "```cs\nlitDetails.Text = product.ProductDescription;\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Encode data passed to the Literal.Text property with the Web Protection Library's (aka AntiXSS) appropriate context-specific method.\n",
+        "Content": "```cs\nlitDetails.Text = Encoder.HtmlEncode(product.ProductDescription);\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0104-unencoded-webforms-property",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0105",
+    "Anchor": "sec0105-unencoded-label-text",
+    "Title": "Unencoded Label Text",
+    "Category": "Cross-Site Scripting",
+    "Message": "Unencoded Label.Text property value.",
+    "Description": "Data is written to the browser using the raw Label.Text method. This can result in Cross-Site Scripting (XSS) vulnerabilities if the data source is considered untrusted or dynamic (request parameters, database, web service, etc.).\n",
+    "Recommendation": "Label controls are often found in HTML contexts, but can also appear in other contexts such as JavaScript, HTML Attribute, or URL. Fixing the vulnerability requires the appropriate Web Protection Library (aka AntiXSS) context-specific method to encode the data before setting the Label.Text property.\n",
+    "CWE": {
+      "Id": "79",
+      "Name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "Url": "https://cwe.mitre.org/data/definitions/79.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.windows.controls.label(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.web.security.antixss.antixssencoder(v=vs.110).aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the Label.Text property set to a dynamic database value.\n",
+        "Content": "```xml\nlblDetails.Text = product.ProductDescription;\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Encode data passed to the Label.Text property with the Web Protection Library's (aka AntiXSS) appropriate context-specific method.\n",
+        "Content": "```xml\nlblDetails.Text = Encoder.HtmlEncode(product.ProductDescription);\n``` \n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0105-unencoded-label-text",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0025",
+    "Anchor": "sec0025-weak-symmetric-algorithm",
+    "Title": "Weak Symmetric Algorithm",
+    "Category": "Insecure Cryptography",
+    "Message": "Weak algorithm is not approved for protecting sensitive information.",
+    "Description": "The DES, TripleDES, and RC2 classes use weak encryption algorithms and not considered secure for protecting sensitive information.\n",
+    "Recommendation": "Use the AesManaged or AesCryptoServiceProvider algorithm (aka Rijndael) for symmetric encryption operations.\n",
+    "CWE": {
+      "Id": "327",
+      "Name": "Use of a Broken or Risky Cryptographic Algorithm",
+      "Url": "https://cwe.mitre.org/data/definitions/327.html"
+    },
+    "References": [
+      "http://csrc.nist.gov/groups/ST/toolkit/block_ciphers.html",
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.aesmanaged(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the DESCryptoServiceProvider algorithm being used to encrypt a sensitive piece of data.\n",
+        "Content": "```cs\nusing (MemoryStream mStream = new MemoryStream())\n{\n    //Input bytes\n    byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);\n\n    SymmetricAlgorithm alg = new DESCryptoServiceProvider();\n\n    //Set key and iv\n    alg.Key = GetKey();\n    alg.IV = GetIv();\n\n    //Create the crypto stream\n    CryptoStream cStream = new CryptoStream(mStream, alg.CreateEncryptor(), CryptoStreamMode.Write);\n    cStream.Write(inputBytes, 0, inputBytes.Length);\n    cStream.FlushFinalBlock();\n    cStream.Close();\n\n    //Get the output\n    output = mStream.ToArray();\n\n    //Close resources\n    mStream.Close();\n    alg.Clear();\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Use the AesManaged algorithm for symmetric encryption.\n",
+        "Content": "```cs\nusing (MemoryStream mStream = new MemoryStream())\n{\n    //Input bytes\n    byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);\n\n    SymmetricAlgorithm alg = new AesManaged();\n\n    //Set key and iv\n    alg.Key = GetKey();\n    alg.IV = GetIv();\n\n    //Create the crypto stream\n    CryptoStream cStream = new CryptoStream(mStream, alg.CreateEncryptor(), CryptoStreamMode.Write);\n    cStream.Write(inputBytes, 0, inputBytes.Length);\n    cStream.FlushFinalBlock();\n    cStream.Close();\n\n    //Get the output\n    output = mStream.ToArray();\n\n    //Close resources\n    mStream.Close();\n    alg.Clear();\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0025-weak-symmetric-algorithm",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0027",
+    "Anchor": "sec0027-weak-algorithm-md5",
+    "Title": "Weak Algorithm: MD5",
+    "Category": "Insecure Cryptography",
+    "Message": "Weak hashing algorithm is not approved for use in a security context.",
+    "Description": "The MD5CryptoServiceProvider class uses the weak MD5 algorithm and is not an approved hashing algorithm.\n",
+    "Recommendation": "Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations.<br/>\n\n<i class=\"fa fa-info-circle\"></i> This alone is not sufficient for password hashing, which requires a unique salt and an adaptive hashing algorithm / iterations. See the references below for more information on password hashing in .NET.\n",
+    "CWE": {
+      "Id": "327",
+      "Name": "Use of a Broken or Risky Cryptographic Algorithm",
+      "Url": "https://cwe.mitre.org/data/definitions/327.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.md5cryptoserviceprovider(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.sha256(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.sha512(v=vs.110).aspx",
+      "https://blogs.dropbox.com/tech/2016/09/how-dropbox-securely-stores-your-passwords/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the MD5 algorithm hashing a piece of data.\n",
+        "Content": "```cs\nHashAlgorithm hash = new MD5CryptoServiceProvider();\nbyte[] bytes = hash.ComputeHash(input);\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Use SHA256Managed or SHA512Managed for hashing operations (note: this is not enough for storing passwords).\n",
+        "Content": "```cs\nHashAlgorithm hash = new SHA512Managed();\nbyte[] bytes = hash.ComputeHash(input);\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0027-weak-algorithm-md5",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0028",
+    "Anchor": "sec0028-weak-algorithm-sha1",
+    "Title": "Weak Algorithm: SHA1",
+    "Category": "Insecure Cryptography",
+    "Message": "Weak hashing algorithm is not approved for use in a security context.",
+    "Description": "The SHA1 algorithm has known collision weaknesses and should not be used for security operations in new applications.\n",
+    "Recommendation": "Use the SHA256Managed (at least) preferably SHA512Managed for hashing operations.<br/>\n\n<i class=\"fa fa-info-circle\"></i> This alone is not sufficient for password hashing, which requires a unique salt and adaptive hashing algorithm. See the references below for more information on password hashing in .NET.\n",
+    "CWE": {
+      "Id": "327",
+      "Name": "Use of a Broken or Risky Cryptographic Algorithm",
+      "Url": "https://cwe.mitre.org/data/definitions/327.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.sha1managed(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.sha256(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.sha512(v=vs.110).aspx",
+      "https://blogs.dropbox.com/tech/2016/09/how-dropbox-securely-stores-your-passwords/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the SHA1 algorithm hashing a piece of data.\n",
+        "Content": "```cs\nHashAlgorithm hash = new SHA1CryptoServiceProvider();\nbyte[] bytes = hash.ComputeHash(input);\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Use SHA256Managed or SHA512Managed for hashing operations (note: this is not enough for storing passwords).\n",
+        "Content": "```cs\nHashAlgorithm hash = new SHA512Managed();\nbyte[] bytes = hash.ComputeHash(input);\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0028-weak-algorithm-sha1",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0115",
+    "Anchor": "sec0115-insecure-random-number-generator",
+    "Title": "Insecure Random Number Generator",
+    "Category": "Insecure Cryptography",
+    "Message": "System.Random does not provide cryptographically secure random numbers.",
+    "Description": "System.Random is a statistical random number generator that does not generate sufficiently random values for use in a security context. \n",
+    "Recommendation": "Generate values used in a security context (e.g., encryption keys, initialization vectors, random passwords, authentication tokens) using the System.Security.Cryptography.RNGCryptoServiceProvider.\n",
+    "CWE": {
+      "Id": "338",
+      "Name": "Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)",
+      "Url": "https://cwe.mitre.org/data/definitions/338.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *System.Random* algorithm creating a random value.\n",
+        "Content": "```cs\npublic static byte[] GenerateRandomBytes(int length)\n{\n    var random = new Random();\n    byte[] bytes = new byte[length];\n    random.NextBytes(bytes);\n    return bytes;\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Use the *RNGCryptoServiceProvider* class to create random values for use in security operations.\n",
+        "Content": "```cs\npublic static byte[] GenerateSecureRandomBytes(int length)\n{\n    var random = new RNGCryptoServiceProvider();\n    byte[] bytes = new byte[length];\n    random.GetNonZeroBytes(bytes);\n    return bytes;\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0115-insecure-random-number-generator",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0026",
+    "Anchor": "sec0026-weak-cipher-mode",
+    "Title": "Weak Cipher Mode",
+    "Category": "Insecure Cryptography",
+    "Message": "Cipher Mode is not secure for symmetric encryption operations.",
+    "Description": "Symmetric algorithms use a Cipher Mode to repeatedly apply a cryptographic transformation to multiple blocks of data. Weaknesses in the Cipher Mode can allow cryptographic attacks to compromise the integrity or confidentiality of data.<br/>\n\nSEC0026 identifies usage of the weak Cipher Modes in symmetric encryption operations including CFB, CTS, ECB, and OFB. Each of these cipher modes contain cryptographic weaknesses. For example, Electronic Codebook (ECB) mode encrypts blocks individually without using an initialization vector, which fails to provide entropy for identical plaintext blocks being encrypted with the same encryption key. This can allow attackers to identify patterns and repetition in ciphertext, and may lead to the discovery of the original encryption key.\n",
+    "Recommendation": "The .NET cryptography libraries do not contain support for the strongest Cipher Modes: Counter Mode (CTR) and Galois Counter Mode (GCM). Third-party encryption libraries, such as <a href=\"https://www.nuget.org/packages/BouncyCastle\" target=\"_blank\">Bouncy Castle</a> can be used instead of the native .NET cryptography libraries.<br/>\n\nIf a product is required to use the .NET cryptography libraries, use the *CipherMode.CBC* option for symmetric block cipher operations. However, the *CipherMode.CBC* mode is vulnerable to Padding Oracle attacks. See [SEC0124](#sec0124-weak-cipher-mode-padding) for details on Cipher Block Chaining (CBC) padding weaknesses and defenses.\n",
+    "CWE": {
+      "Id": "327",
+      "Name": "Use of a Broken or Risky Cryptographic Algorithm",
+      "Url": "https://cwe.mitre.org/data/definitions/327.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.security.cryptography.ciphermode(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the AES algorithm setting the Mode to the CipherMode.ECB option.\n",
+        "Content": "```cs\nusing (MemoryStream mStream = new MemoryStream())\n{\n    //Input bytes\n    byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);\n\n    SymmetricAlgorithm alg = Aes.Create();\n    alg.Mode = CipherMode.ECB;\n\n    //Set key and iv\n    alg.Key = GetKey();\n    alg.IV = GetIv();\n\n    //Create the crypto stream\n    CryptoStream cStream = new CryptoStream(mStream\n      , alg.CreateEncryptor()\n      , CryptoStreamMode.Write);\n    cStream.Write(inputBytes, 0, inputBytes.Length);\n    cStream.FlushFinalBlock();\n    cStream.Close();\n\n    //Get the output\n    output = mStream.ToArray();\n\n    //Close resources\n    mStream.Close();\n    alg.Clear();\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Set the AES algorithm mode set to CipherMode.CBC option, perform an integrity check  generate a unique initialization vector for each input.\n",
+        "Content": "```cs\n//Perform integrity check on incoming data\nstring[] args = model.ProtectedData.Split('.');\nbyte[] ciphertext = Convert.FromBase64String(args[0]);\nbyte[] hmac = Convert.FromBase64String(args[1]);\n\nHMACSHA256 hmac = new HMACSHA256(_KEY);\nbyte[] verification = hmac.ComputeHash(ciphertext);\n\nif (!verification.SequenceEqual(hmac))\n    throw new ArgumentException(\"Invalid signature detected.\");\n\nusing (MemoryStream mStream = new MemoryStream())\n{\n    SymmetricAlgorithm alg = Aes.Create();\n    alg.Mode = CipherMode.CBC;\n\n    //Set key and iv\n    alg.Key = GetKey();\n    alg.IV = GetIv();\n\n    //Create the crypto stream\n    CryptoStream cStream = new CryptoStream(mStream\n      , alg.CreateDecryptor()\n      , CryptoStreamMode.Write);\n    cStream.Write(ciphertext, 0, inputBytes.Length);\n    cStream.FlushFinalBlock();\n    cStream.Close();\n\n    //Get the cleartext\n    byte[] cleartext = mStream.ToArray();\n\n    //Close resources\n    mStream.Close();\n    alg.Clear();\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0026-weak-cipher-mode",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0029",
+    "Anchor": "sec0029-insecure-deserialization",
+    "Title": "Insecure Deserialization",
+    "Category": "Insecure Deserialization",
+    "Message": "Object deserialization using a vulnerable library.",
+    "Description": "Deserializing untrusted data using vulnerable libraries can allow attackers to execute arbitrary code and perform denial of service attacks against the server.<br/>\nSEC0029 covers over 25 .NET libraries vulnerable to deserialization attacks. The most commonly used libraries are as follows:\n- JavaScriptSerializer\n- DataContractJsonSerializer\n- BinaryFormatter\n- SoapFormatter\n- ObjectStateFormatter\n- NetDataContractSerializer\n- LosFormatter\n- And many more...\n",
+    "Recommendation": "Avoid deserializing untrusted data (e.g. request parameters, web service parameters, data from external services) using the above dangerous methods. In cases where deserialization is required, ensure that the application performs signature validation (e.g. HMAC) before deserializing the data.<br/>\n\nThe SEC0029 analyzer currently looks for insecure function calls. Data flow analysis is not yet performed to determine if the binary content being parsed is actually controllable by an attacker.\n",
+    "CWE": {
+      "Id": "502",
+      "Name": "Deserialization of Untrusted Data",
+      "Url": "https://cwe.mitre.org/data/definitions/502.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization",
+      "https://www.blackhat.com/docs/us-17/thursday/us-17-Munoz-Friday-The-13th-Json-Attacks.pdf",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.web.script.serialization.javascriptserializer",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.json.datacontractjsonserializer",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.formatters.soap.soapformatter",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.web.ui.objectstateformatter",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.netdatacontractserializer",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.web.ui.losformatter"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the BinaryFormatter Deserialize method deserializing a byte array without HMAC signature validation.\n",
+        "Content": "```cs\nusing (MemoryStream stream = new MemoryStream())\n{\n    byte[] bytes = Convert.FromBase64String(model.UserData);\n    stream.Write(bytes, 0, bytes.Length);\n    BinaryFormatter formatter = new BinaryFormatter();\n    return (User)formatter.Deserialize(stream);\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Ensure that the application performs signature validation (e.g. HMAC) before deserializing the data. This snippet assumes that the serialized data has been concatenated with the signature (joined using a '.') and sent to the client.\n",
+        "Content": "```cs\n//Validate user data signature\nstring[] args = model.UserData.Split('.');\nbyte[] userData = Convert.FromBase64String(args[0]);\nbyte[] hmac = Convert.FromBase64String(args[1]);\n\nHMACSHA256 hmac = new HMACSHA256(_KEY);\nbyte[] verification = hmac.ComputeHash(userData);\n\nif (!verification.SequenceEqual(hmac))\n    throw new ArgumentException(\"Invalid signature detected.\");\n\n//If valid, process the deserialization\nusing (MemoryStream stream = new MemoryStream())\n{\n    byte[] bytes = Convert.FromBase64String(userData);\n    stream.Write(bytes, 0, bytes.Length);\n    BinaryFormatter formatter = new BinaryFormatter();\n    return (User)formatter.Deserialize(stream);\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0029-insecure-deserialization",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0030",
+    "Anchor": "sec0030-deserialization-newtonsoft-json",
+    "Title": "Insecure Deserialization: Newtonsoft JSON",
+    "Category": "Insecure Deserialization",
+    "Message": "Object deserialization using a vulnerable TypeNameHandling setting.",
+    "Description": "The Newtonsoft JSON DeserializeObject method can allow attackers to execute arbitrary code and perform denial of service attacks if the *TypeNameHandling* setting is set to a value other than None.\n",
+    "Recommendation": "Validate incoming data with HMAC protection to ensure it has not been modified on the client. Explicitly set the TypeNameHandling setting to None (which is the default) to prevent JSON deserialization vulnerabilities.\n",
+    "CWE": {
+      "Id": "502",
+      "Name": "Deserialization of Untrusted Data",
+      "Url": "https://cwe.mitre.org/data/definitions/502.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization",
+      "http://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_TypeNameHandling.htm"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *model.UserData* request parameter being deserialized with Newtonsoft JSON serialization TypeNameHandling enumeration set to All.\n",
+        "Content": "```cs\nJsonSerializerSettings settings = new JsonSerializerSettings();\nsettings.TypeNameHandling = TypeNameHandling.Auto;\nreturn JsonConvert.DeserializeObject<User>(model.UserData, settings);\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Validate incoming data with HMAC protection to ensure it has not been modified on the client. Explicitly set the TypeNameHandling setting to None (which is the default) to prevent JSON deserialization vulnerabilities.\n",
+        "Content": "```cs\n//Validate user data signature\nstring[] args = json.Split('.');\nbyte[] userData = Convert.FromBase64String(args[0]);\nbyte[] hash = Convert.FromBase64String(args[1]);\n\nHMACSHA256 hmac = new HMACSHA256(_KEY);\nbyte[] verification = hmac.ComputeHash(userData);\n\nif (!verification.SequenceEqual(hash))\n    throw new ArgumentException(\"Invalid signature detected.\");\n\nJsonSerializerSettings settings = new JsonSerializerSettings();\nsettings.TypeNameHandling = TypeNameHandling.None;\nreturn JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(userData), settings);\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0030-deserialization-newtonsoft-json",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0031",
+    "Anchor": "sec0031-command-injection-process-start",
+    "Title": "Command Injection: Process.Start",
+    "Category": "Injection",
+    "Message": "Untrusted data is passed to the Process.Start fileName or arguments parameter.",
+    "Description": "Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server's operating system.\n",
+    "Recommendation": "Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to approve safe characters and escape evil characters.<br/>\n\nTo prevent command injection, follow this pattern:<br/>\n\n- Does the user really need to directly control the *fileName* passed to this command? The answer is usually No. Consider moving the *fileName* values to server-side storage and look up the value using a non-injectable value such as a GUID, integer, etc. passed in from the request. For example, consider an application that allows the user to run two commands: calc.exe and process.exe.<br/>\n\n  | Command Name | GUID |\n  |------|--------------|\n  | calc.exe | 06C67D8C-CAD5-4003-B065-1089CFF0D1E9 |\n  | process.exe | A180A8AF-C667-4074-A768-C95F13819E2A |\n\n  Requests pass in a valid GUID and the application selects the associated process. If the GUID is not valid, throw an exception. This ensures that the user can only run a process that exists in your list of approved processes.<br/>\n\n- Validate incoming *arguments* against a strict list of approved values or characters only and reject everything else. Consider using the server-side lookup tables (as described above) for argument values as well. Avoid using *string* values whenever possible, instead opting for non-injectable data types (e.g. GUID, integer, date, decimal, etc.). If *string* values must be passed as an *argument*, then use regular expressions to restrict the characters to avoid special characters. For example: [A-za-z0-9]+<br/>\n\n- Reject the special characters shown to the right in *Figure 1*.\n",
+    "CWE": {
+      "Id": "78",
+      "Name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/78.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.diagnostics.process.start(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Figure 1** The following characters are control characters in various shells (cmd, bash, etc.) and should be stripped from untrusted string values being passed to the *fileName* or *arguments* parameters.\n",
+        "Content": "```\n& < > [ ] { } ^ = ; ! ' + , ` ~ [white space].\n```\n"
+      },
+      {
+        "Badge": "**Insecure Code:** The following example shows the *model.FileName* parameter being passed to the *Process.Start* method's *fileName* parameter. This allows an attacker to execute arbitrary commands on the server.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Run(ProcessViewModel model)\n{\n    Process p = Process.Start(model.FileName);\n    model.ExitCode = p.ExitCode;\n    return View(model);\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Rather than allowing the user to control the file name directly, look up the *fileName* in a server-side collection. The following example verifies the file id against the command entries in a server-side configuration file before executing the command.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Run(ProcessViewModel model)\n{\n    //Pull valid commands from the configuration file\n    List<Command> commands = GetCommands();\n\n    //Verify the command exists\n    Command c = commands.FirstOrDefault(i => i.Id == model.FileId);\n    if (c == null)\n        throw new ArgumentException(\"Invalid file name parameter\");\n\n    Process p = Process.Start(c.FileName);\n    model.ExitCode = p.ExitCode;\n    return View(model);\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0031-command-injection-process-start",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0032",
+    "Anchor": "sec0032-command-injection-process-start-info",
+    "Title": "Command Injection: ProcessStartInfo",
+    "Category": "Injection",
+    "Message": "Untrusted data is passed to the ProcessStartInfo fileName or arguments parameter.",
+    "Description": "Concatenating untrusted data into operating system commands can allow attackers to execute arbitrary commands against the server's operating system.\n",
+    "Recommendation": "Defending against command injection in the .NET ecosystem is more difficult than other injection categories because no special encoding method exists to allow safe characters and escape evil characters.<br/>\n\nTo prevent command injection, follow this pattern:<br/>\n\n- Does the user really need to directly control the *fileName* passed to this command? The answer is usually No. Consider moving the *fileName* values to server-side storage and look up the value using a non-injectable value such as a GUID, integer, etc. passed in from the request. For example, consider an application that allows the user to run two commands: calc.exe and process.exe.<br/>\n\n  | Command Name | GUID |\n  |------|--------------|\n  | calc.exe | 06C67D8C-CAD5-4003-B065-1089CFF0D1E9 |\n  | process.exe | A180A8AF-C667-4074-A768-C95F13819E2A |\n\n  Requests pass in a valid GUID and the application selects the associated process. If the GUID is not valid, throw an exception. This ensures that the user can only run a process that exists in your list of approved processes.<br/>\n\n- Validate incoming *arguments* against a strict list of approved values or characters and reject everything else. Consider using the server-side lookup tables (as described above) for argument values as well. Avoid using *string* values whenever possible, instead opting for non-injectable data types (e.g. GUID, integer, date, decimal, etc.). If *string* values must be passed as an *argument*, then use regular expressions to restrict the characters to avoid special characters. For example: [A-za-z0-9]+<br/>\n\n- Reject the special characters shown to the right in *Figure 1*.\n",
+    "CWE": {
+      "Id": "78",
+      "Name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/78.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.diagnostics.processstartinfo(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Figure 1** The following characters are control characters in various shells (cmd, bash, etc.) and should be stripped from untrusted string values being passed to the *fileName* or *arguments* parameters.\n",
+        "Content": "```\n& < > [ ] { } ^ = ; ! ' + , ` ~ [white space].\n```\n"
+      },
+      {
+        "Badge": "**Insecure Code:** The following example shows the *model.FileName* parameter being passed to the *ProcessStartInfo* constructor's *fileName* parameter. This allows an attacker to execute arbitrary commands on the server.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Run(ProcessViewModel model)\n{\n    ProcessStartInfo info = new ProcessStartInfo()\n    {\n        FileName = model.FileName,\n    };\n    Process p = Process.Start(info);\n    model.ExitCode = p.ExitCode;\n    return View(model);\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Rather than allowing the user to control the file name directly, look up the *fileName* in a server-side collection. The following example verifies the file id against the command entries in a server-side configuration file before executing the command.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Run(ProcessViewModel model)\n{\n    //Pull valid commands from the configuration file\n    List<Command> commands = GetCommands();\n\n    //Verify the command exists\n    Command c = commands.FirstOrDefault(i => i.Id == model.FileId);\n    if (c == null)\n        throw new ArgumentException(\"Invalid file name parameter\");\n\n    ProcessStartInfo info = new ProcessStartInfo()\n    {\n        FileName = c.FileName,\n    };\n    Process p = Process.Start(info);\n    model.ExitCode = p.ExitCode;\n    return View(model);\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0032-command-injection-process-start-info",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0106",
+    "Anchor": "sec0106-sql-injection-dynamic-linq-query",
+    "Title": "SQL Injection: Dynamic LINQ Query",
+    "Category": "Injection",
+    "Message": "LINQ query executes dynamic SQL without parameterization.",
+    "Description": "Concatenating untrusted data into a dynamic SQL string and calling vulnerable LINQ methods can allow SQL Injection:<br/>\n\n- ExecuteQuery\n- ExecuteCommand\n",
+    "Recommendation": "To ensure calls to vulnerable LINQ methods are parameterized, pass parameters into the statement using the  method’s second argument: *params object[] parameters*.\n",
+    "CWE": {
+      "Id": "89",
+      "Name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/89.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/bb361109(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows dynamic SQL passed to the ExecuteQuery LINQ method.\n",
+        "Content": "```cs\nusing (DbDataContext context = new DbDataContext())\n{\n    string q = \"SELECT Name from Items where ProductCode = \" + model.ProductCode;\n    name = context.ExecuteQuery<string>(q).SingleOrDefault().ToString();\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Call the overloaded ExecuteQuery method that accepts a list of parameters in the second argument.\n",
+        "Content": "```cs\nusing (DbDataContext context = new DbDataContext())\n{\n    string q = \"SELECT Name from Items where ProductCode = {0}\";\n    name = context.ExecuteQuery<string>(q, model.ProductCode).SingleOrDefault().ToString();\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0106-sql-injection-dynamic-linq-query",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0107",
+    "Anchor": "sec0107-sql-injection-ado-net",
+    "Title": "SQL Injection: ADO.NET",
+    "Category": "Injection",
+    "Message": "ADO.NET command is executing an untrusted SQL statement.",
+    "Description": "ADO.NET classes allow applications to communicate directly to a backend database without using an Object Relational Mapping (ORM) framework. SEC0107 identifies the following classes allowing dynamic SQL statements to be constructed and executed: <br/>\n\n- System.Data.SqlClient.SqlCommand\n- Microsoft.Data.Sqlite.SqliteCommand\n- System.Data.OleDb.OleDbCommand\n- System.Data.Odbc.OdbcCommand\n- IBM.Data.DB2.DB2Command\n",
+    "Recommendation": "Ensure that calls to these methods do not concatenate untrusted data into dynamic SQL statements sent to the *CommandText*. Use parameter placeholders or stored procedures to prevent SQL Injection attacks.\n",
+    "CWE": {
+      "Id": "89",
+      "Name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/89.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.data.sqlclient.sqlcommand(v=vs.110).aspx",
+      "https://docs.microsoft.com/en-us/dotnet/api/microsoft.data.sqlite.sqlitecommand",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.data.oledb.oledbcommand",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.data.odbc.odbccommand"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows a snippet concatenating a request parameter into a dynamic SQL statement. The statement is executed using the *ExecuteScalar* method.\n",
+        "Content": "```cs\nSqlCommand cmd = new SqlCommand(\"select count(*) from Users where UserName = '\" + model.UserName + \"'\", cn);\nstring result = cmd.ExecuteScalar().ToString();\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Parameterize the query using the standard ADO.NET placeholders and set the parameter value.\n",
+        "Content": "```cs\nSqlCommand cmd = new SqlCommand(\"select count(*) from Users where UserName = @UserName\", cn);\nSqlParameter parm = new SqlParameter(\"@UserName\", NVarChar);\nparm.Value = model.UserName;\ncmd.Parameters.Add(parm);\nstring result = cmd.ExecuteScalar().ToString();\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0107-sql-injection-ado-net",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0108",
+    "Anchor": "sec0108-sql-injection-dynamic-ef-query",
+    "Title": "SQL Injection: Dynamic EF Query",
+    "Category": "Injection",
+    "Message": "EF method executes untrusted SQL without parameterization.",
+    "Description": "Concatenating untrusted data into a dynamic SQL string and calling vulnerable Entity Framework (EF) methods can allow SQL Injection:<br/>\n- ExecuteSqlCommand\n- ExecuteSqlCommandAsync\n- SqlQuery\n- FromSql\n",
+    "Recommendation": "To ensure calls to vulnerable EF methods are parameterized, pass parameters into the statement using the  method’s second argument: *params object[] parameters*.\n",
+    "CWE": {
+      "Id": "89",
+      "Name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/89.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.data.entity.database(v=vs.113).aspx",
+      "https://docs.microsoft.com/en-us/ef/core/querying/raw-sql"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows dynamic SQL passed to the ExecuteSqlCommand Entity Database method.\n",
+        "Content": "```cs\nusing (DbDataContext context = new DbDataContext())\n{\n    string q = \"DELETE FROM Items WHERE ProductCode = '\" + model.ProductCode + \"'\";\n    context.Database.ExecuteSqlCommand(q);\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Call the overloaded ExecuteSqlCommand method that accepts a list of parameters in the second argument.\n",
+        "Content": "```cs\nusing (DbDataContext context = new DbDataContext())\n{\n    string q = \"DELETE FROM Items WHERE ProductCode = @productCode\";\n    context.Database.ExecuteSqlCommand(q, model.ProductCode);\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0108-sql-injection-dynamic-ef-query",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0114",
+    "Anchor": "sec0114-ldap-injection-directory-entry",
+    "Title": "LDAP Injection Directory Entry",
+    "Category": "Injection",
+    "Message": "Untrusted data is passed to the LDAP DirectoryEntry path expression.",
+    "Description": "LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized.\n",
+    "Recommendation": "Fixing the LDAP Injection Directory Entry vulnerability requires untrusted data to be encoded using the appropriate Web Protection Library (aka AntiXSS) LDAP encoding method:<br/>\n\n- Encoder.LdapDistinguishedNameEncode()\n",
+    "CWE": {
+      "Id": "90",
+      "Name": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/90.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directoryentry(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directorysearcher(v=vs.110).aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows untrusted data being concatenated into directory entry constructor path without escaping LDAP control characters.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry(string.Format(\"LDAP://DC={0}, DC=COM/\", model.Domain));\nDirectorySearcher searcher = new DirectorySearcher(entry);\nsearcher.SearchScope = SearchScope.Subtree;\nsearcher.Filter = \"(name={BobbyTables})\";\nSearchResultCollection resultCollection = searcher.FindAll();\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Encode untrusted data passed to the DirectoryEntry path argument with the Web Protection Library's (aka AntiXSS) LdapDistinguishedNameEncode method.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry(string.Format(\"LDAP://DC={0}, DC=COM/\", Encoder.LdapDistinguishedNameEncode(model.Domain));\nDirectorySearcher searcher = new DirectorySearcher(entry);\nsearcher.SearchScope = SearchScope.Subtree;\nsearcher.Filter = \"(name={BobbyTables})\";\nSearchResultCollection resultCollection = searcher.FindAll();\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0114-ldap-injection-directory-entry",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0117",
+    "Anchor": "sec0117-ldap-injection-path-assignment",
+    "Title": "LDAP Injection Path Assignment",
+    "Category": "Injection",
+    "Message": "Untrusted data is assigned to the LDAP DirectoryEntry Path property.",
+    "Description": "LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized.\n",
+    "Recommendation": "Fixing the LDAP Injection Path Assignment vulnerability requires untrusted data to be encoded using the appropriate Web Protection Library (aka AntiXSS) LDAP encoding method:<br/>\n\n- Encoder.LdapDistinguishedNameEncode()\n",
+    "CWE": {
+      "Id": "90",
+      "Name": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/90.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directoryentry(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directorysearcher(v=vs.110).aspx]",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows untrusted data being concatenated into the *DirectoryEntry* Path property without escaping LDAP control characters.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry();\nentry.Path = string.Format(\"LDAP://DC={0},DC=COM,CN=Users\", model.Domain);\nentry.Username = model.UserName;\nentry.Password = model.Password;\nDirectorySearcher searcher = new DirectorySearcher(entry);\nsearcher.SearchScope = SearchScope.Subtree;\nsearcher.Filter = $\"(samaccountname=DOMAIN\\\\BobbyTables)\";\nSearchResult result = searcher.FindOne();\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Encode untrusted data passed to the DirectoryEntry.Path property with the Web Protection Library's (aka AntiXSS) LdapDistinguishedNameEncode method.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry();\nentry.Path = string.Format(\"LDAP://DC={0},DC=COM,CN=Users\", Encoder.LdapDistinguishedNameEncode(model.Domain));\nentry.Username = model.UserName;\nentry.Password = model.Password;\nDirectorySearcher searcher = new DirectorySearcher(entry);\nsearcher.SearchScope = SearchScope.Subtree;\nsearcher.Filter = $\"(samaccountname=DOMAIN\\\\BobbyTables)\";\nSearchResult result = searcher.FindOne();\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0117-ldap-injection-path-assignment",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0118",
+    "Anchor": "sec0118-ldap-injection-directory-searcher",
+    "Title": "LDAP Injection Directory Searcher",
+    "Category": "Injection",
+    "Message": "Untrusted data is passed to the LDAP DirectorySearcher filter expression.",
+    "Description": "LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized.\n",
+    "Recommendation": "Fixing the LDAP Injection Directory Searcher vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method:<br/>\n\n- Encoder.LdapFilterEncode()\n",
+    "CWE": {
+      "Id": "90",
+      "Name": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/90.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directoryentry(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directorysearcher(v=vs.110).aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows untrusted data being concatenated into directory searcher constructor's Filter property without escaping LDAP control characters.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry(\"LDAP://DC=example.com, DC=COM/\");\nDirectorySearcher searcher = new DirectorySearcher(entry, string.Format(\"(name={0})\", model.UserName);\nsearcher.SearchScope = SearchScope.Subtree;\nSearchResultCollection resultCollection = searcher.FindAll();\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Encode untrusted data passed to the *DirectorySearcher* Filter argument with the Web Protection Library's (aka AntiXSS) LdapFilterEncode method.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry(\"LDAP://DC=example.com, DC=COM/\");\nDirectorySearcher searcher = new DirectorySearcher(entry, string.Format(\"(name={0})\", Encoder.LdapFilterEncode(model.UserName)));\nsearcher.SearchScope = SearchScope.Subtree;\nSearchResultCollection resultCollection = searcher.FindAll();\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0118-ldap-injection-directory-searcher",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0119",
+    "Anchor": "sec0119-ldap-injection-directory-searcher",
+    "Title": "LDAP Injection Filter Assignment",
+    "Category": "Injection",
+    "Message": "Untrusted data is passed to the LDAP DirectoryEntry Filter property.",
+    "Description": "LDAP Injection vulnerabilities occur when untrusted data is concatenated into a LDAP Path or Filter expression without properly escaping control characters. This can allow attackers to change the meaning of an LDAP query and gain access to resources for which they are not authorized.\n",
+    "Recommendation": "Fixing the LDAP Injection Filter Assignment vulnerability requires untrusted data to be encoded using the Web Protection Library (aka AntiXSS) LDAP encoding method:<br/>\n\n- Encoder.LdapFilterEncode()\n",
+    "CWE": {
+      "Id": "90",
+      "Name": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+      "Url": "https://cwe.mitre.org/data/definitions/90.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A1-Injection",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directoryentry(v=vs.110).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.directoryservices.directorysearcher(v=vs.110).aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows untrusted data being concatenated into the *DirectorySearcher* Filter property without escaping LDAP control characters.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry(\"LDAP://DC=example.com, DC=COM\");\nDirectorySearcher searcher = new DirectorySearcher(entry);\nsearcher.SearchScope = SearchScope.Subtree;\nsearcher.Filter = string.Format(\"(name={0})\", model.UserName);\nSearchResultCollection resultCollection = searcher.FindAll();\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Encode untrusted data passed to the *DirectorySearcher.Filter* property with the Web Protection Library's (aka AntiXSS) LdapFilterEncode method.\n",
+        "Content": "```cs\nDirectoryEntry entry = new DirectoryEntry(\"LDAP://DC=example.com, DC=COM\");\nDirectorySearcher searcher = new DirectorySearcher(entry);\nsearcher.SearchScope = SearchScope.Subtree;\nsearcher.Filter = string.Format(\"(name={0})\", Encoder.LdapFilterEncode(model.UserName));\nSearchResultCollection resultCollection = searcher.FindAll();\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0119-ldap-injection-directory-searcher",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0017",
+    "Anchor": "sec0017-identity-weak-password-complexity",
+    "Title": "Identity Weak Password Complexity",
+    "Category": "Password Management",
+    "Message": "Password complexity does not meet the requirements - Minimum Length ({0}), Numeric Character ({1}), Lowercase Character ({2}), Uppercase Character ({3}), Special Character ({4})",
+    "Description": "Weak passwords can allow attackers to easily guess user passwords using wordlist or brute force attacks. Enforcing a strict password complexity policy mitigates these attacks by significantly increasing the time to guess a user’s valid password.<br/>\n\nThe following .NET Framework and Core password complexity classes are supported by SEC0017:\n\n- Microsoft.AspNet.Identity.PasswordValidator\n- Microsoft.AspNetCore.Identity.PasswordOptions\n",
+    "Recommendation": "Out of the box, Visual Studio’s template for ASP.NET Identity-based authentication requires only 6 characters. Increasing the minimum length from 6 to a value greater than 12 characters will significantly increase the strength of the passwords stored by the application.<br/>\n\nRequiring all of the character types (upper, lower, numeric, and special) increases the computational power to crack passwords.\n",
+    "CWE": {
+      "Id": "521",
+      "Name": "Weak Password Requirements",
+      "Url": "https://cwe.mitre.org/data/definitions/521.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/microsoft.aspnet.identity.passwordvalidator(v=vs.108).aspx",
+      "https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.passwordoptions"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *ApplicationUserManager* class configuring the *PasswordValidator* with a weak password complexity policy. This configuration, which is the default policy generated by Visual Studio, sets a minimum password length of 6 characters.\n",
+        "Content": "```cs\n// Configure validation logic for passwords\nmanager.PasswordValidator = new PasswordValidator\n{\n    RequiredLength = 6\n};\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Update the *PasswordValidator* configuration to meet your organization's password complexity requirements. The following example shows a required length of 12 characters, along with at least one digit, upper, lower, and special character.\n",
+        "Content": "```cs\n// Configure validation logic for passwords\nmanager.PasswordValidator = new PasswordValidator\n{\n    RequiredLength = 12,\n    RequireDigit = true,\n    RequireLowercase = true,\n    RequireNonLetterOrDigit = true,\n    RequireUppercase = true\n};\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0017-identity-weak-password-complexity",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0018",
+    "Anchor": "sec0018-identity-password-lockout-disabled",
+    "Title": "Identity Password Lockout Disabled",
+    "Category": "Password Management",
+    "Message": "Account lockout protection is disabled.",
+    "Description": "Password lockout mechanisms help prevent continuous brute force attacks again user accounts by disabling an account for a period of time after a number of invalid attempts.\n",
+    "Recommendation": "The ASP.NET Identity SignInManager protects against brute force attacks if the lockout parameter is set to true.\n",
+    "CWE": {
+      "Id": "307",
+      "Name": "Improper Restriction of Excessive Authentication Attempts",
+      "Url": "https://cwe.mitre.org/data/definitions/307.html"
+    },
+    "References": [
+      "https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.signinmanager-1.passwordsigninasync",
+      "https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.signinmanager-1.checkpasswordsigninasync"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *SignInManager.PasswordSignInAsync* method passing *false* in the *lockoutOnFailure* parameter. This disables the Identity password lockout mechanism.\n",
+        "Content": "```cs\npublic async Task<ActionResult> Login(LoginViewModel model, string returnUrl)\n{\n    var user = await _userManager.FindByNameAsync(model.Username);\n    [...]\n    var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);\n    [...]\n};\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Change the *lockoutOnFailure* parameter value to *true*.\n",
+        "Content": "```cs\n{\n    var user = await _userManager.FindByNameAsync(model.Username);\n    [...]\n    var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);\n    [...]\n};\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0018-identity-password-lockout-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0019",
+    "Anchor": "sec0019-missing-antiforgery-token-attribute",
+    "Title": "Missing AntiForgery Token Attribute",
+    "Category": "Validation",
+    "Message": "The Action is missing the AntiForgeryToken attribute.",
+    "Description": "Cross Site Request Forgery attacks occur when a victim authenticates to a target web site and then visits a malicious web page. The malicious web page then sends a fake HTTP request (GET, POST, etc.) back to the target website. The victim’s valid authentication cookie from the target web site is automatically included in the malicious request, sent to the target web site, and processed as a valid transaction under the victim’s identity.<br/>\n\nThis rule searches for all actions decorated with HTTP verbs that typically modify data (POST, PUT, DELETE, and PATCH). Actions containing the [AllowAnonymous] attribute are not reported as CSRF attacks target authenticated users. Any identified actions that are missing the *ValidateAntiForgeryToken* attribute raise a diagnostic warning.\n",
+    "Recommendation": "In ASP.NET MVC, the *ValidateAntiForgeryToken* attribute protects applications using authentication cookies from CSRF attacks. Actions with this attribute search the request parameters for the __RequestVerificationToken and validate the value prior to executing the request.\n",
+    "CWE": {
+      "Id": "352",
+      "Name": "Cross-Site Request Forgery (CSRF)",
+      "Url": "https://cwe.mitre.org/data/definitions/352.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.mvc.validateantiforgerytokenattribute(v=vs.118).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *Enter* action performing a transaction without using the *ValidateAntiForgeryToken* attribute.\n",
+        "Content": "```cs\n[HttpPost]\npublic ActionResult Enter(int id, ContestEntryModel model)\n{\n    if (ModelState.IsValid)\n    {\n        submitContestEntry(id, model);\n    }\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** By adding the *ValidateAntiForgeryToken* attribute, the application will validate the *__RequestVerificationToken* request parameter before entering the contest.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Enter(int id, ContestEntryModel model)\n{\n    if (ModelState.IsValid)\n    {\n        submitContestEntry(id, model);\n    }\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0019-missing-antiforgery-token-attribute",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0022",
+    "Anchor": "sec0022-model-request-validation-disabled",
+    "Title": "Model Request Validation Disabled",
+    "Category": "Validation",
+    "Message": "The AllowHtml attribute disables the validate request security feature.",
+    "Description": "Request validation performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context.\n",
+    "Recommendation": "Request validation is enabled by default during model binding to dynamic HTML request parameters, but can be disabled on individual model properties using the **AllowHtml** attribute. The following countermeasures can help validate data and filter XSS payloads:<br/>\n\n- Avoid accepting HTML input from untrusted data sources. Leave request validation enabled and consider accepting a different data format, such as markdown.\n- Create a custom validation attribute that performs strict validation on the given property\n- Create a custom action filter that sanitizes request parameters containing HTML using the AntiXss HTML Sanitizer class to strip potentially dangerous script from untrusted data before consuming the data.\n\n<i class=\"fa fa-info-circle\"></i> Version 4.3.0 is the recommended HTML sanitizer library version\n",
+    "CWE": {
+      "Id": "20",
+      "Name": "Improper Input Validation",
+      "Url": "https://cwe.mitre.org/data/definitions/20.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.mvc.allowhtmlattribute(v=vs.118).aspx",
+      "https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.validationattribute.aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *ProductFeedback* model setting the *AllowHtml* attribute on the *Feedback* property.\n",
+        "Content": "```cs\npublic class ProductFeedbackModel\n{\n        [Display(Name = \"Rating\")]\n        public int Rating { get; set; }\n\n        [Display(Name = \"Feedback\")]\n        [AllowHtml]\n        public string Feedback { get; set; }\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** The following example removes the *AllowHtml* attribute to enable request validation.\n",
+        "Content": "```cs\npublic class ProductFeedbackModel\n{\n        [Display(Name = \"Rating\")]\n        public int Rating { get; set; }\n\n        [Display(Name = \"Feedback\")]\n        public string Feedback { get; set; }\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0022-model-request-validation-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0023",
+    "Anchor": "sec0023-action-request-validation-disabled",
+    "Title": "Action Request Validation Disabled",
+    "Category": "Validation",
+    "Message": "Setting the ValidateInput method's first parameter to false disables the validate request security feature.",
+    "Description": "Request validation performs blacklist input validation for XSS payloads found in form and URL request parameters. Request validation has known bypass issues and does not prevent all XSS attacks, but it does provide a strong countermeasure for most payloads targeting a HTML context.\n",
+    "Recommendation": "Request validation is enabled by default during model binding to dynamic HTML request parameters, but can be disabled on controllers and actions properties using the **ValidateInput(false)** attribute. The following countermeasures can help validate data and filter XSS payloads:<br/>\n\n- Avoid accepting HTML input from untrusted data sources. Leave request validation enabled and consider accepting a different data format, such as markdown.\n- Create a custom action filter that sanitizes request parameters containing HTML using the AntiXss HTML Sanitizer class to strip potentially dangerous script from untrusted data before consuming the data.<br/>\n\n<i class=\"fa fa-info-circle\"></i> Version 4.3.0 is the recommended HTML sanitizer library version\n",
+    "CWE": {
+      "Id": "20",
+      "Name": "Improper Input Validation",
+      "Url": "https://cwe.mitre.org/data/definitions/20.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.mvc.validateinputattribute.aspx",
+      "https://wpl.codeplex.com/"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *Save* action using the *ValidateInput(false)* attribute to disable request validation.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateInput(false)]\npublic ActionResult Save(int id, ProductFeedbackModel model)\n{\n\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** The following example removes the *ValidateInput(false)* attribute to enable request validation.\n",
+        "Content": "```cs\n[HttpPost]\npublic ActionResult Save(int id, ProductFeedbackModel model)\n{\n    \n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Low",
+    "Url": "https://pumascan.com/rules/#sec0023-action-request-validation-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0109",
+    "Anchor": "sec0109-unvalidated-mvc-redirect",
+    "Title": "Unvalidated MVC Redirect",
+    "Category": "Validation",
+    "Message": "Unvalidated redirect location is passed to the Controller.Redirect action.",
+    "Description": "Passing unvalidated redirect locations to the MVC *Controller.Redirect* method can allow attackers to send users to malicious web sites. This can allow attackers to perform phishing attacks and distribute malware to victims.\n",
+    "Recommendation": "Avoid performing redirect actions with user controllable data (e.g. request parameters). Consider validating redirect paths to allow relative paths inside of the application and deny absolute paths. All absolute paths must be validated against an approved list of external domains prior to redirecting the user.\n",
+    "CWE": {
+      "Id": "601",
+      "Name": "URL Redirection to Untrusted Site ('Open Redirect')",
+      "Url": "https://cwe.mitre.org/data/definitions/601.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.mvc.controller.redirect(v=vs.118).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the Controller Redirect method called using an unvalidated request parameter.\n",
+        "Content": "```cs\npublic async Task<ActionResult> Login(LoginViewModel model, string returnUrl)\n{\n    [perform auth logic]\n\n    return this.Redirect(returnUrl);\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Validate the return URL is a local path (not absolute) to ensure an attacker cannot redirect the user to a malicious external domain.\n",
+        "Content": "```cs\npublic async Task<ActionResult> Login(LoginViewModel model, string returnUrl)\n{\n    [perform auth logic]\n\n    if (Url.IsLocalUrl(returnUrl))\n    {\n        return this.Redirect(returnUrl);\n    }\n    else\n    {\n        return RedirectToAction(\"Index\", \"Home\");\n    }\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0109-unvalidated-mvc-redirect",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0110",
+    "Anchor": "sec0110-unvalidated-redirect",
+    "Title": "Unvalidated Redirect",
+    "Category": "Validation",
+    "Message": "Unvalidated redirect location is passed to the Response.Redirect method.",
+    "Description": "Passing unvalidated redirect locations to the *Response.Redirect* method can allow attackers to send users to malicious web sites. This can allow attackers to perform phishing attacks and distribute malware to victims.\n",
+    "Recommendation": "Avoid performing redirect actions with user controllable data (e.g. request parameters). Consider validating redirect paths to allow relative paths inside of the application and deny absolute paths. All absolute paths must be validated against an approved list of external domains prior to redirecting the user.\n",
+    "CWE": {
+      "Id": "601",
+      "Name": "URL Redirection to Untrusted Site ('Open Redirect')",
+      "Url": "https://cwe.mitre.org/data/definitions/601.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/a8wa7sdt(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *Response.Redirect* method called using an unvalidated request parameter.\n",
+        "Content": "```cs\nif (Request.QueryString[\"ReturnUrl\"] != null)\n    Response.Redirect(Request.QueryString[\"ReturnUrl\"]);                    \n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Validate the return URL is a relative path (not absolute) to ensure an attacker cannot redirect the user to a malicious external domain.\n",
+        "Content": "```cs                    \nUri targetUri = null;\n\nif (Uri.TryCreate(Request.QueryString[\"ReturnUrl\"], UriKind.Relative, out targetUri))\n{\n    Response.Redirect(targetUri.ToString());\n}\nelse\n{\n    Response.Redirect(\"~/default.aspx\");\n}                    \n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0110-unvalidated-redirect",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0111",
+    "Anchor": "sec0111-path-tampering-mvc-file-result",
+    "Title": "Path Tampering: MVC File Result",
+    "Category": "Validation",
+    "Message": "Unvalidated file path parameter is passed to the Controller {0} action, which can allow arbitrary file downloads from the server.",
+    "Description": "Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker.<br/>\n\nThe ASP.NET MVC *FilePathResult* and *FileStreamResult* actions are used to stream file content to the browser. \n",
+    "Recommendation": "Failing to validate the file path used by these actions can allow path traversal vulnerabilities. Ensure that all user input is properly validated and sanitized before it is passed to the file API.\n",
+    "CWE": {
+      "Id": "23",
+      "Name": "Relative Path Traversal",
+      "Url": "https://cwe.mitre.org/data/definitions/23.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.web.mvc.filepathresult(v=vs.118).aspx",
+      "https://docs.microsoft.com/en-us/previous-versions/aspnet/web-frameworks/dd492941(v=vs.118)"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *FilePathResult* action result using the *fileName* request parameter to construct the file path location.\n",
+        "Content": "```cs\n[HttpPost]\npublic FileResult Download(string fileName)\n{\n    string filePath = ConfigurationManager.AppSettings[\"DownloadDirectory\"].ToString();\n    return new FilePathResult(filePath + fileName, \"application/octet-stream\");\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Avoid using untrusted values when constructing a file path. Instead, store file paths in a trusted location, such as a configuration file, and use a unique identifier to construct the file name.\n",
+        "Content": "```cs\n[HttpPost]\npublic FileResult Download(Guid fileId)\n{\n    string filePath = ConfigurationManager.AppSettings[\"DownloadDirectory\"].ToString();\n    filePath = string.Format(\"{0}{1}.pdf\", filePath, fileId.ToString());\n    return new FilePathResult(filePath, \"application/octet-stream\");\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0111-path-tampering-mvc-file-result",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0112",
+    "Anchor": "sec0112-path-tampering-unvalidated-file-path",
+    "Title": "Path Tampering: Unvalidated File Path",
+    "Category": "Validation",
+    "Message": "Unvalidated file paths are passed to a {0} API.",
+    "Description": "Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker. <br/>\n\nSEC0112 scans the *System.IO.FileStream* API that is commonly called with dynamic file path data.\n",
+    "Recommendation": "Dynamic file paths passed to a file stream require strict validation. Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker to contain dangerous characters (../).\n",
+    "CWE": {
+      "Id": "23",
+      "Name": "Relative Path Traversal",
+      "Url": "https://cwe.mitre.org/data/definitions/23.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.io.filestream(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows a *FileStream* being constructed from a dynamic parameter to determine the file path location.\n",
+        "Content": "```cs\npublic ActionResult Index(string fileName)\n{\n    using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))\n    {\n        return new FileStreamResult(stream, fileName);\n    }\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Avoid using untrusted values when constructing a file path. Instead, store file paths in a trusted location, such as a configuration file, and use a unique identifier to construct the file name.\n",
+        "Content": "```cs\npublic ActionResult Index(Guid fileId)\n{\n    string path = Path.Combine(ConfigurationManager.AppSettings[\"DownloadPath\"], fileId.ToString());\n\n    //NOTE: YOU MAY STILL NEED TO PERFORM ENTITLEMENT AUTHORIZATION BEFORE RETURNING THE FILE\n\n    using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))\n    {\n        return new FileStreamResult(stream, fileName);\n    }\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0112-path-tampering-unvalidated-file-path",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0113",
+    "Anchor": "sec0113-certificate-validation-disabled",
+    "Title": "Certificate Validation Disabled",
+    "Category": "Validation",
+    "Message": "The ServerCertificateValidationCallback method fails to properly validate the server's certificate.",
+    "Description": "Disabling certificate validation is common in testing and development environments. Quite often, this is accidentally deployed to production, leaving the application vulnerable to man-in-the-middle attacks on insecure networks. <br/>\n\nThe following .NET 6, .NET Core and .NET Framework classes are supported by SEC0113:\n\n- System.Net.HttpWebRequest\n- System.Net.Http.HttpClientHandler\n- System.Net.Http.WebRequestHandler                \n- System.Net.ServicePointManager\n",
+    "Recommendation": "Do not override the *ServerCertificateValidationCallback* or *ServerCertificateCustomValidationCallback* methods to always return true. If the development team is using self-signed certificates, use certificate pinning to ensure the application will only communicate with the trusted server certificate.\n",
+    "CWE": {
+      "Id": "295",
+      "Name": "Improper Certificate Validation",
+      "Url": "https://cwe.mitre.org/data/definitions/295.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.net.servicepointmanager.servercertificatevalidationcallback",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.net.httpwebrequest.servercertificatevalidationcallback",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclienthandler.servercertificatecustomvalidationcallback",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.net.http.webrequesthandler.servercertificatevalidationcallback"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *HttpClientHandler.ServerCertificateCustomValidationCallback* method being overridden to always return a *true* value.\n",
+        "Content": "```cs\nusing (var handler = new HttpClientHandler())\n{\n    handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;\n\n    using (var client = new HttpClient(handler))\n    {\n        var request = await client.GetAsync($\"{BASE_URL}{endpoint}\");\n        var json = await request.Content.ReadAsStringAsync();\n\n        item = JsonConvert.DeserializeObject<T>(json);\n    }\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** This one is too easy. Don't override the frameworks certificate validation to always return true.\n",
+        "Content": "```cs\nusing (var handler = new HttpClientHandler())\n{\n    using (var client = new HttpClient(handler))\n    {\n        var request = await client.GetAsync($\"{BASE_URL}{endpoint}\");\n        var json = await request.Content.ReadAsStringAsync();\n\n        item = JsonConvert.DeserializeObject<T>(json);\n    }\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0113-certificate-validation-disabled",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0116",
+    "Anchor": "sec0116-path-tampering-unvalidated-file-path",
+    "Title": "Path Tampering: Unvalidated File Path",
+    "Category": "Validation",
+    "Message": "Unvalidated file paths are passed to a {0} API.",
+    "Description": "Path traversal vulnerabilities occur when an application does not properly validate file paths for directory traversal (../) and other malicious characters. This can allow attackers to download, overwrite, or delete unauthorized files from the server.\n",
+    "Recommendation": "Ensure file paths are read from a trusted location, such as a static resource or configuration file. Do not send file paths in request parameters, which can be modified by an attacker to contain dangerous characters (../).\n\nSEC0116 covers several APIs that are commonly called with dynamic file path data. Any of the following method calls require strict validation on the files being consumed by the API:<br/>\n\n- System.IO.File\n- Delete\n- OpenText\n- OpenWrite\n- Read\n- ReadAllBytes\n- ReadAllLines\n- ReadAllText\n- ReadLines\n- WriteAllBytes\n- WriteAllLines\n- WriteAllText\n",
+    "CWE": {
+      "Id": "23",
+      "Name": "Relative Path Traversal",
+      "Url": "https://cwe.mitre.org/data/definitions/23.html"
+    },
+    "References": [
+      "https://msdn.microsoft.com/en-us/library/system.io.file(v=vs.110).aspx"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *File.Delete* method called using a dynamic parameter from a REST service to construct the file path location.\n",
+        "Content": "```cs\npublic HttpResponseMessage Delete(string file)\n{\n    string path = Path.Combine(ConfigurationManager.AppSettings[\"DownloadPath\"], file);\n    File.Delete(path);\n    return Request.CreateResponse(HttpStatusCode.OK);\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Avoid using untrusted values when constructing a file path. Instead, store file paths in a trusted location, such as a configuration file, and use a unique identifier to construct the file name.\n",
+        "Content": "```cs\n[HttpPost]\npublic HttpResponseMessage Delete(Guid fileId)\n{\n    string path = Path.Combine(ConfigurationManager.AppSettings[\"DownloadPath\"], fileId.ToString());\n    //NOTE: YOU STILL NEED TO AUTHORIZE THE USERS ENTITLEMENTS ON DELETING THIS FILE :)\n    File.Delete(path);\n    return Request.CreateResponse(HttpStatusCode.OK);\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0116-path-tampering-unvalidated-file-path",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0120",
+    "Anchor": "sec0120-missing-authorize-attribute",
+    "Title": "Missing Authorize Attribute",
+    "Category": "Access Control",
+    "Message": "The Action is missing the Authorization attribute and can be invoked by anonymous users.",
+    "Description": "Missing Authorization occurs when an application does not properly verify an authenticated user’s access to functionality, data, or resources. In many cases, applications do not check  policy, claim, or role-based access control rules during a request. This can allow attackers to invoke privileged functionality, such as changing their role or directly browsing to an administrative interface in the application.\n",
+    "Recommendation": "Access control is managed in ASP.NET MVC, Web API, and .NET Core Controllers and Actions using the **Authorize** attribute. By default, Actions missing the Authorize attribute can be invoked by anonymous users. Review the SEC0120 warnings and determine if the Authorize attribute needs to be present to protect against anonymous access.\n",
+    "CWE": {
+      "Id": "306",
+      "Name": "Missing Authentication for Critical Function",
+      "Url": "https://cwe.mitre.org/data/definitions/306.html"
+    },
+    "References": [
+      "https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication",
+      "https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control",
+      "https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizeattribute",
+      "https://docs.microsoft.com/en-us/dotnet/api/system.web.mvc.authorizeattribute"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *Enter* action missing the *Authorization* attribute.\n",
+        "Content": "```cs\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Enter(int id, ContestEntryModel model)\n{\n    if (ModelState.IsValid)\n    {\n        submitContestEntry(id, model);\n    }\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** By adding the *Authorization* attribute with a valid policy, the application restricts access to users meeting the *EnterContest* permissions.\n",
+        "Content": "```cs\n[Authorize(Policy = Scopes.EnterContent)]\n[HttpPost]\n[ValidateAntiForgeryToken]\npublic ActionResult Enter(int id, ContestEntryModel model)\n{\n    if (ModelState.IsValid)\n    {\n        submitContestEntry(id, model);\n    }\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0120-missing-authorize-attribute",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0121",
+    "Anchor": "sec0121-cors-any-origin-wildcard",
+    "Title": "CORS Allow Origin Wildcard",
+    "Category": "Access Control",
+    "Message": "Do not set the CORS Access-Control-Allow-Origin header to a wildcard (*).",
+    "Description": "Cross-Origin Resource Sharing (CORS) allows a service to disable the browser's Same-origin policy, which prevents scripts on an attacker-controlled domain from accessing resources and data hosted on a different domain. The CORS Access-Control-Allow-Origin HTTP header specifies the domain with permission to invoke a cross-origin service and view the response data. Configuring the Access-Control-Allow-Origin header with a wildcard (\\*) can allow code running on an attacker-controlled domain to view responses containing sensitive data. <br/>\n\nSEC0121 identifies .NET CORS misconfigurations using the *AllowAnyOrigin()* method.\n",
+    "Recommendation": "Avoid setting the Access-Control-Allow-Origin header to a wildcard (\\*). Instead, configure the service to validate the incoming Origin header value against a trusted list of domains. Return the incoming accepted domain in the Access-Control-Allow-Origin header value, otherwise default the Access-Control-Allow-Origin value to a known safe origin.\n",
+    "CWE": {
+      "Id": "942",
+      "Name": "Overly Permissive Cross-domain Whitelist",
+      "Url": "https://cwe.mitre.org/data/definitions/942.html"
+    },
+    "References": [
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin",
+      "https://www.youtube.com/watch?reload=9&v=wgkj4ZgxI4c",
+      "https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-2.2"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows a CORS configuration using the *AllowAnyOrigin* configuration, which sets the *Access-Control-Allow-Origin* header to the wildcard (\\*) \n",
+        "Content": "```cs\npublic void Configure(IApplicationBuilder app, IHostingEnvironment env)\n{\n    ...\n    app.UseCors(builder => builder.AllowAnyOrigin());\n    ...\n}\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** The following example shows the *ConfigureServices* method creating a *_secureOrigin* policy with a trusted list of domains. Then, the *Configure* method configures the CORS policy to usee the *_secureOrigin* policy.\n",
+        "Content": "```cs\nprivate readonly string secureOrigin = \"_secureOrigin\";\n\npublic void ConfigureServices(IServiceCollection services)\n{\n    services.AddCors(options =>\n    {\n        options.AddPolicy(secureOrigin,\n        builder =>\n        {\n            builder.WithOrigins(\"https://www.pumasecurity.io\",\n                                \"https://www.pumascan.com\");\n        });\n    });\n}\n\npublic void Configure(IApplicationBuilder app, IHostingEnvironment env)\n{\n   ...\n   app.UseCors(secureOrigin);\n   ...\n}\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "Medium",
+    "Url": "https://pumascan.com/rules/#sec0121-cors-any-origin-wildcard",
+    "Severity": "Warning"
+  },
+  {
+    "Id": "SEC0122",
+    "Anchor": "sec0122-jwt-signature-validation-disabled",
+    "Title": "JWT Signature Validation Disabled",
+    "Category": "Access Control",
+    "Message": "JWT signature validation is disabled.",
+    "Description": "The JSON Web Tokens (JWT) header and payload values are base64 encoded, which can be decoded, tampered, and replayed to gain access to protected resources. \n",
+    "Recommendation": "Web service APIs relying on JSON Web Tokens (JWT) for authentication and authorization must sign each JWT with a private key or secret. Each web service endpoint must require JWT signature validation prior to decoding and using the token to access protected resources. <br/>\nIn ASP.NET Core, configure the Authentication service's JwtBearer options to require signed tokens: <br/>\n  \n  - **RequireSignedTokens**: Rejects JWTs that do not have a signature.\n",
+    "CWE": {
+      "Id": "347",
+      "Name": "Improper Verification of Cryptographic Signature",
+      "Url": "https://cwe.mitre.org/data/definitions/347.html"
+    },
+    "References": [
+      "https://cheatsheets.pragmaticwebsecurity.com/cheatsheets/jwt.pdf",
+      "https://tools.ietf.org/html/rfc7519#section-11.2",
+      "https://docs.microsoft.com/en-us/dotnet/api/microsoft.identitymodel.tokens.tokenvalidationparameters"
+    ],
+    "CodeExamples": [
+      {
+        "Badge": "**Insecure Code:** The following example shows the *TokenValidationParameters*.*RequireSignedTokens* property set to false.\n",
+        "Content": "```cs\nservices.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\n  .AddJwtBearer(options =>\n  {\n      options.TokenValidationParameters = new TokenValidationParameters\n      {\n          [...]\n          RequireSignedTokens = false,\n      };\n  });\n```\n"
+      },
+      {
+        "Badge": "**Secure Code:** Set the *TokenValidationParameters*.*RequireSignedTokens* property to true. \n",
+        "Content": "```cs\nservices.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\n  .AddJwtBearer(options =>\n  {\n      options.TokenValidationParameters = new TokenValidationParameters\n      {\n          [...]\n          RequireSignedTokens = true,\n      };\n  });\n```\n"
+      }
+    ],
+    "DefaultRiskRating": "High",
+    "Url": "https://pumascan.com/rules/#sec0122-jwt-signature-validation-disabled",
+    "Severity": "Warning"
+  }
+]
