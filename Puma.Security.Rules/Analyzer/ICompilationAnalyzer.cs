@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  * 
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -10,12 +10,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-using Puma.Security.Rules.Core;
-
 namespace Puma.Security.Rules.Analyzer
 {
     public interface ICompilationAnalyzer
     {
-        void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext);
     }
 }

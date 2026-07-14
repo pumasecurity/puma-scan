@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  * 
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -18,7 +18,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Common;
-using Puma.Security.Rules.Core;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
@@ -31,56 +30,43 @@ namespace Puma.Security.Rules.Analyzer.Core
         {
         }
 
-        public virtual void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext)
+        public virtual bool IsSuppressed(SemanticModel model, VulnerableSyntaxNode vulnerableSyntaxNode, DiagnosticId ruleId)
         {
-            var context = pumaContext.RosylnContext;
-
-            if (VulnerableSyntaxNodes.IsEmpty)
-                return;
-
-            foreach (var vulnerableSyntaxNode in VulnerableSyntaxNodes)
+            var canSuppress = false;
+            var sources = vulnerableSyntaxNode.Source;
+            foreach (var syntaxNode in sources)
             {
-                var canSuppress = false;
-                var sources = vulnerableSyntaxNode.Source;
-                foreach (var syntaxNode in sources)
+                var idsToMatchOn = syntaxNode.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
+                foreach (var identifierNameSyntax in idsToMatchOn)
                 {
-                    var idsToMatchOn = syntaxNode.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
-                    foreach (var identifierNameSyntax in idsToMatchOn)
+                    var containingBlock = syntaxNode.FirstAncestorOrSelf<MethodDeclarationSyntax>();
+
+                    var idMatches = containingBlock
+                        .DescendantNodes()
+                        .OfType<IdentifierNameSyntax>()
+                        .Where(p => p.Identifier.ValueText == syntaxNode.ToString())
+                        .ToList<SyntaxNode>();
+
+                    var declarationMatches = containingBlock
+                        .DescendantNodes()
+                        .OfType<VariableDeclaratorSyntax>()
+                        .Where(p => p.Identifier.ValueText == identifierNameSyntax.ToString())
+                        .Select(p => p.Initializer.Value)
+                        .ToList<SyntaxNode>();
+
+                    var matches = idMatches.Union(declarationMatches);
+                    var idModel = model.Compilation.GetSemanticModel(syntaxNode.SyntaxTree);
+
+                    foreach (var match in matches)
                     {
-                        var containingBlock = syntaxNode.FirstAncestorOrSelf<MethodDeclarationSyntax>();
+                        var indexNode = match.AncestorsAndSelf().FirstOrDefault();
 
-                        var idMatches = containingBlock
-                            .DescendantNodes()
-                            .OfType<IdentifierNameSyntax>()
-                            .Where(p => p.Identifier.ValueText == syntaxNode.ToString())
-                            .ToList<SyntaxNode>();
-
-                        var declarationMatches = containingBlock
-                            .DescendantNodes()
-                            .OfType<VariableDeclaratorSyntax>()
-                            .Where(p => p.Identifier.ValueText == identifierNameSyntax.ToString())
-                            .Select(p => p.Initializer.Value)
-                            .ToList<SyntaxNode>();
-
-                        var matches = idMatches.Union(declarationMatches);
-                        var idModel = context.Compilation.GetSemanticModel(syntaxNode.SyntaxTree);
-
-                        foreach (var match in matches)
+                        while (!canSuppress && indexNode != containingBlock)
                         {
-                            var indexNode = match.AncestorsAndSelf().FirstOrDefault();
+                            var nodeAnalyzer = SyntaxNodeAnalyzerFactory.Create(indexNode);
+                            canSuppress = nodeAnalyzer.CanSuppress(idModel, indexNode, ruleId);
 
-                            while (!canSuppress && indexNode != containingBlock)
-                            {
-                                var nodeAnalyzer = SyntaxNodeAnalyzerFactory.Create(indexNode);
-                                canSuppress = nodeAnalyzer.CanSuppress(idModel, indexNode, pumaContext.DiagnosticId);
-
-                                indexNode = indexNode.Ancestors().FirstOrDefault();
-                            }
-
-                            if (canSuppress)
-                            {
-                                break;
-                            }
+                            indexNode = indexNode.Ancestors().FirstOrDefault();
                         }
 
                         if (canSuppress)
@@ -93,11 +79,16 @@ namespace Puma.Security.Rules.Analyzer.Core
                     {
                         break;
                     }
-
                 }
 
-                vulnerableSyntaxNode.Suppressed = canSuppress;
+                if (canSuppress)
+                {
+                    break;
+                }
+
             }
+
+            return canSuppress;
         }
     }
 }

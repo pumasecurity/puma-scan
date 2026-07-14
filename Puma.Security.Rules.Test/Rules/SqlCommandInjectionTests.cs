@@ -92,6 +92,27 @@ public class Db
         }
 
         [TestMethod]
+        public async Task CommandTextFromSanitizedLocalDoesNotFlag()
+        {
+            // Exercises the intra-method sanitizer suppression pass
+            // (BaseCodeBlockAnalyzer): the sink argument is a local whose
+            // declaration is cleansed by Convert.ToInt32, which only the
+            // declaration-walk can see - sink-time checks alone cannot.
+            var test = Stubs + @"
+public class Db
+{
+    public void Execute(string input)
+    {
+        var id = System.Convert.ToInt32(input).ToString();
+        var cmd = new Microsoft.Data.SqlClient.SqlCommand();
+        cmd.CommandText = ""SELECT * FROM Users WHERE Id = "" + id;
+    }
+}
+";
+            await PumaVerifier.VerifyAnalyzerAsync(test);
+        }
+
+        [TestMethod]
         public async Task MicrosoftDataSqlClientCtorWithConstantCommandDoesNotFlag()
         {
             var test = Stubs + @"

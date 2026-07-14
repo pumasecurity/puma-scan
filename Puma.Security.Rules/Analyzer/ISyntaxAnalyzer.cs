@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  * 
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -12,6 +12,7 @@
 
 using System.Collections.Concurrent;
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -27,5 +28,7 @@ namespace Puma.Security.Rules.Analyzer
         ConcurrentStack<VulnerableSyntaxNode> VulnerableSyntaxNodes { get; }
 
         void GetSinks(SyntaxNodeAnalysisContext context, DiagnosticId ruleId);
+
+        bool IsSuppressed(SemanticModel model, VulnerableSyntaxNode vulnerableSyntaxNode, DiagnosticId ruleId);
     }
 }

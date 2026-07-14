@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  * 
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -12,6 +12,7 @@
 
 using System.Collections.Concurrent;
 
+using Puma.Security.Rules.Core;
 using Puma.Security.Rules.Model;
 
 namespace Puma.Security.Rules.Analyzer
@@ -19,5 +20,7 @@ namespace Puma.Security.Rules.Analyzer
     internal interface IAdditionalTextAnalyzer : ICompilationAnalyzer
     {
         ConcurrentStack<DiagnosticInfo> VulnerableAdditionalText { get; }
+
+        void OnCompilationEnd(PumaCompilationAnalysisContext pumaContext);
     }
 }

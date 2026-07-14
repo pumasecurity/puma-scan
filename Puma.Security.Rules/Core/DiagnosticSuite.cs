@@ -1,5 +1,5 @@
 /* 
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  * 
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -61,7 +61,7 @@ namespace Puma.Security.Rules.Core
         {
             try
             {
-                var pumaContext = new PumaAnalysisContext(context);
+                context.EnableConcurrentExecution();
 
                 //add the analyzers
                 foreach (var analyzer in Analyzers)
@@ -75,7 +75,7 @@ namespace Puma.Security.Rules.Core
                             _additionalTextAnalyzerRegisterService.Register(context, analyzer);
                             break;
                         case ISyntaxAnalyzer _:
-                            _syntaxNodeAnalyzerRegisterService.Register(pumaContext, analyzer);
+                            _syntaxNodeAnalyzerRegisterService.Register(context, analyzer);
                             break;
                     }
                 }

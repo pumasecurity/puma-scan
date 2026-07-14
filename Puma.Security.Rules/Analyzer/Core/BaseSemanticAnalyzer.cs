@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  * 
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -12,10 +12,10 @@
 
 using System.Collections.Concurrent;
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 using Puma.Security.Rules.Common;
-using Puma.Security.Rules.Core;
 
 namespace Puma.Security.Rules.Analyzer.Core
 {
@@ -29,9 +29,9 @@ namespace Puma.Security.Rules.Analyzer.Core
 
         }
 
-        public virtual void OnCompilationEnd(PumaCompilationAnalysisContext context)
+        public virtual bool IsSuppressed(SemanticModel model, VulnerableSyntaxNode vulnerableSyntaxNode, DiagnosticId ruleId)
         {
-            
+            return false;
         }
     }
 }
