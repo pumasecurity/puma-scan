@@ -3,15 +3,13 @@
   <PropertyGroup>
     <Description>Parses msbuild output logs and exports only Puma Scan warnings for processing in CI</Description>
     <Copyright>Puma Security, LLC</Copyright>
-    <Company>Puma Security LLC</Company>
+    <Company>Puma Security, LLC</Company>
     <Product>Puma Scan Community Edition</Product>
     <AssemblyTitle>Puma Scan Build Parser</AssemblyTitle>
-    <TargetFramework>net6</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Puma.Security.Parser</AssemblyName>
     <OutputType>Exe</OutputType>
-    <Company>Puma Security, LLC</Company>
-    <AssemblyName>Puma.Security.Parser</AssemblyName>
     <RootNamespace>Puma.Security.Parser</RootNamespace>
   </PropertyGroup>
 

@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Puma.Security.Rules.Vsix</RootNamespace>
     <AssemblyName>Puma.Security.Rules.Vsix.VS2022</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -56,27 +56,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Web.XmlTransform, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.Xdt.3.1.0\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Puma.Security.Rules.Vsix\License.txt">
-      <Link>License.txt</Link>
+    <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\Puma.Security.Rules.Vsix\logo-200x200.png">
-      <Link>logo-200x200.png</Link>
+    <Content Include="logo-200x200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Puma.Security.Rules.2022\Puma.Security.Rules.2022.csproj">
-      <Project>{31251bad-79d1-4f96-8320-308991e3d45c}</Project>
-      <Name>Puma.Security.Rules.2022</Name>
+    <ProjectReference Include="..\Puma.Security.Rules\Puma.Security.Rules.csproj">
+      <Project>{B198B981-D039-43D2-8B84-2B4F1BC1A1BA}</Project>
+      <Name>Puma.Security.Rules</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
