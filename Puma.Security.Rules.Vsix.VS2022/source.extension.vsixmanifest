@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
     <Identity Id="Puma.Security.Rules.Vsix.VS2022.5abd99bc-a6f7-42c4-b17a-c757bea7ced5" Version="3.0.0" Language="en-US" Publisher="Puma Security" />
-    <DisplayName>Puma Scan</DisplayName>
+    <DisplayName>Puma Scan Community</DisplayName>
     <Description xml:space="preserve">Puma Scan Community Edition is a free extension that provides secure code analysis as development teams write code. Vulnerabilities are displayed as spell check and compiler warnings.</Description>
     <MoreInfo>https://github.com/pumasecurity/puma-scan</MoreInfo>
     <License>License.txt</License>

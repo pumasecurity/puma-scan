@@ -102,7 +102,7 @@ namespace Puma.Security.Parser
         {
             ParserResult<Options> result = CommandLine.Parser.Default.ParseArguments<Options>(args);
 
-            if (result.Tag == CommandLine.ParserResultType.NotParsed)
+            if (result.Tag == ParserResultType.NotParsed)
             {
                 return null;
             }

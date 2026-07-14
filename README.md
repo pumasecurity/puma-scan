@@ -10,7 +10,7 @@ Puma Scan is a .NET software secure code analysis tool providing real time, cont
 
 # Supported Environments
 
-Puma Scan supports Visual Studio 2022 (17.8+) and Visual Studio 2026 via a single extension, and ships as a single NuGet package (`Puma.Security.Rules`) for build-time analysis with the .NET SDK.
+Puma Scan supports Visual Studio 2022 (17.8+) and Visual Studio 2026 via a single extension, and ships as a single NuGet package (`Puma.Security.Rules.2022`) for build-time analysis with the .NET SDK.
 
 # Documentation
 

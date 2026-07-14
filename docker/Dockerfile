@@ -10,7 +10,7 @@ RUN mkdir /results
 RUN mkdir /tools
 
 # Install puma into the image
-COPY ./Puma.Security.Rules/bin/Release/Puma.Security.Rules.3.0.0.nupkg /tools
+COPY ./Puma.Security.Rules/bin/Release/Puma.Security.Rules.2022.3.0.0.nupkg /tools
 COPY ./pumascan.sh /tools
 
 WORKDIR /tools
