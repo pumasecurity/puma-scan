@@ -42,5 +42,6 @@
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|Puma.Security.Rules|" />
     <Asset Type="Microsoft.VisualStudio.Analyzer" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|Puma.Security.Rules|" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" d:Source="Project" d:ProjectName="PumaSecurity.PumaScanPro.Rules" Path="Microsoft.Web.XmlTransform.dll" />
   </Assets>
 </PackageManifest>
