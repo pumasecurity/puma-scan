@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright(c) 2016 - 2020 Puma Security, LLC (https://pumasecurity.io)
+ * Copyright(c) 2016 - 2026 Puma Security, LLC (https://pumasecurity.io)
  *
  * Project Leads:
  * Eric Johnson (eric.johnson@pumascan.com)
@@ -102,7 +102,7 @@ namespace Puma.Security.Parser
         {
             ParserResult<Options> result = CommandLine.Parser.Default.ParseArguments<Options>(args);
 
-            if (result.Tag == CommandLine.ParserResultType.NotParsed)
+            if (result.Tag == ParserResultType.NotParsed)
             {
                 return null;
             }

@@ -1,19 +1,18 @@
-if ($env:CERTIFICATE_PATH -eq "") {
-	Write-Host "Error: Certificate path environment variable is required."
-	exit 1
+# Signing is temporarily disabled: the previous code signing certificate expired.
+# When signing resumes (planned: Azure Trusted Signing via Sign CLI, since
+# Microsoft.VSSDK.VsixSignTool is deprecated), set CERTIFICATE_PATH and
+# CERTIFICATE_PASSPHRASE in the pipeline and replace the tool invocation below.
+if ([string]::IsNullOrEmpty($env:CERTIFICATE_PATH) -or [string]::IsNullOrEmpty($env:CERTIFICATE_PASSPHRASE)) {
+	Write-Host "No signing certificate configured. Skipping VSIX signature (extension will be unsigned)."
+	exit 0
 }
 
-if ($env:CERTIFICATE_PASSPHRASE -eq "") {	
-	Write-Host "Error: Certificate passphrase environment variable is required."
-	exit 2
-}
-
-if ($env:BUILD_VERSION -eq "") {
+if ([string]::IsNullOrEmpty($env:BUILD_VERSION)) {
 	Write-Host "Error: Version number environment variable is required"
 	exit 3
 }
 
-if ($env:ARTIFACTS_DIRECTORY -eq "") {
+if ([string]::IsNullOrEmpty($env:ARTIFACTS_DIRECTORY)) {
 	Write-Host "Error: Artifact staging directory not defined"
 	exit 3
 }
@@ -23,14 +22,6 @@ if (!(Test-Path $vsixsignPath -PathType Leaf)) {
 	Write-Host "Error: $vsixsignPath not found"
 	exit 4
 }
-
-Write-Host "Starting VS2017 extension signature..."
-
-& $vsixsignPath sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSPHRASE" /v ".\Puma.Security.Rules.Vsix.VS2017\bin\Release\Puma.Security.Rules.Vsix.VS2017.vsix"
-
-Write-Host "Starting VS2019 extension signature..."
-
-& $vsixsignPath sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSPHRASE" /v ".\Puma.Security.Rules.Vsix\bin\Release\Puma.Security.Rules.Vsix.vsix"
 
 Write-Host "Starting VS2022 extension signature..."
 

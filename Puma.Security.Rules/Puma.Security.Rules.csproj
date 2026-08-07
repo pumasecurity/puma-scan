@@ -7,21 +7,21 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <PackageId>Puma.Security.Rules.2019</PackageId>
-    <PackageVersion>2.3.1.0</PackageVersion>
+    <PackageId>Puma.Security.Rules.2022</PackageId>
+    <PackageVersion>3.0.0</PackageVersion>
     <Authors>Puma Security LLC</Authors>
-    <PackageLicenseUrl>https://github.com/pumasecurity/puma-scan/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/pumasecurity/puma-scan/wiki</PackageProjectUrl>
     <PackageIconUrl>https://www.pumascan.com/img/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/pumasecurity/puma-scan</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>Puma Scan Community Edition is a free software security analyzer providng real time, continuous source code analysis as development teams write and build code. Puma Scan hunts for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
     <PackageReleaseNotes>https://github.com/pumasecurity/puma-scan/releases</PackageReleaseNotes>
-    <Copyright>Copyright 2016 - 2020 Puma Security, LLC</Copyright>
+    <Copyright>Copyright 2016 - 2026 Puma Security, LLC</Copyright>
     <PackageTags>Puma Scan, Code Analyzer, Application Security, Software Security, Puma Scan Community, .NET Security, Code Scan, OWASP, SANS, Security</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <Version>2.3.1.0</Version>
+    <Version>3.0.0</Version>
     <Company>Puma Security LLC</Company>
     <Product>Puma Scan Community Edition</Product>
     <AssemblyName>Puma.Security.Rules</AssemblyName>
@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.8.0" />
     <PackageReference Include="Microsoft.Web.Xdt" Version="3.1.0" />
   </ItemGroup>
   
@@ -46,7 +46,7 @@
     <None Update="tools\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Update="tools\parser\*.*" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Include="$(OutputPath)\tools\parser\*.*" Pack="true" PackagePath="tools/parser" />
-    <None Include="$(OutputPath)\..\..\..\..\packages\Microsoft.Web.Xdt.3.1.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(NuGetPackageRoot)microsoft.web.xdt\3.1.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
@@ -59,7 +59,5 @@
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="if $(ConfigurationName) == Release (&#xD;&#xA; if not exist &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot; mkdir &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; dotnet publish &quot;$(ProjectDir)..\Puma.Security.Parser\Puma.Security.Parser.csproj&quot; -c $(ConfigurationName) -o &quot;$(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser&quot;&#xD;&#xA; del $(ProjectDir)bin\$(ConfigurationName)\netstandard2.0\tools\parser\*.pdb&#xD;&#xA;)" />
   </Target>
-
-  <Import Project="..\Puma.Security.Rules.Shared\Puma.Security.Rules.Shared.projitems" Label="Shared" />
 
 </Project>

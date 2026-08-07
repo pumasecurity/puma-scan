@@ -1,5 +1,7 @@
 Security analyzers for C# that performs static code analysis for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.
 
+Supports Visual Studio 2022 (17.8+) and Visual Studio 2026. Build-time analysis is available via the [Puma.Security.Rules.2022](https://www.nuget.org/packages/Puma.Security.Rules.2022) NuGet package.
+
 ## Analysis Categories
 
 - Insecure Configuration
