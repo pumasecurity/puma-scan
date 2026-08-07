@@ -30,8 +30,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.8.0" />
-    <PackageReference Include="Microsoft.Web.Xdt" Version="3.1.0" />
+    <!-- PrivateAssets=all keeps these out of the package's nuspec dependencies:
+         analyzer packages must be dependency-free. The compiler host provides
+         Microsoft.CodeAnalysis at runtime, and XmlTransform ships in analyzers/dotnet/cs. -->
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.8.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Web.Xdt" Version="3.1.0" PrivateAssets="all" />
   </ItemGroup>
   
   <ItemGroup>
