@@ -12,7 +12,8 @@
     <Authors>Puma Security LLC</Authors>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/pumasecurity/puma-scan/wiki</PackageProjectUrl>
-    <PackageIconUrl>https://www.pumascan.com/img/logo.png</PackageIconUrl>
+    <PackageIcon>logo-200x200.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/pumasecurity/puma-scan</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>Puma Scan Community Edition is a free software security analyzer providng real time, continuous source code analysis as development teams write and build code. Puma Scan hunts for vulnerabilities identified in the OWASP Top 10, SANS/CWE Top 25, and other common insecure coding patterns.</Description>
@@ -48,6 +49,8 @@
     <None Include="$(OutputPath)\tools\parser\*.*" Pack="true" PackagePath="tools/parser" />
     <None Include="$(NuGetPackageRoot)microsoft.web.xdt\3.1.0\lib\netstandard2.0\Microsoft.Web.XmlTransform.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\Puma.Security.Rules.Vsix.VS2022\logo-200x200.png" Pack="true" PackagePath="\" Visible="false" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
